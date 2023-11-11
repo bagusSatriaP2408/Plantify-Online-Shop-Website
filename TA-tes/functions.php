@@ -167,11 +167,6 @@ function validateUsernameLogin(&$errors, $username) {
 function validateLogin(&$errors, $username, $password) {
     $role = validateUsernameLogin($errors, $username);
 
-    if ($role) {
-        $statement = DB->prepare("SELECT password FROM $role WHERE username = :username AND password = SHA2(:password, 0)");
-        $statement->execute(array(":username" => $username, ":password" => $password));   
-    }
-
     if (checkRequired($password)) {
         $errors["password"] = "password tidak boleh kosong";
         return false;
@@ -183,6 +178,8 @@ function validateLogin(&$errors, $username, $password) {
             $errors["password"] = "password tidak boleh kurang dari 8 karakter";
             return false;
         } else if ($role) {
+            $statement = DB->prepare("SELECT password FROM $role WHERE username = :username AND password = SHA2(:password, 0)");
+            $statement->execute(array(":username" => $username, ":password" => $password));  
             if ($statement->rowCount() == 0) {
                 $errors["password"] = "password salah";
                 return false;
