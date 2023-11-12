@@ -1,6 +1,24 @@
 <?php
 require_once('base.php');
 
+
+
+
+//-------------------------------Profile------------------------------------------
+function getDataDiri($username)
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM customer WHERE username = :username");
+		$statement->bindValue(":username",$username);
+		$statement->execute();
+		return $statement->fetch(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// ---------------------------end Profile ----------------------------------------
+
 function getAllDataProducts()
 {
 	try {
@@ -21,16 +39,16 @@ function getNewProducts()
 		echo $err->getMessage();
 	}
 }
-function getAllDataProductsWithDetails()
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM produk JOIN kategori ON kategori.id_kategori = produk.id_kategori");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
+// function getAllDataProductsWithDetails()
+// {
+// 	try {
+// 		$statement = DB->prepare("SELECT * FROM produk JOIN kategori ON kategori.id_kategori = produk.id_kategori");
+// 		$statement->execute();
+// 		return $statement->fetchAll(PDO::FETCH_ASSOC);
+// 	} catch (PDOException $err) {
+// 		echo $err->getMessage();
+// 	}
+// }
 function getAllCategories()
 {
 	try {
@@ -41,18 +59,18 @@ function getAllCategories()
 		echo $err->getMessage();
 	}
 }
-// function getAllDataProductsWithDetailsByCategory($kodeKat)
-// {
-// 	global $db;
-// 	try {
-// 		$statement = $db->prepare("SELECT * FROM products JOIN categories ON categories.kodeKategori = products.kodeKategori WHERE products.kodeKategori = :kodeKat");
-// 		$statement->bindValue(':kodeKat', $kodeKat);
-// 		$statement->execute();
-// 		return $statement->fetchAll(PDO::FETCH_ASSOC);
-// 	} catch (PDOException $err) {
-// 		echo $err->getMessage();
-// 	}
-// }
+
+function getAllDataProductsWithDetailsByCategory($kodeKat)
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM produk JOIN kategori ON kategori.id_kategori = produk.id_kategori WHERE produk.id_kategori = :kodeKat");
+		$statement->bindValue(':kodeKat', $kodeKat);
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
 
 // function getDataProductsByCategory($kodeKategori)
 // {
@@ -211,3 +229,118 @@ function getAllCategories()
 // 		echo $err->getMessage();
 // 	}
 // }
+
+// Keranjang
+
+// function insertKeranjang($username)
+// {
+// 	try{
+// 		$statement = DB->prepare("INSERT INTO keranjang (username) VALUES (:username)");
+// 		$username->bindValue(':username',$username);
+// 		$statement->execute();
+// 		return $statement->fetch(PDO::FETCH_ASSOC);
+// 	}catch(PDOException $err){
+// 		echo $err->getMessage();
+// 	}
+// }
+
+function getKeranjang($username)
+{
+	try{
+		$statement = DB->prepare("SELECT kd.id_produk,kd.id_keranjang,nama_produk,harga_produk,stok_produk,gambar_produk, count(*) as jml FROM keranjang_detail kd JOIN produk p ON kd.id_produk = p.id_produk JOIN keranjang k ON k.id_keranjang = kd.id_keranjang WHERE username = :username GROUP BY id_produk");
+		$statement->bindValue(':username',$username);
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	}catch (PDOException $err) 
+	{
+		echo $err->getMessage();
+	}
+}
+
+function getCartCode($username)
+{
+	try {
+		$statement = DB->prepare("SELECT id_keranjang FROM keranjang WHERE username = :username");
+		$statement->bindValue(':username', $username);
+		$statement->execute();
+		if($statement->rowcount() > 0)
+		{
+			return $statement->fetch(PDO::FETCH_ASSOC);
+		}
+		else{
+			$statement1 = DB->prepare("INSERT INTO keranjang (username) VALUES (:username)");
+			$statement1->bindValue(':username', $username);
+			$statement1->execute();
+			$statement = DB->prepare("SELECT id_keranjang FROM keranjang WHERE username = :username");
+			$statement->bindValue(':username', $username);
+			$statement->execute();
+			return $statement->fetch(PDO::FETCH_ASSOC);
+		}
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+function insertCart($username, $id_produk)
+{
+	$id_keranjang = getCartCode($username);
+	try {
+		$statement = DB->prepare("INSERT INTO keranjang_detail(id_keranjang,id_produk) VALUES (:id_keranjang,:id_produk)");
+		$statement->bindValue(':id_keranjang', $id_keranjang['id_keranjang']);
+		$statement->bindValue(':id_produk', $id_produk);
+		$statement->execute();
+
+		$previousPage = $_SERVER['HTTP_REFERER'];
+		header("Location: $previousPage");
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+// function getAllProductsInCarts($kodePelanggan)
+// {
+// 	try {
+// 		$statement = DB->prepare("SELECT cartdetails.kodeProduk, namaProduk,gambarProduk, categories.namaKategori,
+// 		 hargaProduk, COUNT(*) AS jumlah_item FROM cartdetails JOIN carts ON cartdetails.kodeKeranjang = carts.kodeKeranjang 
+// 		 JOIN products ON cartdetails.kodeProduk = products.kodeProduk JOIN categories ON products.kodeKategori=categories.kodeKategori
+// 		  where carts.kodePelanggan=:kodePelanggan GROUP BY cartdetails.kodeProduk");
+// 		$statement->bindValue(':kodePelanggan', $kodePelanggan);
+// 		$statement->execute();
+// 		return $statement->fetchAll(PDO::FETCH_ASSOC);
+// 	} catch (PDOException $err) {
+// 		echo $err->getMessage();
+// 	}
+// }
+function deleteProductInCart($id_produk, $id_keranjang,$hapus)
+{
+	// $kodeKeranjang = getCartCode($kodePelanggan);
+	if($hapus===0){
+		$query = "DELETE FROM keranjang_detail WHERE id_keranjang=:id_keranjang AND id_produk=:id_produk ORDER BY id_keranjang_detail DESC LIMIT 1";
+	}elseif($hapus===1){
+		$query = "DELETE FROM keranjang_detail WHERE id_keranjang=:id_keranjang AND id_produk=:id_produk ORDER BY id_keranjang_detail";
+	}
+	try {
+		$statement = DB->prepare($query);
+		$statement->bindValue(':id_keranjang', $id_keranjang);
+		$statement->bindValue(':id_produk', $id_produk);
+		$statement->execute();
+
+		$previousPage = $_SERVER['HTTP_REFERER'];
+		header("Location: $previousPage");
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+function increaseProductInCart($id_produk, $id_keranjang)
+{
+	// $kodeKeranjang = getCartCode($kodePelanggan);
+	try {
+		$statement = DB->prepare("INSERT INTO  keranjang_detail(id_keranjang,id_produk) VALUES (:id_keranjang,:id_produk)");
+		$statement->bindValue(':id_keranjang', $id_keranjang);
+		$statement->bindValue(':id_produk', $id_produk);
+		$statement->execute();
+
+		$previousPage = $_SERVER['HTTP_REFERER'];
+		header("Location: $previousPage");
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}

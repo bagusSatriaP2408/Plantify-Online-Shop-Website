@@ -28,6 +28,7 @@ if (isset($_POST['login'])) {
     if ($role) {
 
         $_SESSION["role"] = $role;
+        $_SESSION['username'] = $username;
         $_SESSION["login"] = true;
 
         // arahkan ke halaman sesuai role

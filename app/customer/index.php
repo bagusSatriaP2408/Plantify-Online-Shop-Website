@@ -75,7 +75,9 @@ $new = getNewProducts();
               <h5><?= $products[$i]['nama_produk']?></h5>
               <h5>Rp. <?= $products[$i]['harga_produk']?>,-</h5>
               <small>Tersedia <?= $products[$i]['stok_produk']?></small>
-              <div class="btn-card">Beli</div>
+              <a href="tambah_keranjang.php?produk=<?= $products[$i]["id_produk"] ?>">
+                <div class="btn-card">Beli</div>
+              </a>
             </div>
           </div>
         <?php endfor;?>
@@ -91,10 +93,12 @@ $new = getNewProducts();
       </div>
       <div class="container">
         <?php foreach($categories as $category):?>
-        <div class="card-kategori">
-          <img class="img2" src="<?= BASEURL ;?>/assets/img/bonsai7.jpg" alt="img kategori" />
-          <h4 class="title2"><?= $category['nama_kategori'] ?></h4>
-        </div>
+          <a href="<?= BASEURL?>/app/customer/produk.php?cate=<?= $category['id_kategori']?>" >
+            <div class="card-kategori">
+              <img class="img2" src="<?= BASEURL ;?>/assets/img/bonsai7.jpg" alt="img kategori" />
+              <h4 class="title2"><?= $category['nama_kategori'] ?></h4>
+            </div>
+          </a>
         <?php endforeach ;?>
       </div>
     </div>

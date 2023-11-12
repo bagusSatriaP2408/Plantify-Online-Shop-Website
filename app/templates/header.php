@@ -24,11 +24,11 @@ require_once(BASEPATH . "/app/database.php");
         <a href="">
           <img src="<?= BASEURL ;?>/assets/img/icon-search.png" alt="icon" />
         </a>
-        <a href="">
-          <img src="<?= BASEURL ;?>/assets/img/icon-profile.png" alt="icon" />
+        <a href="<?= BASEURL ;?>/app/customer/keranjang.php">
+          <img src="<?= BASEURL ;?>/assets/img/<?= $title == 'Keranjang' ? 'icon-keranjang-active.png': 'icon-keranjang.png'?>" alt="icon" />
         </a>
-        <a href="">
-          <img src="<?= BASEURL ;?>/assets/img/icon-keranjang.png" alt="icon" />
+        <a href="<?= BASEURL ;?>/app/customer/profile.php">
+          <img src="<?= BASEURL ;?>/assets/img/<?= $title == 'Profile' ? 'icon-profile-active.png': 'icon-profile.png'?>" alt="icon" />
         </a>
       </div>
     </header>
