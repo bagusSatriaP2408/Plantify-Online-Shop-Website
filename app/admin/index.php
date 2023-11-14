@@ -6,34 +6,100 @@ if (!isset($_SESSION['login'])) {
     exit();
 }
 
+$title = "Dashboard";
+$page = "Admin";
+require_once('../base.php');
+require_once(BASEPATH . "/app/admin/templates/sidebar.php");
+require_once(BASEPATH . "/app/admin/templates/header.php");
+$products = getAllDataProducts();
+$customers = getAllDataCustomer();
+$supplier = getAllDataSupplier();
 ?>
+        <!-- start main -->
+        <main>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
-    <link rel="stylesheet" href="../../assets/styles/style_admin.css" />
-</head>
-<body>
-    <div class="khusus">
-        <div class="kiri">
-            <div>
-                <img class="logo" src="logo.png" alt="logo">
+            <!-- start produk -->
+            <div class="produk">
+                <div class="judul">
+                    <h2>Produk</h2>
+                    <a href="">
+                        <h4>Lihat semua</h4>
+                    </a>
+                </div>
+                <div class="container-produk">
+                    <?php for($i=0;$i<3;$i++):?>
+                    <div class="card">
+                        <img
+                            class="img-produk"
+                            src="<?= BASEURL ;?>/assets/img/<?= $products[$i]['gambar_produk'] ?>"
+                            alt="gambar produk"
+                        />
+                        <div class="caption">
+                            <h5><?= $products[$i]['nama_produk']?></h5>
+                            <h5>Rp. <?= $products[$i]['harga_produk']?>,-</h5>
+                            <small>Tersedia <?= $products[$i]['stok_produk']?></small>
+                        </div>
+                    </div>
+                    <?php endfor;?>
+                </div>
             </div>
-            <div class="profile">
-                <img src="profile.png" alt="profile">
-                <h3>Admin</h3>
-            </div>
-            <div class="dashboard"><h3>Dashboard</h3></div>
-            <div class="infoakun"><h3>Info Akun</h3></div>
-            <div class="infobarang"><h3>Info Barang</h3></div>    
-            <div class="transaksi"><h3>Info Transaksi</h3></div>
-        </div>
-        <div class="kanan">
+            <!-- end produk -->
 
-        </div>
+            <!-- start supplier -->
+            <div class="supplier">
+                <div class="judul">
+                    <h2>Supplier</h2>
+                    <a href="">
+                        <h4>Lihat semua</h4>
+                    </a>
+                </div>
+                <table>
+                    <tr>
+                        <th>Nama</th>
+                        <th>No. Telepon</th>
+                        <th>Alamat</th>
+                    </tr>
+                    <?php for($i=0;$i<3;$i++): ?>
+                        <tr>
+                            <td><?= $supplier[$i]['nama_supplier']; ?></td>
+                            <td><?= $supplier[$i]['no_telepon']; ?></td>
+                            <td><?= $supplier[$i]['alamat']; ?></td>
+                        </tr>
+                    <?php endfor; ?>
+                </table>
+            </div>
+            <!-- end supplier -->
+
+            <!-- start customer -->
+            <div class="customer">
+                <div class="judul">
+                    <h2>Customer</h2>
+                    <a href="">
+                        <h4>Lihat semua</h4>
+                    </a>
+                </div>
+                <table>
+                    <tr>
+                        <th>Username</th>
+                        <th>Nama</th>
+                        <th>No. Telepon</th>
+                        <th>Alamat</th>
+                    </tr>
+                    <?php for($i=0;$i<3;$i++): ?>
+                        <tr>
+                            <td><?= $customers[$i]['username']; ?></td>
+                            <td><?= $customers[$i]['nama']; ?></td>
+                            <td><?= $customers[$i]['no_telepon']; ?></td>
+                            <td><?= $customers[$i]['alamat']; ?></td>
+                        </tr>
+                    <?php endfor; ?>
+                </table>
+            </div>
+            <!-- end customer -->
+
+        </main>
+        <!-- end main -->
     </div>
+
 </body>
 </html>

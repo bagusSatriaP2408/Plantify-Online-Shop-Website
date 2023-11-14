@@ -1,36 +1,167 @@
-body{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+@font-face {
+  font-family: "Montserrat";
+  src: url("../font/Montserrat-Regular.ttf");
 }
-.kiri{
-    background-color:  #004f44;
-    width: 460px;
-    text-align: center;
-    color: white;
+@font-face {
+  font-family: "Poppins";
+  src: url("../font/Poppins-Regular.ttf");
 }
-.khusus{
-    display: flex;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --hijau: #004f44;
+  --poppins: "Poppins", sans-serif;
+  --monsterrat: "Montserrat";
+  font-family: var(--poppins);
 }
-.profile{
-    display: flex;
-    margin-left: 175px;
-    margin-bottom: 80px;
-    margin-top: 30px;
+
+
+/* sidebar start */
+.sidebar {
+  background-color: var(--hijau);
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  padding: 30px 10px;
 }
-h2{
-    margin-bottom: 10px;
-    
+.logo {
+  width: 120px;
 }
-img{
-    width: 40px;
-    height: 40px;
-    margin-top: 12px;
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 90%;
 }
-.logo{
-    width: 80px;
-    height: 80px;
+menu {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 40px;
 }
-.dashboard,.infoakun,.infobarang,.transaksi{
-    margin-top: 50px;
-    border-radius: 20px;
-    border-bottom: solid 2px #ffff;
+menu a,
+.logout {
+  color: white;
+  text-decoration: none;
+}
+.active {
+  color: rgb(217, 255, 0);
+}
+/* sidebar end */
+
+.container-kanan {
+  flex: 1;
+  background-color: #ccc;
+  margin-left: 250px;
+  overflow-y: auto;
+}
+
+/* header start */
+header {
+  height: 10vh;
+  padding: 15px 35px;
+  display: flex;
+  background-color: #fff;
+  justify-content: space-between;
+  border-radius: 10px;
+  margin: 10px 15px;
+}
+.profil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.icon-profil {
+  width: 50px;
+  border-radius: 50px;
+}
+/* header end */
+
+.judul, .judul a {
+  color: green;
+}
+.judul a {
+  text-decoration: none;
+}
+
+/* start produk */
+.produk {
+  padding: 50px 128px 50px 128px;
+  color: green;
+  background-color: #fff;
+  margin: 10px 15px;
+  border-radius: 10px;
+}
+.judul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--monsterrat);
+  margin-bottom: 50px;
+}
+.container-produk {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  align-content: center;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  font-size: large;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+.img-produk {
+  object-fit: cover;
+  width: 278px;
+  height: 300px;
+}
+small {
+  font-size: 12px;
+  color: grey;
+}
+.caption {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+}
+/* End Produk */
+
+/* Start Supplier */
+.supplier {
+  padding: 50px 128px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 10px 15px;
+}
+/* End Supplier */
+
+/* Start Customer */
+.customer {
+  padding: 50px 128px 50px 128px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 10px 15px;
+}
+table {
+  width: 100%;
+}
+th {
+  background-color: cadetblue;
+}
+td {
+  background-color: aquamarine;
+  text-align: center;
 }

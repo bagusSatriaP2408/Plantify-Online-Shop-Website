@@ -344,3 +344,28 @@ function increaseProductInCart($id_produk, $id_keranjang)
 		echo $err->getMessage();
 	}
 }
+
+
+
+
+function getAllDataCustomer()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM customer");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+function getAllDataSupplier()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM supplier");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
