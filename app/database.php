@@ -345,8 +345,93 @@ function increaseProductInCart($id_produk, $id_keranjang)
 	}
 }
 
+ function getAllBank()
+ {
+	try {
+		$statement = DB->prepare("SELECT * FROM bank");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+
+ function getAllPengiriman()
+ {
+	try {
+		$statement = DB->prepare("SELECT * FROM metode_pengiriman");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+
+ function insertOrder($username,$total,$pengiriman,$rekening,$bank,$id_keranjang)
+ {
+	try {
+		$statement = DB->prepare("INSERT INTO `order` (username,total_order,id_pengiriman,id_bank,id_order_status,no_rekening) 
+		VALUES (:username,:total_order,:id_pengiriman,:id_bank,:id_order_status,:no_rekening)");
+		$statement->execute(array(':username' => $username,
+								':total_order'=> $total,
+								':id_pengiriman' => $pengiriman,
+								':id_bank' => $bank,
+								':id_order_status' => 1,
+								':no_rekening'=> $rekening
+							));
+		
+		$id = DB->lastInsertId();
+		$stat1 = DB->prepare("DELETE FROM keranjang_detail WHERE id_keranjang = :id_keranjang");
+		$stat1->execute(array(':id_keranjang' => $id_keranjang));
+		$stat2 = DB->prepare("DELETE FROM keranjang WHERE id_keranjang = :id_keranjang");
+		$stat2->execute(array(':id_keranjang' => $id_keranjang));
+
+		return $id;
 
 
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+
+ function insertOrderDetail($id_order,$id_produk,$jumlah,$total_harga)
+ {
+	try {
+		$statement = DB->prepare("INSERT INTO `order_detail` (id_order,id_produk,jumlah_produk,harga_total) 
+		VALUES (:id_order,:id_produk,:jumlah,:total_harga)");
+		$statement->execute(array(':id_order' => $id_order,
+								':id_produk'=> $id_produk,
+								':jumlah' => $jumlah,
+								':total_harga' => $total_harga,
+		));
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+
+ function getOrder($username)
+ {
+	try {
+		$statement = DB->prepare("SELECT id_order,tanggal_order,total_order,no_rekening,nama_ekspedisi,nama_bank,status 
+		FROM `order` o JOIN metode_pengiriman mp ON o.id_pengiriman = mp.id_pengiriman 
+		JOIN bank b ON o.id_bank = b.id_bank JOIN order_status os ON o.id_order_status = os.id_order_status
+		WHERE username = :username");
+		$statement->execute([':username'=>$username]);
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+ function getDetailOrder($id){
+	try {
+		$statement = DB->prepare("SELECT * FROM order_detail od JOIN produk p ON od.id_produk = p.id_produk
+		 WHERE id_order = :id_order");
+		$statement->execute([':id_order'=>$id]);
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
 
 function getAllDataCustomer()
 {

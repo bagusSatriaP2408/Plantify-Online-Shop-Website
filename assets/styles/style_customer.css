@@ -223,3 +223,51 @@ footer {
   background-color: black;
 }
 /* End Footer */
+.img-keranjang {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+td,
+tr {
+  padding: 0px 60px 40px 60px;
+  text-align: center;
+}
+th {
+  text-align: left;
+  padding: 0px 60px 20px 60px;
+}
+.produk-keranjang {
+  display: flex;
+  text-align: left;
+}
+.a {
+  justify-content: flex-start;
+}
+.bayar {
+  padding: 50px;
+}
+.total {
+  padding: 20px 15px 20px 15px;
+  margin: 0px 60px 30px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+}
+.x {
+  position: relative;
+  top: -20px;
+  color: #666666;
+}
+.jumlah-btn {
+  color: #666666;
+  border: 1px solid #666666;
+  border-radius: 100px;
+  padding: 0 7px 0 7px;
+}
+.jml {
+  margin: 15px;
+}

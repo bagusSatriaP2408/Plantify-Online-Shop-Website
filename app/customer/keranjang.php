@@ -13,56 +13,11 @@ require_once(BASEPATH."/app/templates/header.php");
 
 
 $dataKeranjang = getKeranjang($_SESSION['username']);
+$dataDiri = getDataDiri($_SESSION['username']);
+$bank = getAllBank();
+$pengiriman = getAllPengiriman();
+
 ?>
-<style>
-    .img-keranjang{
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-td,tr{
-        padding: 0px 60px 40px 60px;
-        text-align: center;
-    }
-    th{
-        text-align: left;
-        padding: 0px 60px 20px 60px;
-    }
-    .produk-keranjang{
-        display: flex;
-        text-align: left;
-    }
-    .a{
-        justify-content:flex-start;
-    }
-    .bayar{
-        padding: 50px;
-    }
-    .total{
-        padding: 20px 15px 20px 15px;
-        margin: 0px 60px 30px 60px;;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #D9D9D9;
-        border-radius: 20px;
-    }
-    .x{
-        position: relative;
-        top: -20px;
-        color: #666666;
-    }
-    .jumlah-btn{
-        color: #666666;
-        border: 1px solid #666666;
-        border-radius: 100px;
-        padding: 0 7px 0 7px;
-    }
-    .jml{
-        margin: 15px;
-    }
-</style>
 <div class="produk">
     <div class="judul">
 
@@ -118,15 +73,30 @@ td,tr{
                 <h4>Rp. <?= number_format($total, 0, ',', '.')?>,-</h4>
             </div>
         </div>
+        <form action="tambah_order.php" method="post">
         <div class="card bayar">
 
                 <h3>Info Pembayaran</h3>
-                <label for="almt">Alamat Pengiriman</label>
-                <input type="text" id="almt">
-                <label for="pengirim">Opsi Pengiriman</label>
-                <img src="<?= BASEURL?>/assets/img/icon-keranjang.png" style="width:50px" alt="">
-                <label for="bayar">Tipe Pembayaran</label>
-                <img src="<?= BASEURL?>/assets/img/icon-keranjang.png" style="width:50px" alt="">
-            </div>
+                <h4>Nama : </h4>
+                <h5><?= $dataDiri['nama']?></h5>
+                <h4>Alamat : </h4>
+                <h5><?= $dataDiri['alamat']?></h5>
+                    <label for="pengiriman">Opsi Pengiriman</label>
+                    <select name="pengiriman" id="pengiriman">
+                    <?php foreach($pengiriman as $kirim) :  ?> 
+                        <option value="<?= $kirim['id_pengiriman']?>"><?= $kirim['nama_ekspedisi'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                    <label for="bank">Tipe Pembayaran</label>
+                    <select name="bank" id="bank">
+                        <?php foreach($bank as $b) :  ?> 
+                            <option value="<?= $b['id_bank']?>"><?= $b['nama_bank'] ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    <label for="">No Rekening</label>
+                    <input type="text" name="no_rekening">
+                    <input type="submit" value="Pesan" name="submit">
+                </div>
+            </form>
     </div>
 </div>

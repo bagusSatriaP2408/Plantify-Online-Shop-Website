@@ -5,6 +5,7 @@ if (!isset($_SESSION['login'])) {
     header("Location: ../index.php");
     exit();
 }
+require_once('../base.php');
 
 ?>
 
@@ -60,5 +61,6 @@ if (!isset($_SESSION['login'])) {
             </tr>
         </table>
     </div>
+    <a href="<?= BASEURL ?>/app/logout.php">logout</a>
 </body>
 </html>
