@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2023 at 04:12 PM
+-- Generation Time: Nov 15, 2023 at 06:10 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -39,8 +39,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`username`, `password`) VALUES
-('jony1234', 'aa28566c61142bb9856d6c967ef6d80ecc490cabd95d1015be9b04e07591acd0'),
-('jony12345', 'aa28566c61142bb9856d6c967ef6d80ecc490cabd95d1015be9b04e07591acd0');
+('jony1111', 'bf73ab106dd097a9d2a1d63a07825bf34496734f6dd65877a9d29125b3d0ef34');
 
 -- --------------------------------------------------------
 
@@ -52,6 +51,18 @@ CREATE TABLE `bank` (
   `id_bank` int(11) NOT NULL,
   `nama_bank` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `bank`
+--
+
+INSERT INTO `bank` (`id_bank`, `nama_bank`) VALUES
+(1, 'Mandiri'),
+(2, 'BCA'),
+(3, 'BRI'),
+(4, 'BNI'),
+(5, 'CIMB Niaga'),
+(6, 'Permata');
 
 -- --------------------------------------------------------
 
@@ -72,7 +83,9 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`username`, `password`, `nama`, `no_telepon`, `alamat`) VALUES
-('jony1234', 'aa28566c61142bb9856d6c967ef6d80ecc490cabd95d1015be9b04e07591acd0', 'bagus', '123456789101', 'benjeng');
+('jony2222', '2f6205701e5a247cd3ec262511e56b6a7a4ad3b4e49144dac97937ae704024b5', 'jony', '123456789101', 'iraq'),
+('jony4321', 'efa87211c6f8b2e588da402546a8a17e09853528e9e5833fd659451cf4275b8b', 'jony', '123456789101', 'irlandia'),
+('test1234', '937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244', 'Test', '123742588852', 'Mexico');
 
 -- --------------------------------------------------------
 
@@ -85,6 +98,16 @@ CREATE TABLE `kategori` (
   `nama_kategori` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `kategori`
+--
+
+INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
+(2, 'Bonsai Buah'),
+(3, 'Bonsai Bunga'),
+(4, 'Bonsai Conifer'),
+(5, 'Bonsai Daun Lebar');
+
 -- --------------------------------------------------------
 
 --
@@ -95,6 +118,13 @@ CREATE TABLE `keranjang` (
   `id_keranjang` int(11) NOT NULL,
   `username` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `keranjang`
+--
+
+INSERT INTO `keranjang` (`id_keranjang`, `username`) VALUES
+(1, 'jony2222');
 
 -- --------------------------------------------------------
 
@@ -125,7 +155,7 @@ CREATE TABLE `manajer` (
 --
 
 INSERT INTO `manajer` (`username`, `password`) VALUES
-('jony1234', 'aa28566c61142bb9856d6c967ef6d80ecc490cabd95d1015be9b04e07591acd0');
+('jony12345', '17d8c0405070683f2e5e235ac1eb1e99eca1f798334933f16cdbd4726722b798');
 
 -- --------------------------------------------------------
 
@@ -191,6 +221,14 @@ CREATE TABLE `order_status` (
   `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `order_status`
+--
+
+INSERT INTO `order_status` (`id_order_status`, `status`) VALUES
+(1, 0),
+(2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -208,6 +246,16 @@ CREATE TABLE `produk` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+--
+-- Dumping data for table `produk`
+--
+
+INSERT INTO `produk` (`id_produk`, `id_supplier`, `nama_produk`, `harga_produk`, `stok_produk`, `gambar_produk`, `id_kategori`, `created_at`) VALUES
+(6, 2, 'Bonsai', 50000, 4, 'baru.jpg', 2, '2023-11-14 12:16:14'),
+(7, 4, 'Bonsai 2', 40000, 2, 'baru.jpg', 2, '2023-11-14 12:16:26'),
+(8, 2, 'Bonsai 3', 30000, 5, 'baru.jpg', 4, '2023-11-14 12:16:34'),
+(9, 2, 'Bonsai 4', 30000, 5, 'baru.jpg', 4, '2023-11-14 12:16:34');
+
 -- --------------------------------------------------------
 
 --
@@ -216,8 +264,19 @@ CREATE TABLE `produk` (
 
 CREATE TABLE `supplier` (
   `id_supplier` int(11) NOT NULL,
-  `nama_supplier` varchar(100) NOT NULL
+  `nama_supplier` varchar(100) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `no_telepon` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`id_supplier`, `nama_supplier`, `alamat`, `no_telepon`) VALUES
+(2, 'Bonsai World', 'Jl. Bonsai No. 123, Kota Bonsai', '081234567890'),
+(3, 'Green Gardens', 'Jl. Kebun Bonsai 5, Bonsai City', '085678901234'),
+(4, 'Nature\'s Art', 'Jl. Indah Bonsai 8, Bonsai Ville', '081112223344');
 
 --
 -- Indexes for dumped tables
@@ -327,25 +386,25 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT for table `bank`
 --
 ALTER TABLE `bank`
-  MODIFY `id_bank` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_bank` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `kategori`
 --
 ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `keranjang_detail`
 --
 ALTER TABLE `keranjang_detail`
-  MODIFY `id_keranjang_detail` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_keranjang_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `metode_pembayaran`
@@ -375,19 +434,19 @@ ALTER TABLE `order_detail`
 -- AUTO_INCREMENT for table `order_status`
 --
 ALTER TABLE `order_status`
-  MODIFY `id_order_status` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_order_status` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
