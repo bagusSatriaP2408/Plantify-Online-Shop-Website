@@ -3,7 +3,7 @@
     <!-- Start Header -->
     <header>
         <div class="dashboard">
-            <span><?= $page ?></span>
+            <span>Admin</span>
             <p>Dashboard</p>
         </div>
         <div class="profil">

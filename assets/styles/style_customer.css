@@ -15,6 +15,9 @@
   --monsterrat: "Montserrat";
   font-family: var(--poppins);
 }
+body {
+  overflow-x: hidden;
+}
 /* Start Header */
 
 header,
@@ -138,7 +141,7 @@ p {
 .container {
   display: flex;
   flex-wrap: wrap;
-  gap: 70px;
+  gap: 50px;
   align-content: center;
 }
 .card {

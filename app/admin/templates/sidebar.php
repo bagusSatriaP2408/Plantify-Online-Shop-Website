@@ -17,10 +17,10 @@ require_once(BASEPATH . "/app/database.php");
         <img class="logo" src="<?= BASEURL ;?>/assets/img/logo.png" alt="logo" />
         <div class="menu-container">
             <menu>
-                <a href="" class="<?= $title === 'Dashboard' ? 'active' : '' ?>">Dashboard</a>
-                <a href="" class="<?= $title === 'Product' ? 'active' : '' ?>">Product</a>
-                <a href="" class="<?= $title === 'Supplier' ? 'active' : '' ?>">Supplier</a>
-                <a href="" class="<?= $title === 'Customer' ? 'active' : '' ?>">Customer</a>
+                <a href="<?= BASEURL ?>/app/admin/index.php" class="<?= $title === 'Dashboard' ? 'active' : '' ?>">Dashboard</a>
+                <a href="<?= BASEURL ?>/app/admin/produk.php" class="<?= $title === 'Produk' ? 'active' : '' ?>">Produk</a>
+                <a href="<?= BASEURL ?>/app/admin/supplier.php" class="<?= $title === 'Supplier' ? 'active' : '' ?>">Supplier</a>
+                <a href="<?= BASEURL ?>/app/admin/customer.php" class="<?= $title === 'Customer' ? 'active' : '' ?>">Customer</a>
             </menu>
             <a href="<?= BASEURL ;?>/app/logout.php" class="logout"><div>Logout</div></a>
         </div>
