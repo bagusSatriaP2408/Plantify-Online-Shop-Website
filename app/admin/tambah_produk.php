@@ -12,12 +12,14 @@ $errors = array();
 $success = false;
 
 if (isset($_POST['submit'])) {
+
     $nama_produk = htmlspecialchars($_POST['nama_produk']);
     $harga = htmlspecialchars($_POST['harga']);
     $stok = htmlspecialchars($_POST['stok']);
     $kategori = $_POST['kategori'];
     $sup = $_POST['supplier'];
-    // $gambar = $_POST['gambar'];
+
+    $gambar = uploadGambar($errors);
     validasiTambahProduk($errors, $_POST);
 
     $cek = "";
@@ -27,6 +29,21 @@ if (isset($_POST['submit'])) {
 
     if (strlen($cek) == 0) {
         $success = true;
+    }
+
+    if ($success && $gambar) {
+        try{
+            $stat = DB->prepare("INSERT INTO produk (id_supplier,nama_produk,harga_produk,stok_produk,gambar_produk,id_kategori) VALUES (:id_supplier,:nama_produk,:harga_produk,:stok_produk,:gambar_produk,:id_kategori)");
+            $stat->execute(array(
+                ":id_supplier" => $sup,
+                ":nama_produk" => $nama_produk,
+                ":harga_produk" => $harga,
+                ":stok_produk" => $stok,
+                ":gambar_produk" => $gambar,
+                ":id_kategori" => $kategori));
+        } catch (PDOException $err) {
+            echo $err->getMessage();
+        }
     }
 }
 
@@ -48,7 +65,7 @@ $supplier = getAllDataSupplier();
         </div>
         <p class="error"><?= $errors['error'] ?? ''; ?></p>
         <?php if ($success) { ?>
-            <div>Produk sukses ditambahkan</div>
+            <div>Produk sukses ditambahkan!</div>
         <?php } else { ?>
             <form action="tambah_produk.php" method="post" enctype="multipart/form-data">
                 <div class="input-container">
@@ -87,14 +104,13 @@ $supplier = getAllDataSupplier();
                         <?php endfor; ?>
                     </select>
                 </div>
-                <!-- <div class="input-container">
+                <div class="input-container">
                     <label for="gambar">Gambar : </label>
                     <input type="file" name="gambar" id="gambar">
-                </div> -->
+                </div>
                 <button type="submit" name="submit" class="submit">Tambahkan</button>
             </form>
         <?php } ?>
-        
     </div>
     <!-- end tambah produk -->
 

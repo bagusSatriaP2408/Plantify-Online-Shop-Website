@@ -36,7 +36,7 @@ $supplier = getAllDataSupplier();
                     <a href="<?= BASEURL ?>/app/admin/ubah_produk.php?id=<?= $product['id_produk']; ?>">
                         <button class="ubah">Ubah</button>
                     </a> 
-                    <a href="">
+                    <a href="hapus_produk.php?id=<?= $product['id_produk']; ?>">
                         <button class="hapus">Hapus</button>
                     </a>
                 </div>
