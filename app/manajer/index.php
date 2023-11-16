@@ -15,12 +15,12 @@ require_once('../base.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager</title>
-    <link rel="stylesheet" href="../../assets/styles/style_manajer.css" />
+    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style_manajer.css" />
 </head>
 <body>
     <div class="header">
         <div class="profile">
-            <img class="pfl" src="profile.png" alt="profile">
+            <img class="pfl" src="<?= BASEURL ?>/assets/img/icon-profile.png" alt="profile">
         </div>
         <div class="logo">
             <img src="logo.png" alt="logo">

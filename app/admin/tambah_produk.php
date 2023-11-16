@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
                 ":gambar_produk" => $gambar,
                 ":id_kategori" => $kategori));
         } catch (PDOException $err) {
-            echo $err->getMessage();
+            echo $err->getMessage(); 
         }
     }
 }
@@ -56,7 +56,7 @@ $categories  = getAllCategories();
 $supplier = getAllDataSupplier();
 ?>
     <!-- start tambah produk -->
-    <div class="tambah-produk">
+    <div class="wadah">
         <a href="<?= BASEURL ?>/app/admin/produk.php">
             <button class="kembali">Kembali</button>
         </a>

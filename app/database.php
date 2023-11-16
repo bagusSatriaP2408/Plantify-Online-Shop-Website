@@ -475,60 +475,24 @@ function getProductById($id) {
 	}
 }
 
-function upload() {
-    
-    $namaFile = $_FILES["gambar"]["name"];
-    $error = $_FILES["gambar"]["error"];
-    $tmpName = $_FILES["gambar"]["tmp_name"];
-    
-    // cek apakah tidak ada gambar yang diupload
-    if ($error === 4) {
-        $errors['error'] = "pilih gambar terlebih dahulu";
-        return false;
-    }
-    
-    // cek apakah yang diupload adalah gambar (cek ekstensi)
-    $ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
-    $ekstensiGambar = explode('.', $namaFile); // memecah string dengan delimiter .
-    $ekstensiGambar = strtolower(end($ekstensiGambar)); // ambil indeks terakhir
-    
-    // cek apakah ekstensi ada di ekstensigambarvalid
-    if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
-        $errors['error'] = "ekstensi gambar tidak valid";
-        return false;
-    }
-    
-    // generate nama gambar baru
-    $namaFileBaru = uniqid();
-    $namaFileBaru .= '.';
-    $namaFileBaru .= $ekstensiGambar;
-
-    move_uploaded_file($tmpName, "../../assets/img/" . $namaFileBaru); 
-    
-    return $namaFileBaru;
-
-}
-
-function updateProduct($data) {
+function deleteSupplier($id) {
 	try {
-		$nama_produk = htmlspecialchars($data['nama_produk']);
-		$harga = htmlspecialchars($data['harga']);
-		$stok = htmlspecialchars($data['stok']);
-		$kategori = $data['kategori'];
-		$sup = $data['supplier'];
-		$gambar = upload();
-
-		$stat = DB->prepare("SELECT * FROM produk WHERE id_produk = :id");
-		$stat->execute(array(
-			":id_supplier" => $sup,
-			":nama_produk" => $nama_produk,
-			":harga_produk" => $harga,
-			":stok_produk" => $stok,
-			":gambar_produk" => $gambar,
-			":id_kategori" => $kategori));
-
-			
+		$statement = DB->prepare("DELETE FROM supplier WHERE id_supplier = :id");
+		$statement->execute(array(":id" => $id));
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
 		echo $err->getMessage();
 	}
 }
+
+function getSupplierById($id) {
+	try {
+		$statement = DB->prepare("SELECT * FROM supplier WHERE id_supplier = :id");
+		$statement->execute(array(":id" => $id));
+		return $statement->fetch(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+

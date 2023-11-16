@@ -16,7 +16,7 @@ $supplier = getAllDataSupplier();
 ?>
         
         <!-- start produk -->
-        <div class="produk">
+        <div class="wadah">
             <div class="judul">
                 <h2>Produk</h2>
                 <a href="<?= BASEURL ?>/app/admin/produk.php">
@@ -43,7 +43,7 @@ $supplier = getAllDataSupplier();
         <!-- end produk -->
 
         <!-- start supplier -->
-        <div class="supplier">
+        <div class="wadah">
             <div class="judul">
                 <h2>Supplier</h2>
                 <a href="<?= BASEURL ?>/app/admin/supplier.php">
@@ -68,7 +68,7 @@ $supplier = getAllDataSupplier();
         <!-- end supplier -->
 
         <!-- start customer -->
-        <div class="customer">
+        <div class="wadah">
             <div class="judul">
                 <h2>Customer</h2>
                 <a href="<?= BASEURL ?>/app/admin/customer.php">

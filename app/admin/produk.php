@@ -15,7 +15,7 @@ $categories  = getAllCategories();
 $supplier = getAllDataSupplier();
 ?>
     <!-- start produk -->
-    <div class="produk">
+    <div class="wadah">
         <div class="judul">
             <h2>Produk</h2>
         </div>

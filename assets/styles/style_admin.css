@@ -48,8 +48,7 @@ menu {
   gap: 25px;
   padding: 40px;
 }
-menu a,
-.logout {
+a {
   color: white;
   text-decoration: none;
 }
@@ -91,17 +90,14 @@ header {
   align-items: center;
   font-family: var(--monsterrat);
   margin-bottom: 50px;
-}
-.judul,
-.judul a {
   color: green;
 }
 .judul a {
-  text-decoration: none;
+  color: green;
 }
 
 /* start produk */
-.produk {
+.wadah{
   padding: 50px 128px;
   color: green;
   background-color: #fff;
@@ -182,15 +178,6 @@ button.tambah {
 button.tambah:hover {
   background-color: #218838;
 }
-
-/* tambah produk start */
-.tambah-produk {
-  padding: 50px 128px;
-  color: green;
-  background-color: #fff;
-  margin: 10px 15px;
-  border-radius: 10px;
-}
 button.kembali {
   background-color: #6c757d; 
   color: #fff; 
@@ -242,29 +229,23 @@ button[type="submit"]:hover {
 /* tambah produk end */
 /* End Produk */
 
-/* Start Supplier */
-.supplier {
-  padding: 50px 128px;
-  background-color: #fff;
-  border-radius: 10px;
-  margin: 10px 15px;
-}
-/* End Supplier */
-
-/* Start Customer */
-.customer {
-  padding: 50px 128px 50px 128px;
-  background-color: #fff;
-  border-radius: 10px;
-  margin: 10px 15px;
-}
 table {
   width: 100%;
+  border-collapse: collapse;
 }
 th {
-  background-color: cadetblue;
+  background-color: #2ecc71;
+  padding: 20px;
+  color: black;
 }
 td {
-  background-color: aquamarine;
   text-align: center;
+  padding: 20px;
+}
+tr:nth-child(odd) {
+  background-color: #ccc;
+}
+
+.logout:hover , menu a:hover {
+  color: rgb(217, 255, 0);
 }

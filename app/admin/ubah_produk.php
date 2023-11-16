@@ -13,6 +13,7 @@ $id = isset($_POST['id_produk']) ? $_POST['id_produk'] : $_GET['id'];
 $errors = array();
 $success = false;
 if (isset($_POST['submit'])) {
+
     $id = $_POST['id_produk'];
     $nama_produk = htmlspecialchars($_POST['nama_produk']);
     $harga = htmlspecialchars($_POST['harga']);
@@ -62,7 +63,7 @@ $categories  = getAllCategories();
 $supplier = getAllDataSupplier();
 ?>
     <!-- start ubah produk -->
-    <div class="tambah-produk">
+    <div class="wadah">
         <a href="<?= BASEURL ?>/app/admin/produk.php">
             <button class="kembali">Kembali</button>
         </a>

@@ -21,43 +21,6 @@ function checkNumeric($field) {
     return preg_match($pattern, $field);
 }
 
-// validasi inputan nama (required, alfabet)
-function validateNamaProduk(&$errors, $nama_produk) {
-    if (checkRequired($nama_produk)) {
-        $errors["nama_produk"] = "nama produk tidak boleh kosong";
-    } else {
-        if (!checkAlphabet($nama_produk)) {
-            $errors["nama_produk"] = "nama produk harus berupa alfabet";
-        } else {
-            $errors["nama_produk"] = "";
-        }
-    }
-}
-
-// validasi inputan telepon (required, numeric, panjang digit)
-function validateTel(&$errors, $tel) {
-    if (checkRequired($tel)) {
-        $errors["tel"] = "nomor telepon tidak boleh kosong";
-    } else {
-        if (!checkNumeric($tel)) {
-            $errors["tel"] = "nomor telepon harus berupa angka";
-        } else if (strlen($tel) < 12) {
-            $errors["tel"] = "tidak boleh kurang dari 12 digit";
-        } else {
-            $errors["tel"] = "";
-        }
-    }
-}
-
-// validasi inputan alamat (required)
-function validateAlamat(&$errors, $address) {
-    if (checkRequired($address)) {
-        $errors["address"] = "alamat tidak boleh kosong";
-    } else {
-        $errors["address"] = "";
-    }
-}
-
 function validasiTambahProduk (&$errors, $inputan) {
 
     $nama_produk = htmlspecialchars($inputan['nama_produk']);
@@ -74,7 +37,7 @@ function validasiTambahProduk (&$errors, $inputan) {
     } else if (!checkAlphaNumeric($nama_produk) && !checkAlphabet($nama_produk)) {
         $errors['error'] = "nama produk tidak boleh mengandung simbol";
     } else if ($stat->rowCount() > 0) {
-        $errors["error"] = "nama produk sudah ada";
+        $errors['error'] = "nama produk sudah ada";
     } else if (!checkNumeric($harga)) {
         $errors['error'] = "harga produk harus berupa angka";
     } else if (!checkNumeric($stok)) {
