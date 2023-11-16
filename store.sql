@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2023 at 06:10 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Nov 16, 2023 at 03:45 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,8 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `store`
 --
-CREATE DATABASE IF NOT EXISTS `store` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `store`;
 
 -- --------------------------------------------------------
 
@@ -30,12 +28,13 @@ USE `store`;
 --
 
 CREATE TABLE `admin` (
-  `username` varchar(100) NOT NULL,
-  `password` varchar(64) NOT NULL
+  `username` varchar(100) COLLATE utf8_bin NOT NULL,
+  `password` varchar(64) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `admin`
+
 --
 
 INSERT INTO `admin` (`username`, `password`) VALUES
@@ -49,7 +48,7 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 
 CREATE TABLE `bank` (
   `id_bank` int(11) NOT NULL,
-  `nama_bank` varchar(100) NOT NULL
+  `nama_bank` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -71,11 +70,11 @@ INSERT INTO `bank` (`id_bank`, `nama_bank`) VALUES
 --
 
 CREATE TABLE `customer` (
-  `username` varchar(100) NOT NULL,
-  `password` varchar(64) NOT NULL,
-  `nama` varchar(100) NOT NULL,
-  `no_telepon` varchar(100) NOT NULL,
-  `alamat` varchar(100) NOT NULL
+  `username` varchar(100) COLLATE utf8_bin NOT NULL,
+  `password` varchar(64) COLLATE utf8_bin NOT NULL,
+  `nama` varchar(100) COLLATE utf8_bin NOT NULL,
+  `no_telepon` varchar(100) COLLATE utf8_bin NOT NULL,
+  `alamat` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -83,7 +82,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`username`, `password`, `nama`, `no_telepon`, `alamat`) VALUES
-('jony2222', '2f6205701e5a247cd3ec262511e56b6a7a4ad3b4e49144dac97937ae704024b5', 'jony', '123456789101', 'iraq'),
+('jony2222', '2f6205701e5a247cd3ec262511e56b6a7a4ad3b4e49144dac97937ae704024b5', 'jony', '123456789101', 'iraq Jawa barat'),
 ('jony4321', 'efa87211c6f8b2e588da402546a8a17e09853528e9e5833fd659451cf4275b8b', 'jony', '123456789101', 'irlandia'),
 ('test1234', '937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244', 'Test', '123742588852', 'Mexico');
 
@@ -95,7 +94,7 @@ INSERT INTO `customer` (`username`, `password`, `nama`, `no_telepon`, `alamat`) 
 
 CREATE TABLE `kategori` (
   `id_kategori` int(11) NOT NULL,
-  `nama_kategori` varchar(100) NOT NULL
+  `nama_kategori` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -116,15 +115,8 @@ INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
 
 CREATE TABLE `keranjang` (
   `id_keranjang` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL
+  `username` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
---
--- Dumping data for table `keranjang`
---
-
-INSERT INTO `keranjang` (`id_keranjang`, `username`) VALUES
-(1, 'jony2222');
 
 -- --------------------------------------------------------
 
@@ -146,8 +138,8 @@ CREATE TABLE `keranjang_detail` (
 --
 
 CREATE TABLE `manajer` (
-  `username` varchar(100) NOT NULL,
-  `password` varchar(64) NOT NULL
+  `username` varchar(100) COLLATE utf8_bin NOT NULL,
+  `password` varchar(64) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -160,25 +152,23 @@ INSERT INTO `manajer` (`username`, `password`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `metode_pembayaran`
---
-
-CREATE TABLE `metode_pembayaran` (
-  `id_pembayaran` int(11) NOT NULL,
-  `id_bank` int(11) NOT NULL,
-  `no_rekening` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `metode_pengiriman`
 --
 
 CREATE TABLE `metode_pengiriman` (
   `id_pengiriman` int(11) NOT NULL,
-  `nama_ekspedisi` varchar(100) NOT NULL
+  `nama_ekspedisi` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `metode_pengiriman`
+--
+
+INSERT INTO `metode_pengiriman` (`id_pengiriman`, `nama_ekspedisi`) VALUES
+(1, 'JNE Express'),
+(2, 'J&T Express'),
+(3, 'SiCepat'),
+(4, 'Pahala Express');
 
 -- --------------------------------------------------------
 
@@ -188,13 +178,24 @@ CREATE TABLE `metode_pengiriman` (
 
 CREATE TABLE `order` (
   `id_order` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
+  `username` varchar(100) COLLATE utf8_bin NOT NULL,
   `total_order` int(11) NOT NULL,
-  `id_pembayaran` int(11) NOT NULL,
   `id_pengiriman` int(11) NOT NULL,
   `tanggal_order` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `id_order_status` int(11) NOT NULL
+  `id_order_status` int(11) NOT NULL,
+  `id_bank` int(11) NOT NULL,
+  `no_rekening` varchar(20) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `order`
+--
+
+INSERT INTO `order` (`id_order`, `username`, `total_order`, `id_pengiriman`, `tanggal_order`, `id_order_status`, `id_bank`, `no_rekening`) VALUES
+(47, 'jony2222', 130000, 3, '2023-11-15 15:50:56', 1, 2, '123456798765'),
+(48, 'jony2222', 0, 1, '2023-11-15 15:51:32', 1, 2, '123456798765'),
+(49, 'jony2222', 0, 1, '2023-11-15 17:10:41', 1, 2, '123456798765'),
+(50, 'jony2222', 100000, 1, '2023-11-15 17:56:08', 1, 1, '123456798765');
 
 -- --------------------------------------------------------
 
@@ -209,6 +210,17 @@ CREATE TABLE `order_detail` (
   `jumlah_produk` int(11) NOT NULL,
   `harga_total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `order_detail`
+--
+
+INSERT INTO `order_detail` (`id_order_detail`, `id_order`, `id_produk`, `jumlah_produk`, `harga_total`) VALUES
+(45, 47, 7, 1, 40000),
+(46, 47, 8, 2, 60000),
+(47, 47, 9, 1, 30000),
+(48, 50, 7, 1, 40000),
+(49, 50, 8, 2, 60000);
 
 -- --------------------------------------------------------
 
@@ -238,10 +250,10 @@ INSERT INTO `order_status` (`id_order_status`, `status`) VALUES
 CREATE TABLE `produk` (
   `id_produk` int(11) NOT NULL,
   `id_supplier` int(11) NOT NULL,
-  `nama_produk` varchar(100) NOT NULL,
+  `nama_produk` varchar(100) COLLATE utf8_bin NOT NULL,
   `harga_produk` int(11) NOT NULL,
   `stok_produk` int(11) NOT NULL,
-  `gambar_produk` varchar(100) NOT NULL,
+  `gambar_produk` varchar(100) COLLATE utf8_bin NOT NULL,
   `id_kategori` int(11) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -264,9 +276,9 @@ INSERT INTO `produk` (`id_produk`, `id_supplier`, `nama_produk`, `harga_produk`,
 
 CREATE TABLE `supplier` (
   `id_supplier` int(11) NOT NULL,
-  `nama_supplier` varchar(100) NOT NULL,
-  `alamat` varchar(100) NOT NULL,
-  `no_telepon` varchar(100) NOT NULL
+  `nama_supplier` varchar(100) COLLATE utf8_bin NOT NULL,
+  `alamat` varchar(100) COLLATE utf8_bin NOT NULL,
+  `no_telepon` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -328,13 +340,6 @@ ALTER TABLE `manajer`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `metode_pembayaran`
---
-ALTER TABLE `metode_pembayaran`
-  ADD PRIMARY KEY (`id_pembayaran`),
-  ADD KEY `FK_bank` (`id_bank`);
-
---
 -- Indexes for table `metode_pengiriman`
 --
 ALTER TABLE `metode_pengiriman`
@@ -345,10 +350,10 @@ ALTER TABLE `metode_pengiriman`
 --
 ALTER TABLE `order`
   ADD PRIMARY KEY (`id_order`),
-  ADD KEY `FK_bayar` (`id_pembayaran`),
   ADD KEY `FK_pengiriman` (`id_pengiriman`),
   ADD KEY `FK_status` (`id_order_status`),
-  ADD KEY `FK_pesan` (`username`);
+  ADD KEY `FK_pesan` (`username`),
+  ADD KEY `id_bank` (`id_bank`);
 
 --
 -- Indexes for table `order_detail`
@@ -398,37 +403,31 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `keranjang_detail`
 --
 ALTER TABLE `keranjang_detail`
-  MODIFY `id_keranjang_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `metode_pembayaran`
---
-ALTER TABLE `metode_pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_keranjang_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `metode_pengiriman`
 --
 ALTER TABLE `metode_pengiriman`
-  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengiriman` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id_order_detail` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_order_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `order_status`
@@ -466,19 +465,13 @@ ALTER TABLE `keranjang_detail`
   ADD CONSTRAINT `FK_menambahkan_produk` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `metode_pembayaran`
---
-ALTER TABLE `metode_pembayaran`
-  ADD CONSTRAINT `FK_bank` FOREIGN KEY (`id_bank`) REFERENCES `bank` (`id_bank`);
-
---
 -- Constraints for table `order`
 --
 ALTER TABLE `order`
-  ADD CONSTRAINT `FK_bayar` FOREIGN KEY (`id_pembayaran`) REFERENCES `metode_pembayaran` (`id_pembayaran`),
   ADD CONSTRAINT `FK_pengiriman` FOREIGN KEY (`id_pengiriman`) REFERENCES `metode_pengiriman` (`id_pengiriman`),
   ADD CONSTRAINT `FK_pesan` FOREIGN KEY (`username`) REFERENCES `customer` (`username`),
-  ADD CONSTRAINT `FK_status` FOREIGN KEY (`id_order_status`) REFERENCES `order_status` (`id_order_status`);
+  ADD CONSTRAINT `FK_status` FOREIGN KEY (`id_order_status`) REFERENCES `order_status` (`id_order_status`),
+  ADD CONSTRAINT `order_ibfk_1` FOREIGN KEY (`id_bank`) REFERENCES `bank` (`id_bank`);
 
 --
 -- Constraints for table `order_detail`
