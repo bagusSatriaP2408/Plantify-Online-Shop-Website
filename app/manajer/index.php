@@ -5,62 +5,49 @@ if (!isset($_SESSION['login'])) {
     header("Location: ../index.php");
     exit();
 }
-require_once('../base.php');
 
+$title = "Dashboard";
+require_once('../base.php');
+require_once(BASEPATH . "/app/manajer/templates/sidebar.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager</title>
-    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style_manajer.css" />
-</head>
-<body>
-    <div class="header">
-        <div class="profile">
-            <img class="pfl" src="<?= BASEURL ?>/assets/img/icon-profile.png" alt="profile">
-        </div>
-        <div class="logo">
-            <img src="logo.png" alt="logo">
-        </div>
-        <div class="search">
-            <img class="src" src="search.png" alt="search">
+    <div class="container-kanan">
+        <div class="grafik-container">
+            <div>
+                <canvas id="myChart" width="400" height="100"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+            const chart = document.getElementById('myChart');
+            const data = {
+                labels: [
+                    'Red',
+                    'Blue',
+                    'Yellow'
+                ],
+                datasets: [{
+                    label: 'My First Dataset',
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                    ],
+                    hoverOffset: 4
+                }]
+            };
+
+            const config = {
+                type: 'pie',
+                data: data,
+            };
+
+            new Chart(chart, config);
+            </script>
         </div>
     </div>
-    <div class="grafik">
-        GRAFIK
-    </div>
-    <div class="rekap">
-        <table border="1" class="table" width="1000">
-            <tr>
-                <td>No.</td>
-                <td>Nama</td>
-                <td>Keterangan</td>
-            </tr>
-            <tr>
-                <td>p</td>
-                <td>p</td>
-                <td>p</td>
-            </tr>
-            <tr>
-                <td>p</td>
-                <td>p</td>
-                <td>p</td>
-            </tr>
-            <tr>
-                <td>p</td>
-                <td>p</td>
-                <td>p</td>
-            </tr>
-            <tr>
-                <td>p</td>
-                <td>p</td>
-                <td>p</td>
-            </tr>
-        </table>
-    </div>
-    <a href="<?= BASEURL ?>/app/logout.php">logout</a>
+
 </body>
 </html>
