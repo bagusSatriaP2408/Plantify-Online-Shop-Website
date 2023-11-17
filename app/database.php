@@ -356,27 +356,16 @@ function increaseProductInCart($id_produk, $id_keranjang)
 	}
  }
 
- function getAllPengiriman()
- {
-	try {
-		$statement = DB->prepare("SELECT * FROM metode_pengiriman");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
- }
 
- function insertOrder($username,$total,$pengiriman,$rekening,$bank,$id_keranjang)
+
+ function insertOrder($username,$total,$rekening,$bank,$id_keranjang)
  {
 	try {
-		$statement = DB->prepare("INSERT INTO `order` (username,total_order,id_pengiriman,id_bank,id_order_status,no_rekening) 
-		VALUES (:username,:total_order,:id_pengiriman,:id_bank,:id_order_status,:no_rekening)");
+		$statement = DB->prepare("INSERT INTO `order` (username,total_order,id_bank,no_rekening) 
+		VALUES (:username,:total_order,:id_bank,:no_rekening)");
 		$statement->execute(array(':username' => $username,
 								':total_order'=> $total,
-								':id_pengiriman' => $pengiriman,
 								':id_bank' => $bank,
-								':id_order_status' => 1,
 								':no_rekening'=> $rekening
 							));
 		
@@ -412,12 +401,22 @@ function increaseProductInCart($id_produk, $id_keranjang)
  function getOrder($username)
  {
 	try {
-		$statement = DB->prepare("SELECT id_order,tanggal_order,total_order,no_rekening,nama_ekspedisi,nama_bank,status 
-		FROM `order` o JOIN metode_pengiriman mp ON o.id_pengiriman = mp.id_pengiriman 
-		JOIN bank b ON o.id_bank = b.id_bank JOIN order_status os ON o.id_order_status = os.id_order_status
-		WHERE username = :username");
+		$statement = DB->prepare("SELECT id_order,tanggal_order,total_order,no_rekening,nama_bank,status 
+		FROM `order` o JOIN bank b ON o.id_bank = b.id_bank WHERE username = :username");
 		$statement->execute([':username'=>$username]);
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+
+ function getOrderbyId($username,$id)
+ {
+	try {
+		$statement = DB->prepare("SELECT id_order,tanggal_order,total_order,no_rekening,nama_bank,status ,o.id_bank
+		FROM `order` o JOIN bank b ON o.id_bank = b.id_bank WHERE username = :username AND id_order=:id_order");
+		$statement->execute([':username'=>$username,':id_order'=> $id]);
+		return $statement->fetch(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
 		echo $err->getMessage();
 	}
@@ -432,6 +431,63 @@ function increaseProductInCart($id_produk, $id_keranjang)
 		echo $err->getMessage();
 	}
  }
+
+ function deleteOrderById($id)
+ {
+	try {
+		$statement = DB->prepare("DELETE FROM order_detail WHERE id_order = :id");
+		$statement->execute(array(":id" => $id));
+		$statement = DB->prepare("DELETE FROM `order` WHERE id_order = :id");
+		$statement->execute(array(":id" => $id));
+		$previousPage = $_SERVER['HTTP_REFERER'];
+		header("Location: $previousPage");
+		
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+
+ function updateOrder($id_bank,$no_rekening,$id)
+ {
+	try {
+		$statement = DB->prepare("UPDATE `order` SET id_bank=:id_bank ,no_rekening=:no_rekening where id_order=:id");
+		$statement->execute(array(":id_bank" => $id_bank,':no_rekening' => $no_rekening,':id'=>$id));
+		header("Location: daftar_transaksi.php");
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+ }
+
+function updateStatusOrder($id)
+{
+	try {
+		$statement = DB->prepare("UPDATE `order` SET status=:satu where id_order=:id");
+		$statement->execute(array(":satu" => 1,':id'=>$id));
+		$stat1 = DB->prepare("SELECT p.id_produk,jumlah_produk,stok_produk FROM order_detail od 
+		JOIN produk p ON p.id_produk = od.id_produk WHERE id_order=:id ");
+		$stat1->execute(array(':id'=>$id));
+		$products = $stat1->fetchAll(PDO::FETCH_ASSOC);
+		foreach($products as $product){
+			$stat2 = DB->prepare("UPDATE `produk` SET stok_produk=:jumlah where id_produk=:id");
+			$stokUpdate = $product['stok_produk']-$product['jumlah_produk'];
+			$stat2->execute(array(":jumlah" =>$stokUpdate ,':id'=>$product['id_produk']));
+		}
+		$previousPage = $_SERVER['HTTP_REFERER'];
+		header("Location: $previousPage");
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+function getAllOrder()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM `order` o JOIN bank b on o.id_bank=b.id_bank ORDER BY status,tanggal_order");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
 
 function getAllDataCustomer()
 {

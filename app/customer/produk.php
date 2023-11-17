@@ -1,10 +1,10 @@
 <?php
-// session_start();
+session_start();
 
-// if (!isset($_SESSION['login'])) {
-//     header("Location: ../index.php");
-//     exit();
-// }
+if (!isset($_SESSION['login'])) {
+    header("Location: ../index.php");
+    exit();
+}
 
 $title = 'Produk';
 require_once('../base.php');
@@ -34,9 +34,13 @@ if(!isset($_GET['cate'])){
             <h5><?= $product['nama_produk']?></h5>
             <h5>Rp. <?= $product['harga_produk']?>,-</h5>
             <small>Tersedia <?= $product['stok_produk']?></small>
-            <a href="tambah_keranjang.php?produk=<?= $product["id_produk"] ?>">
-                <div class="btn-card">Beli</div>
-            </a>
+            <?php if ($product['stok_produk'] == 0 ):?>
+                <div class="btn-card">Stok Habis</div>
+            <?php else: ?>
+                <a href="tambah_keranjang.php?produk=<?= $product["id_produk"] ?>">
+                    <div class="btn-card">Beli</div>
+                </a>
+            <?php endif ?>
         </div>
         </div>
     <?php endforeach;?>

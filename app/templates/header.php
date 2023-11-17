@@ -17,7 +17,7 @@ require_once(BASEPATH . "/app/database.php");
         <img class="logo" src="<?= BASEURL ;?>/assets/img/logo.png" alt="logo" />
         <a class="<?= $title == 'Beranda' ? 'active' : '' ?>" href="<?= BASEURL. "/app/customer/index.php" ?>">Beranda</a>
         <a class="<?= $title == 'Produk' ? 'active' : '' ?>" href="<?= BASEURL. "/app/customer/produk.php" ?>">Produk</a>
-        <a href="">Kontak</a>
+        <a class="<?= $title == 'Daftar Pesanan' ? 'active' : '' ?>" href="<?= BASEURL. "/app/customer/daftar_transaksi.php" ?>">Daftar Pesanan</a>
         <a href="">Tentang Kami</a>
       </div>
       <div class="icon-menu">

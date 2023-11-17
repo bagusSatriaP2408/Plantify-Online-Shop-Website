@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login'] )) {
     header("Location: ../index.php");
     exit();
 }
@@ -16,11 +16,17 @@ require_once(BASEPATH.'/app/validations.php');
 $dataKeranjang = getKeranjang($_SESSION['username']);
 $dataDiri = getDataDiri($_SESSION['username']);
 $bank = getAllBank();
+if(empty($dataKeranjang)){
+    header("Location: keranjang.php");
+}
+
+
 if(isset($_POST['submit'])){
-    $no_rekening = htmlspecialchars($_POST['no_rekening']);
-    if(!isset($_POST['bank']) ){
-        $errors['bank'] = 'Mohon pilih bank';
+
+    if(!isset($_POST['bank'])){
+        $errors['bank'] = "Harap pilih pembayaran";
     }
+    $no_rekening = htmlspecialchars($_POST['no_rekening']);
     validateTel($errors, $no_rekening);
     $cek = "";
     foreach ($errors as $error) {
@@ -45,16 +51,11 @@ if(isset($_POST['submit'])){
         insertOrderDetail($a,$data['id_produk'],$data['jml'],$data['jml']*$data['harga_produk']);
     }
     
-    header("Location: ".BASEURL."/app/customer/konfirmasi_pembayaran.php?id=".$a);
+    header("Location: ".BASEURL."/app/customer/daftar_transaksi.php?id=".$a);
 }
 }
 
 ?>
-<style>
-    h6{
-        margin: 100px;
-    }
-</style>
 <div class="produk">
     <div class="judul">
 
@@ -68,28 +69,15 @@ if(isset($_POST['submit'])){
                     <th>Harga</th>
                     <th>Jumlah</th>
                 </tr>
-                <?php if(empty($dataKeranjang)) : ?>
-                    <tr>
-                        <td colspan='3'>Keranjang belanja masih kosong</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td ><a class="btn-card" href="produk.php">Belanja</a></td>
-                        <td></td>
-                    </tr>
-                <?php else :?>
                 <?php foreach ($dataKeranjang as $data ):?>
                     <tr>
                         <td>
                             <div class="produk-keranjang">
-                                <div style="display: flex;">
-                                    <img
-                                    class="img-keranjang"
-                                    src="<?= BASEURL ;?>/assets/img/<?= $data['gambar_produk'] ?>"
-                                    alt="gambar produk"
-                                    />
-                                    <a href="hapus_produk_keranjang.php?pro=<?= $data['id_produk']?>&krjng=<?= $data['id_keranjang']?>" class="x">&#10006;</a>
-                                </div>
+                                <img
+                                class="img-keranjang"
+                                src="<?= BASEURL ;?>/assets/img/<?= $data['gambar_produk'] ?>"
+                                alt="gambar produk"
+                                />
                                 <div class="caption">
                                     <h5><?= $data['nama_produk']?></h5>
                                     <small>Tersedia <?= $data['stok_produk']?></small>
@@ -101,10 +89,7 @@ if(isset($_POST['submit'])){
                         </td>
                         <td>
                             <div style="display: flex; align-items:center;">
-                                <a type="button" class="jumlah-btn" href="kurang_jumlah_produk_keranjang.php?pro=<?=$data["id_produk"]?>&krjng=<?= $data['id_keranjang']?>">&minus;</a> 
                                     <h5 class="jml"><?=$data['jml']?> </h5>
-                                <a type="button" class="jumlah-btn" href="tambah_jumlah_produk_keranjang.php?pro=<?=$data["id_produk"]?>&krjng=<?= $data['id_keranjang']?>">&plus;</a>
-                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>  
@@ -120,6 +105,27 @@ if(isset($_POST['submit'])){
                 <h4>Rp. <?= number_format($total, 0, ',', '.')?>,-</h4>
             </div>
         </div>
-        <a class="btn-card" href="konfirmasi_pembayaran.php">Chekout</a>
-        <?php endif ; ?>
+        <form action="konfirmasi_pembayaran.php" method="post">
+        <div class="card bayar">
+
+            <h3>Info Pembayaran</h3>
+            <h4>Nama : </h4>
+                <h5><?= $dataDiri['nama']?></h5>
+                <h4>Alamat : </h4>
+                <h5><?= $dataDiri['alamat']?></h5>
+                    <label for="bank">Tipe Pembayaran</label>
+                        <?php foreach($bank as $b) :  ?> 
+                            <div>
+                                <input name="bank" id="<?= $b['id_bank']?>" type="radio" value="<?= $b['id_bank'] ?>" <?= isset($_POST['bank'])&&$_POST["bank"]==$b['id_bank'] ? 'checked' : '' ?> >
+                                <label for="<?= $b['id_bank'] ?>"><?= $b['nama_bank'] ?></lable>
+                            </div>
+                            <?php endforeach ?>
+                            <span class="error-msg"><?= $errors["bank"] ?? '' ?></span>
+                        <label for="">No Rekening</label>
+                        <input type="text" name="no_rekening" value="<?= $_POST['no_rekening'] ?? '' ?>">
+                        <span class="error-msg"><?= $errors["tel"] ?? '' ?></span>
+                        <input type="submit" value="Pesan" name="submit">
+                    </div>
+                </form>
+            </div>
 </div>
