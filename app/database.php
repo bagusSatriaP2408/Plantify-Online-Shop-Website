@@ -402,7 +402,7 @@ function increaseProductInCart($id_produk, $id_keranjang)
  {
 	try {
 		$statement = DB->prepare("SELECT id_order,tanggal_order,total_order,no_rekening,nama_bank,status 
-		FROM `order` o JOIN bank b ON o.id_bank = b.id_bank WHERE username = :username");
+		FROM `order` o JOIN bank b ON o.id_bank = b.id_bank WHERE username = :username ORDER BY status,tanggal_order DESC");
 		$statement->execute([':username'=>$username]);
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
@@ -478,11 +478,24 @@ function updateStatusOrder($id)
 		echo $err->getMessage();
 	}
 }
+
 function getAllOrder()
 {
 	try {
-		$statement = DB->prepare("SELECT * FROM `order` o JOIN bank b on o.id_bank=b.id_bank ORDER BY status,tanggal_order");
+		$statement = DB->prepare("SELECT * FROM `order` o JOIN bank b on o.id_bank=b.id_bank ORDER BY status,tanggal_order DESC");
 		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+function getAllOrderByStatusAndTime($time1,$time2,$status)
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM `order` WHERE (tanggal_order BETWEEN :time1 AND :time2) 
+		AND status=:status");
+		$statement->execute([':time1'=>$time1,':time2'=>$time2,':status'=>$status]);
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
 		echo $err->getMessage();

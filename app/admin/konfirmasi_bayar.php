@@ -37,9 +37,13 @@ $pesanan =  getAllOrder();
                     <td><?= $order['nama_bank']?></td>
                     <td><?= $order['status']==0 ? "Belum Dibayar" : "Sudah Dibayar"?></td>
                     <td>
-                        <a href="<?= BASEURL ?>/app/admin/ubah_status_bayar.php?id=<?= $order['id_order']; ?>">
-                            <button class="ubah">Konfirmasi</button>
-                        </a>
+                        <?php if(!$order['status']==0) : ?>
+                            <button class="hapus">Telah dikonfirmasi</button>
+                        <?php else: ?>
+                            <a href="<?= BASEURL ?>/app/admin/ubah_status_bayar.php?id=<?= $order['id_order']; ?>">
+                                <button class="ubah">Konfirmasi</button>
+                            </a>
+                        <?php endif;?>
                     </td>
                 </tr>
             <?php endforeach; ?>

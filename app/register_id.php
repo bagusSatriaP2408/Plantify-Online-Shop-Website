@@ -25,7 +25,7 @@ if (isset($_POST['register'])) {
         validateUsername($errors, $username);
         validatePassword($errors, $password);
         validateConfirmPassword($errors, $password, $password2);
-    } else {
+    } else {    
         // mengambil inputan customer
         $nama = htmlspecialchars($_POST['nama']);
         $tel = htmlspecialchars($_POST['tel']);

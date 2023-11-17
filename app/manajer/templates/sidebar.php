@@ -23,8 +23,8 @@ require_once(BASEPATH . "/app/database.php");
         <div class="menu-container">
             <menu>
                 <a href="<?= BASEURL ?>/app/manajer/index.php" class="<?= $title === 'Dashboard' ? 'active' : '' ?>">Dashboard</a>
-                <a href="<?= BASEURL ?>/app/manajer/rekap.php" class="<?= $title === 'Rekap' ? 'active' : '' ?>">Rekap</a>
-                <a href="<?= BASEURL ?>/app/manajer/grafik.php" class="<?= $title === 'Grafik' ? 'active' : '' ?>">Grafik</a>
+                <a href="<?= BASEURL ?>/app/manajer/belum_bayar.php" class="<?= $title === 'Belum Bayar' ? 'active' : '' ?>">Belum Bayar</a>
+                <a href="<?= BASEURL ?>/app/manajer/sudah_bayar.php" class="<?= $title === 'Sudah Bayar' ? 'active' : '' ?>">Sudah Bayar</a>
             </menu>
         </div>
         <a href="<?= BASEURL ?>/app/logout.php">Logout</a>

@@ -8,5 +8,11 @@ if (!isset($_SESSION['login'])) {
 
 require_once("../base.php");
 require_once(BASEPATH."/app/database.php");
-deleteOrderbyId($_GET['id']);
+
+$order = getOrderbyId($_SESSION['username'],$_GET['id']);
+if($order['status']){
+    header("Location: daftar_transaksi.php");
+}else{
+    deleteOrderbyId($_GET['id']);
+}
 

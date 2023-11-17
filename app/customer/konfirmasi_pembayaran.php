@@ -124,7 +124,10 @@ if(isset($_POST['submit'])){
                         <label for="">No Rekening</label>
                         <input type="text" name="no_rekening" value="<?= $_POST['no_rekening'] ?? '' ?>">
                         <span class="error-msg"><?= $errors["tel"] ?? '' ?></span>
-                        <input type="submit" value="Pesan" name="submit">
+                        <button class="btn-card" type="submit" name="submit">Pesan</button>
+                        <a href="keranjang.php">
+                            <button class="btn-card" type="button">Batalkan</button>
+                        </a>
                     </div>
                 </form>
             </div>

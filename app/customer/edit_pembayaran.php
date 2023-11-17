@@ -11,8 +11,13 @@ require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/app/base.php");
 require_once(BASEPATH . "/app/database.php");
 require_once(BASEPATH.'/app/validations.php');
 
+
 $order = getOrderbyId($_SESSION['username'],$_GET['id']);
 $banks = getAllBank();
+
+if($order['status']){
+    header("Location: daftar_transaksi.php");
+}
 
 
 if(isset($_POST['edit'])){
