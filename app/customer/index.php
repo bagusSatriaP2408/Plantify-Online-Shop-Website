@@ -1,11 +1,11 @@
 <?php
 
-// session_start();
+session_start();
 
-// if (!isset($_SESSION['login'])) {
-//     header("Location: ../index.php");
-//     exit();
-// }
+if (!isset($_SESSION['login'])) {
+    header("Location: ../index.php");
+    exit();
+}
 
 
 $title = 'Beranda';
@@ -75,9 +75,13 @@ $new = getNewProducts();
               <h5><?= $products[$i]['nama_produk']?></h5>
               <h5>Rp. <?= $products[$i]['harga_produk']?>,-</h5>
               <small>Tersedia <?= $products[$i]['stok_produk']?></small>
-              <a href="tambah_keranjang.php?produk=<?= $products[$i]["id_produk"] ?>">
-                <div class="btn-card">Beli</div>
-              </a>
+              <?php if ($products[$i]['stok_produk'] == 0 ):?>
+                <div class="btn-card">Stok Habis</div>
+              <?php else: ?>
+                <a href="tambah_keranjang.php?produk=<?= $product["id_produk"] ?>">
+                    <div class="btn-card">Beli</div>
+                </a>
+              <?php endif ?>
             </div>
           </div>
         <?php endfor;?>

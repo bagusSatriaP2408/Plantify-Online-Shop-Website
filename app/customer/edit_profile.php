@@ -56,11 +56,6 @@ if (isset($_POST['register'])) {
 <body>    
     <div class="form-container">
     <form action="edit_profile.php" method="post">
-            <!-- <div class="input-container">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" value="<?= $_POST["username"] ?? $customer['username'] ?>">
-                <span class="error-msg"><?= $errors["username"] ?? '' ?></span>
-            </div> -->
             <div class="input-container">
                 <label for="nama">Nama</label>
                 <input type="text" id="nama" name="nama" value="<?= $_POST["nama"] ?? $customer['nama'] ?>">

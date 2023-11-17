@@ -21,7 +21,7 @@ require_once(BASEPATH . "/app/database.php");
                 <a href="<?= BASEURL ?>/app/admin/produk.php" class="<?= $title === 'Produk' ? 'active' : '' ?>">Produk</a>
                 <a href="<?= BASEURL ?>/app/admin/supplier.php" class="<?= $title === 'Supplier' ? 'active' : '' ?>">Supplier</a>
                 <a href="<?= BASEURL ?>/app/admin/customer.php" class="<?= $title === 'Customer' ? 'active' : '' ?>">Customer</a>
-                <a href="<?= BASEURL ?>/app/admin/transaksi.php" class="<?= $title === 'Transaksi' ? 'active' : '' ?>">Transaksi</a>
+                <a href="<?= BASEURL ?>/app/admin/konfirmasi_bayar.php" class="<?= $title === 'Konfirmasi Bayar' ? 'active' : '' ?>">Konfirmasi Bayar</a>
             </menu>
             <a href="<?= BASEURL ;?>/app/logout.php" class="logout"><div>Logout</div></a>
         </div>
