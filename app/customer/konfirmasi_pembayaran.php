@@ -75,7 +75,7 @@ if(isset($_POST['submit'])){
                             <div class="produk-keranjang">
                                 <img
                                 class="img-keranjang"
-                                src="<?= BASEURL ;?>/assets/img/<?= $data['gambar_produk'] ?>"
+                                src="<?= BASEURL ;?>/assets/img/produk/<?= $data['gambar_produk'] ?>"
                                 alt="gambar produk"
                                 />
                                 <div class="caption">

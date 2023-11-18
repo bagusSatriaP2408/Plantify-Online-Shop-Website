@@ -31,7 +31,7 @@ $new = getNewProducts();
         <div>
           <div>
             <a href=""><div class="btn-1">Baru</div></a>
-            <img class="img-baru" src="<?= BASEURL ;?>/assets/img/<?= $new[0]['gambar_produk']?>" alt="terbaru" />
+            <img class="img-baru" src="<?= BASEURL ;?>/assets/img/produk/<?= $new[0]['gambar_produk']?>" alt="terbaru" />
           </div>
           <div>
             <a href=""><div class="btn-1">Popular</div></a>
@@ -68,7 +68,7 @@ $new = getNewProducts();
           <div class="card">
             <img
               class="img-produk"
-              src="<?= BASEURL ;?>/assets/img/<?= $products[$i]['gambar_produk'] ?>"
+              src="<?= BASEURL ;?>/assets/img/produk/<?= $products[$i]['gambar_produk'] ?>"
               alt="gambar produk"
             />
             <div class="caption">

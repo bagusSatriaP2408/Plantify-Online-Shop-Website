@@ -111,7 +111,7 @@ $supplier = getAllDataSupplier();
                 </div>
                 <div class="input-container">
                     <label for="gambar">Gambar : </label>
-                    <img src="<?= BASEURL ?>\assets\img\<?= $product['gambar_produk']; ?>" alt="gambar_produk" style="width:200px;">
+                    <img src="<?= BASEURL ?>\assets\img\produk\<?= $product['gambar_produk']; ?>" alt="gambar_produk" style="width:200px;">
                     <input type="file" name="gambar" id="gambar">
                 </div>
                 <button type="submit" name="submit" class="submit">Ubah</button>

@@ -85,7 +85,7 @@ if(isset($_POST['submit'])){
                                 <div style="display: flex;">
                                     <img
                                     class="img-keranjang"
-                                    src="<?= BASEURL ;?>/assets/img/<?= $data['gambar_produk'] ?>"
+                                    src="<?= BASEURL ;?>/assets/img/produk/<?= $data['gambar_produk'] ?>"
                                     alt="gambar produk"
                                     />
                                     <a href="hapus_produk_keranjang.php?pro=<?= $data['id_produk']?>&krjng=<?= $data['id_keranjang']?>" class="x">&#10006;</a>

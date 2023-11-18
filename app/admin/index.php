@@ -28,7 +28,7 @@ $supplier = getAllDataSupplier();
                 <div class="card">
                     <img
                         class="img-produk"
-                        src="<?= BASEURL ;?>/assets/img/<?= $products[$i]['gambar_produk'] ?>"
+                        src="<?= BASEURL ;?>/assets/img/produk/<?= $products[$i]['gambar_produk'] ?>"
                         alt="gambar produk"
                     />
                     <div class="caption">

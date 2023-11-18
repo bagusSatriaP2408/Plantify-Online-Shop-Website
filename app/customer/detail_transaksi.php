@@ -34,7 +34,7 @@ $detail_order = getDetailOrder($_GET['order']);
                                 <div style="display: flex;">
                                     <img
                                     class="img-keranjang"
-                                    src="<?= BASEURL ;?>/assets/img/<?= $order['gambar_produk'] ?>"
+                                    src="<?= BASEURL ;?>/assets/img/produk/<?= $order['gambar_produk'] ?>"
                                     alt="gambar produk"
                                     />
                                 </div>

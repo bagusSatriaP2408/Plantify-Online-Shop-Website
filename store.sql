@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Nov 2023 pada 07.14
+-- Waktu pembuatan: 18 Nov 2023 pada 08.36
 -- Versi server: 10.4.27-MariaDB
 -- Versi PHP: 8.2.0
 
@@ -129,7 +129,7 @@ CREATE TABLE `keranjang_detail` (
   `id_keranjang_detail` int(11) NOT NULL,
   `id_keranjang` int(11) NOT NULL,
   `id_produk` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL
+  `jumlah` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -202,10 +202,30 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `id_supplier`, `nama_produk`, `harga_produk`, `stok_produk`, `gambar_produk`, `id_kategori`, `created_at`) VALUES
-(6, 2, 'Bonsai', 50000, 4, 'baru.jpg', 2, '2023-11-14 12:16:14'),
-(7, 4, 'Bonsai 2', 40000, 2, 'baru.jpg', 2, '2023-11-14 12:16:26'),
-(8, 2, 'Bonsai 3', 30000, 5, 'baru.jpg', 4, '2023-11-14 12:16:34'),
-(9, 2, 'Bonsai 4', 30000, 5, 'baru.jpg', 4, '2023-11-14 12:16:34');
+(11, 2, 'Bonsai Jeruk', 150000, 10, '655862559e56d.jpeg', 2, '2023-11-18 07:05:57'),
+(12, 4, 'Bonsai Apel', 180000, 8, '6558636905db9.jpeg', 2, '2023-11-18 07:10:33'),
+(13, 3, 'Bonsai Anggur', 100000, 15, '655863f28b5d7.jpeg', 2, '2023-11-18 07:12:50'),
+(14, 2, 'Bonsai Plum', 160000, 7, '6558642fe0ce4.jpeg', 2, '2023-11-18 07:13:51'),
+(15, 6, 'Bonsai Persik', 200000, 5, '6558647ba7906.jpeg', 2, '2023-11-18 07:15:07'),
+(16, 2, 'Bonsai Delima', 180000, 9, '655864c40dc18.jpeg', 2, '2023-11-18 07:16:20'),
+(17, 5, 'Bonsai Sakura', 190000, 3, '655864fad59be.jpeg', 3, '2023-11-18 07:17:14'),
+(18, 4, 'Bonsai Mawar', 80000, 18, '6558652e881e7.jpeg', 3, '2023-11-18 07:18:06'),
+(19, 5, 'Bonsai Azalea', 150000, 10, '65586570403f4.jpeg', 3, '2023-11-18 07:19:12'),
+(20, 6, 'Bonsai Camellia', 170000, 12, '655865979afea.jpeg', 3, '2023-11-18 07:19:51'),
+(21, 3, 'Bonsai Lily', 120000, 15, '655865d847de3.jpeg', 3, '2023-11-18 07:20:56'),
+(22, 2, 'Bonsai Bunga Matahari', 60000, 20, '655865f5aeea6.jpeg', 3, '2023-11-18 07:21:25'),
+(23, 4, 'Bonsai Wisteria', 180000, 4, '6558662031437.jpeg', 3, '2023-11-18 07:22:08'),
+(24, 2, 'Bonsai Pine', 150000, 6, '6558664d777fb.jpeg', 4, '2023-11-18 07:22:53'),
+(25, 6, 'Bonsai Juniper', 120000, 8, '65586676e7583.jpeg', 4, '2023-11-18 07:23:34'),
+(26, 5, 'Bonsai Maple', 130000, 7, '655866e09e5b6.jpeg', 5, '2023-11-18 07:26:41'),
+(27, 6, 'Bonsai Ficus', 70000, 25, '6558679a575f6.jpeg', 5, '2023-11-18 07:28:26'),
+(28, 4, 'Bonsai Jade', 50000, 30, '655867ca42393.jpeg', 5, '2023-11-18 07:29:14'),
+(29, 3, 'Bonsai Oak', 170000, 10, '655867edf1c3f.jpeg', 5, '2023-11-18 07:29:49'),
+(30, 4, 'Bonsai Spruce', 140000, 10, '65586839f3d63.jpeg', 4, '2023-11-18 07:31:06'),
+(31, 5, 'Bonsai Cedar', 120000, 8, '6558685b11afc.jpeg', 4, '2023-11-18 07:31:39'),
+(32, 6, 'Bonsai Yew', 160000, 12, '655868fe52be8.jpeg', 4, '2023-11-18 07:34:22'),
+(33, 2, 'Bonsai Fir', 130000, 15, '6558692c842cf.jpeg', 4, '2023-11-18 07:35:08'),
+(34, 3, 'Bonsai Larch', 150000, 7, '6558694d0854f.jpeg', 4, '2023-11-18 07:35:41');
 
 -- --------------------------------------------------------
 
@@ -330,37 +350,37 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT untuk tabel `keranjang`
 --
 ALTER TABLE `keranjang`
-  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_keranjang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `keranjang_detail`
 --
 ALTER TABLE `keranjang_detail`
-  MODIFY `id_keranjang_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id_keranjang_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT untuk tabel `order`
 --
 ALTER TABLE `order`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT untuk tabel `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id_order_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_order_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT untuk tabel `produk`
 --
 ALTER TABLE `produk`
-  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_produk` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_supplier` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
