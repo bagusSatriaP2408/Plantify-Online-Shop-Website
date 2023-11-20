@@ -94,6 +94,7 @@ $supplier = getAllDataSupplier();
         </div>
         <!-- end customer -->
     </div>
+    <!-- end container-kanan -->
 
 </body>
 </html>

@@ -6,6 +6,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
     exit();
 }
 
-require_once("../base.php");
-require_once(BASEPATH."/app/database.php");
-updateStatusOrder($_GET['id']);
+    require_once("../base.php");
+    require_once(BASEPATH."/app/database.php");
+    
+    updateStatusOrder($_GET['id']);

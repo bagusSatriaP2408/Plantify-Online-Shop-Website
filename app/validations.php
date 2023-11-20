@@ -21,6 +21,11 @@ function checkAlphaNumeric($field) {
     return preg_match($pattern, $field);
 }
 
+function checkPassword($field) {
+    $pattern = "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])/";
+    return preg_match($pattern, $field);
+}
+
 // validasi inputan kode ref (required, numeric, ref === kode ref)
 function validateRef(&$errors, $ref, $role, $kode_ref) {
     if ($role == "admin" || $role == "manajer") {
@@ -60,7 +65,6 @@ function validateUsername(&$errors, $username) {
     } else {
         if (!checkAlphaNumeric($username)) {
             $errors["username"] = "username harus gabungan huruf dan angka";
-        // jika query ada isinya maka username sudah dipakai
         } else if ($statement->rowCount() > 0) {
             $errors["username"] = "username sudah digunakan";
         } else {
@@ -91,10 +95,8 @@ function validateUsernameLogin(&$errors, $username) {
             return false;
         } else {
             $errors["username"] = "";
-            // menampung hasil query ke array result
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             $role = $result["role"];
-            
             return $role;
         }
     }   
@@ -105,8 +107,8 @@ function validatePassword(&$errors, $password) {
     if (checkRequired($password)) {
         $errors["password"] = "password tidak boleh kosong";
     } else {
-        if (!checkAlphaNumeric($password)) {
-            $errors["password"] = "password harus gabungan angka dan huruf";
+        if (!checkPassword($password)) {
+            $errors["password"] = "harus gabungan angka dan huruf dan simbol";
         } else if (strlen($password) < 8) {
             $errors["password"] = "password tidak boleh kurang dari 8 karakter";
         } else {
@@ -174,8 +176,8 @@ function validateLogin(&$errors, $username, $password) {
         $errors["password"] = "password tidak boleh kosong";
         return false;
     } else {
-        if (!checkAlphaNumeric($password)) {
-            $errors["password"] = "password harus gabungan angka dan huruf";
+        if (!checkPassword($password)) {
+            $errors["password"] = "harus gabungan angka dan huruf dan simbol";
             return false;
         } else if (strlen($password) < 8) {
             $errors["password"] = "password tidak boleh kurang dari 8 karakter";
@@ -185,7 +187,7 @@ function validateLogin(&$errors, $username, $password) {
             // cek apakah password inputan sesuai dengan password di database yang sudah dienkripsi
             $statement = DB->prepare("SELECT password FROM $role WHERE username = :username AND password = SHA2(:password, 0)");
             $statement->execute(array(":username" => $username, ":password" => $password));  
-            // cek jika password tidak ditemukan 
+            
             if ($statement->rowCount() == 0) {
                 $errors["password"] = "password salah";
                 return false;
@@ -195,6 +197,64 @@ function validateLogin(&$errors, $username, $password) {
             }
         } 
     }
+}
+
+function validasiTambahProduk (&$errors, $inputan) {
+
+    $nama_produk = htmlspecialchars($inputan['nama_produk']);
+    $harga = htmlspecialchars($inputan['harga']);
+    $stok = htmlspecialchars($inputan['stok']);
+    $kategori = $inputan['kategori'];
+    $sup = $inputan['supplier'];
+
+    $stat = DB->prepare("SELECT nama_produk FROM produk WHERE nama_produk = :nama_produk");
+    $stat->execute(array(":nama_produk" => $nama_produk));
+
+    if (checkRequired($nama_produk) || checkRequired($harga) || checkRequired($stok) || $kategori == 0 || $sup == 0) {
+        $errors['error'] = "data produk tidak boleh ada yang kosong";
+    } else if (!checkAlphaNumeric($nama_produk) && !checkAlphabet($nama_produk)) {
+        $errors['error'] = "nama produk tidak boleh mengandung simbol";
+    } else if ($stat->rowCount() > 0) {
+        $errors['error'] = "nama produk sudah ada";
+    } else if (!checkNumeric($harga)) {
+        $errors['error'] = "harga produk harus berupa angka";
+    } else if (!checkNumeric($stok)) {
+        $errors['error'] = "stok produk harus berupa angka";
+    }
+}
+
+function uploadGambar(&$errors) {
+    
+    $namaFile = $_FILES["gambar"]["name"];
+    $error = $_FILES["gambar"]["error"];
+    $tmpName = $_FILES["gambar"]["tmp_name"];
+    
+    // cek apakah tidak ada gambar yang diupload
+    if ($error === 4) {
+        $errors['error'] = "pilih gambar terlebih dahulu";
+        return false;
+    }
+    
+    // cek apakah yang diupload adalah gambar (cek ekstensi)
+    $ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
+    $ekstensiGambar = explode('.', $namaFile); // memecah string dengan delimiter .
+    $ekstensiGambar = strtolower(end($ekstensiGambar)); // ambil indeks terakhir
+    
+    // cek apakah ekstensi ada di ekstensigambarvalid
+    if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+        $errors['error'] = "ekstensi gambar tidak valid";
+        return false;
+    }
+    
+    // generate nama gambar baru
+    $namaFileBaru = uniqid();
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $ekstensiGambar;
+
+    move_uploaded_file($tmpName, "../../assets/img/produk/" . $namaFileBaru); 
+    
+    return $namaFileBaru;
+
 }
 
 

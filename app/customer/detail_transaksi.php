@@ -10,7 +10,7 @@ $title = "Keranjang";
 require_once("../base.php");
 require_once(BASEPATH . "/app/database.php");
 require_once(BASEPATH."/app/templates/header.php");
- 
+
 $detail_order = getDetailOrder($_GET['order']);
 ?>
 
