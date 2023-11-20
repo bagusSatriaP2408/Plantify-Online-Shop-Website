@@ -1,12 +1,12 @@
 <?php 
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
     header("Location: ../index.php");
     exit();
 }
 
-require "validations.php";
+require "../validations.php";
 
 $success = false;
 $errors = array();
@@ -52,38 +52,39 @@ require_once('../base.php');
 require_once(BASEPATH . "/app/admin/templates/sidebar.php");
 require_once(BASEPATH . "/app/admin/templates/header.php");
 ?>
-    <!-- start tambah supplier -->
-    <div class="wadah">
-        <a href="<?= BASEURL ?>/app/admin/supplier.php">
-            <button class="kembali">Kembali</button>
-        </a>
-        <div class="judul">
-            <h2>Tambah Supplier</h2>
-        </div>
-        <p class="error"><?= $errors['error'] ?? ''; ?></p>
-        <?php if ($success) { ?>
-            <div>Supplier sukses ditambahkan!</div>
-        <?php } else { ?>
-            <form action="tambah_supplier.php" method="post">
-                <div class="input-container">
-                    <label for="nama_supplier">Nama Supplier</label>
-                    <input type="text" name="nama_supplier" id="nama_supplier" value="<?php echo $_POST["nama_supplier"] ?? '' ?>">
-                </div>
-                <div class="input-container">
-                    <label for="tel">Telepon Supplier</label>
-                    <input type="text" name="tel" id="tel" value="<?php echo $_POST["tel"] ?? '' ?>">
-                </div>
-                <div class="input-container">
-                    <label for="alamat">Alamat Supplier</label>
-                    <input type="text" name="alamat" id="alamat" value="<?php echo $_POST["alamat"] ?? '' ?>">
-                </div>
-                <button type="submit" name="submit" class="submit">Tambahkan</button>
-            </form>
-        <?php } ?>
-    </div>
-    <!-- end tambah supplier -->
 
+        <!-- start tambah supplier -->
+        <div class="wadah">
+            <a href="<?= BASEURL ?>/app/admin/supplier.php">
+                <button class="kembali">Kembali</button>
+            </a>
+            <div class="judul">
+                <h2>Tambah Supplier</h2>
+            </div>
+            <p class="error"><?= $errors['error'] ?? ''; ?></p>
+            <?php if ($success) { ?>
+                <div>Supplier sukses ditambahkan!</div>
+            <?php } else { ?>
+                <form action="tambah_supplier.php" method="post">
+                    <div class="input-container">
+                        <label for="nama_supplier">Nama Supplier</label>
+                        <input type="text" name="nama_supplier" id="nama_supplier" value="<?php echo $_POST["nama_supplier"] ?? '' ?>">
+                    </div>
+                    <div class="input-container">
+                        <label for="tel">Telepon Supplier</label>
+                        <input type="text" name="tel" id="tel" value="<?php echo $_POST["tel"] ?? '' ?>">
+                    </div>
+                    <div class="input-container">
+                        <label for="alamat">Alamat Supplier</label>
+                        <input type="text" name="alamat" id="alamat" value="<?php echo $_POST["alamat"] ?? '' ?>">
+                    </div>
+                    <button type="submit" name="submit" class="submit">Tambahkan</button>
+                </form>
+            <?php } ?>
+        </div>
+        <!-- end tambah supplier -->
     </div>
+    <!-- end container-kanan -->
 
 </body>
 </html>

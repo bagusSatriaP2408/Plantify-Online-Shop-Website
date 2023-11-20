@@ -1,12 +1,12 @@
 <?php 
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
     header("Location: ../index.php");
     exit();
 }
 
-require "validations.php";
+require "../validations.php";
 
 $id = isset($_POST['id_produk']) ? $_POST['id_produk'] : $_GET['id'];
 
@@ -62,65 +62,66 @@ $product = getProductById($id);
 $categories  = getAllCategories();
 $supplier = getAllDataSupplier();
 ?>
-    <!-- start ubah produk -->
-    <div class="wadah">
-        <a href="<?= BASEURL ?>/app/admin/produk.php">
-            <button class="kembali">Kembali</button>
-        </a>
-        <div class="judul">
-            <h2>Ubah Produk</h2>
-        </div>
-        <p class="error"><?= $errors['error'] ?? ''; ?></p>
-        <?php if ($success) { ?>
-            <div>Produk berhasil diubah!</div>
-        <?php } else { ?>
-            <form action="ubah_produk.php" method="post" enctype="multipart/form-data">
-                <input type="hidden" value="<?= $product['id_produk'] ?>" name="id_produk">
-                <input type="hidden" value="<?= $product['gambar_produk']; ?>" name="gambar_lama">
-                <div class="input-container">
-                    <label for="nama_produk">Nama Produk</label>
-                    <input type="text" name="nama_produk" id="nama_produk" value="<?= $product['nama_produk'] ?>">
-                </div>
-                <div class="input-container">
-                    <label for="harga">Harga Produk</label>
-                    <input type="text" name="harga" id="harga" value="<?= $product['harga_produk'] ?>">
-                </div>
-                <div class="input-container">
-                    <label for="stok">Stok Produk</label>
-                    <input type="text" name="stok" id="stok" value="<?= $product['stok_produk'] ?>">
-                </div>
-                <div class="input-container">
-                    <label for="kategori">Kategori</label>
-                    <select name="kategori" id="kategori">
-                        <?php foreach ($categories as $category): ?>
-                            <option value="<?= $category['id_kategori']; ?>" 
-                            <?= $product['id_kategori'] === $category['id_kategori'] ? 'selected' : '' ?>
-                            ><?= $category['nama_kategori']; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="input-container">
-                    <label for="supplier">Supplier</label>
-                    <select name="supplier" id="supplier">
-                        <?php foreach ($supplier as $supp): ?>
-                            <option value="<?= $supp['id_supplier']; ?>"
-                            <?= $product['id_supplier'] === $supp['id_supplier'] ? 'selected' : '' ?>
-                            ><?= $supp['nama_supplier']; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="input-container">
-                    <label for="gambar">Gambar : </label>
-                    <img src="<?= BASEURL ?>\assets\img\produk\<?= $product['gambar_produk']; ?>" alt="gambar_produk" style="width:200px;">
-                    <input type="file" name="gambar" id="gambar">
-                </div>
-                <button type="submit" name="submit" class="submit">Ubah</button>
-            </form>
-        <?php } ?>
-    </div>
-    <!-- end ubah produk -->
 
+        <!-- start ubah produk -->
+        <div class="wadah">
+            <a href="<?= BASEURL ?>/app/admin/produk.php">
+                <button class="kembali">Kembali</button>
+            </a>
+            <div class="judul">
+                <h2>Ubah Produk</h2>
+            </div>
+            <p class="error"><?= $errors['error'] ?? ''; ?></p>
+            <?php if ($success) { ?>
+                <div>Produk berhasil diubah!</div>
+            <?php } else { ?>
+                <form action="ubah_produk.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="<?= $product['id_produk'] ?>" name="id_produk">
+                    <input type="hidden" value="<?= $product['gambar_produk']; ?>" name="gambar_lama">
+                    <div class="input-container">
+                        <label for="nama_produk">Nama Produk</label>
+                        <input type="text" name="nama_produk" id="nama_produk" value="<?= $product['nama_produk'] ?>">
+                    </div>
+                    <div class="input-container">
+                        <label for="harga">Harga Produk</label>
+                        <input type="text" name="harga" id="harga" value="<?= $product['harga_produk'] ?>">
+                    </div>
+                    <div class="input-container">
+                        <label for="stok">Stok Produk</label>
+                        <input type="text" name="stok" id="stok" value="<?= $product['stok_produk'] ?>">
+                    </div>
+                    <div class="input-container">
+                        <label for="kategori">Kategori</label>
+                        <select name="kategori" id="kategori">
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?= $category['id_kategori']; ?>" 
+                                <?= $product['id_kategori'] === $category['id_kategori'] ? 'selected' : '' ?>
+                                ><?= $category['nama_kategori']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="input-container">
+                        <label for="supplier">Supplier</label>
+                        <select name="supplier" id="supplier">
+                            <?php foreach ($supplier as $supp): ?>
+                                <option value="<?= $supp['id_supplier']; ?>"
+                                <?= $product['id_supplier'] === $supp['id_supplier'] ? 'selected' : '' ?>
+                                ><?= $supp['nama_supplier']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="input-container">
+                        <label for="gambar">Gambar : </label>
+                        <img src="<?= BASEURL ?>\assets\img\produk\<?= $product['gambar_produk']; ?>" alt="gambar_produk" style="width:200px;">
+                        <input type="file" name="gambar" id="gambar">
+                    </div>
+                    <button type="submit" name="submit" class="submit">Ubah</button>
+                </form>
+            <?php } ?>
+        </div>
+        <!-- end ubah produk -->
     </div>
+    <!-- end container-kanan -->
 
 </body>
 </html>

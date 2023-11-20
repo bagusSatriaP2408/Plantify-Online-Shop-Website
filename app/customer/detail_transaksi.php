@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     header("Location: ../index.php");
     exit();
 }
@@ -10,7 +10,7 @@ $title = "Keranjang";
 require_once("../base.php");
 require_once(BASEPATH . "/app/database.php");
 require_once(BASEPATH."/app/templates/header.php");
- 
+
 $detail_order = getDetailOrder($_GET['order']);
 ?>
 
