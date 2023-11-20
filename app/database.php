@@ -479,28 +479,9 @@ function updateStatusOrder($id)
 	}
 }
 
-function getAllOrder()
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM `order` o JOIN bank b on o.id_bank=b.id_bank ORDER BY status,tanggal_order DESC");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
 
-function getAllOrderByStatusAndTime($time1,$time2,$status)
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM `order` WHERE (tanggal_order BETWEEN :time1 AND :time2) 
-		AND status=:status");
-		$statement->execute([':time1'=>$time1,':time2'=>$time2,':status'=>$status]);
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
+
+
 
 
 
@@ -583,6 +564,17 @@ function getSupplierById($id) {
 	}
 }
 
+function getAllOrder()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM `order` o JOIN bank b on o.id_bank=b.id_bank ORDER BY status,tanggal_order DESC");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
 // ---------------------------end Admin ----------------------------------------
 
 
@@ -595,6 +587,29 @@ function getAllProducts()
 	try {
 		$statement = DB->prepare("SELECT * FROM produk");
 		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+function getAllOrders($status) 
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM `order` WHERE status = :status");
+		$statement->execute([":status"=>$status]);
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+function getAllOrderByStatusAndTime($time1,$time2,$status)
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM `order` WHERE (tanggal_order BETWEEN :time1 AND :time2) 
+		AND status=:status");
+		$statement->execute([':time1'=>$time1,':time2'=>$time2,':status'=>$status]);
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
 		echo $err->getMessage();

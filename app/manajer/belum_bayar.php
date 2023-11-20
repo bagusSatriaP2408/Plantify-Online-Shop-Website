@@ -9,15 +9,15 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'manajer') {
 $title = "Belum Bayar";
 require_once('../base.php');
 require_once(BASEPATH . "/app/manajer/templates/sidebar.php");
-date_default_timezone_set('Asia/Jakarta');
-$dt = new DateTime('now');
-$dt = $dt->format('Y-m-d H:i:s');
-$NewDate =  Date('Y-m-d H:i:s',strtotime('-7 days'));
+// date_default_timezone_set('Asia/Jakarta');
+// // $dt = new DateTime('now');
+// // $dt = $dt->format('Y-m-d H:i:s');
+// // $NewDate =  Date('Y-m-d H:i:s',strtotime('-7 days'));
 
 if(isset($_POST['filter'])){
     $orders = getAllOrderByStatusAndTime($_POST['time1'],$_POST['time2'],0);
 }else{
-    $orders = getAllOrderByStatusAndTime($NewDate,$dt,0);
+    $orders = getAllOrders(0);
 }
 ?>
 
