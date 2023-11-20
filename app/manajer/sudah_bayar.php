@@ -1,10 +1,11 @@
 <?php 
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'manajer') {
     header("Location: ../index.php");
     exit();
 }
+
 require_once('../base.php');
 
 $title = "Sudah Bayar";

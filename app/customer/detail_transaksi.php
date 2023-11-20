@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     header("Location: ../index.php");
     exit();
 }
@@ -16,7 +16,6 @@ $detail_order = getDetailOrder($_GET['order']);
 
 <div class="produk">
     <div class="judul">
-
         <h2>Detail</h2>
     </div>
     <div class="container a">

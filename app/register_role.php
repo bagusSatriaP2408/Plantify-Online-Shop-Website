@@ -6,7 +6,6 @@ session_start();
 
 $kode_ref = array("admin" => "123", "manajer" => "321");
 $errors = array();
-$next = false;
 
 if (isset($_POST['next'])) {
 
@@ -24,10 +23,9 @@ if (isset($_POST['next'])) {
     }
 
     if (strlen($cek) == 0) {
-        $next = true;
+        header("Location: register_id.php");
     }
 }
-
 ?>
 
 
@@ -42,7 +40,7 @@ if (isset($_POST['next'])) {
 <body>
     
     <div class="form-container">
-        <form action="<?php echo $next ? "register_id.php" : "register_role.php"?>" method="post">
+        <form action="register_role.php" method="post">
 
             <h2>Register Now</h2>
 

@@ -1,10 +1,11 @@
 <?php 
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'manajer') {
     header("Location: ../index.php");
     exit();
 }
+
 require_once('../base.php');
 
 $title = "Belum Bayar";
@@ -21,8 +22,6 @@ if(isset($_POST['filter'])){
     $orders = getAllOrderByStatusAndTime($NewDate,$dt,0);
 }
 ?>
-<?= $dt?>
-<?= $NewDate ?>
 
 <div class="container-kanan">
     <form action="rekap.php" method="post">
@@ -68,8 +67,7 @@ if(isset($_POST['filter'])){
             };
 
             new Chart(chart, config);
-            </script>
-           
+            </script>   
         </div>
         <div class="wadah">
             <div class="judul">

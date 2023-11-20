@@ -1,8 +1,7 @@
-<?php
-
+<?php 
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     header("Location: ../index.php");
     exit();
 }
@@ -11,7 +10,6 @@ require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/app/base.php");
 require_once(BASEPATH . "/app/database.php");
 require_once(BASEPATH.'/app/validations.php');
 
-
 $order = getOrderbyId($_SESSION['username'],$_GET['id']);
 $banks = getAllBank();
 
@@ -19,12 +17,11 @@ if($order['status']){
     header("Location: daftar_transaksi.php");
 }
 
-
 if(isset($_POST['edit'])){
 
     $no_rekening = htmlspecialchars($_POST['rek']);
-
     validateTel($errors, $no_rekening);
+    
     $cek = "";
     foreach ($errors as $error) {
         $cek .= $error;

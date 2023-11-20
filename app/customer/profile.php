@@ -1,8 +1,7 @@
 <?php
-
 session_start();
 
-if (!isset($_SESSION['login'])) {
+if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     header("Location: ../index.php");
     exit();
 }
@@ -10,16 +9,13 @@ if (!isset($_SESSION['login'])) {
 $title = "Profile";
 require_once("../base.php");
 require_once(BASEPATH."/app/templates/header.php");
+// mendapatkan data diri customer
 $customer = getDataDiri($_SESSION['username']);
-
-
 ?>
 
 <div class="produk">
-
-    <div class="container">
-        
-    <div class=" card">
+    <div class="container">   
+        <div class=" card">
             <div class="caption">
                 <h2>Nama : <?= $customer['nama']?></h2>
                 <h2>Username : <?= $customer['username']?></h2>
@@ -33,7 +29,5 @@ $customer = getDataDiri($_SESSION['username']);
                 </a>
             </div>
         </div>
-        </div>
-        
-        
     </div>
+</div>
