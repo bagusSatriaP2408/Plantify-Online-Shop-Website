@@ -16,7 +16,6 @@ $detail_order = getDetailOrder($_GET['order']);
 
 <div class="produk">
     <div class="judul">
-
         <h2>Detail</h2>
     </div>
     <div class="container a">

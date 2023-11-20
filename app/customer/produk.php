@@ -9,10 +9,13 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
 $title = 'Produk';
 require_once('../base.php');
 require_once(BASEPATH . "/app/templates/header.php");
+
+// mengecek apakah ada get jika tidak menampilkan semua
 if(!isset($_GET['cate'])){
     $products = getAllDataProducts();
     $judul = 'Semua Produk';
 }else{
+    // jika ada tampilkan sesuai kategori get
     $products = getAllDataProductsWithDetailsByCategory($_GET['cate']);
     $judul = 'Kategori : '. $products[0]['nama_kategori'];
 }
@@ -20,30 +23,26 @@ if(!isset($_GET['cate'])){
 
 <div class="produk">
     <div class="judul">
-    <h2><?= $judul ?></h2>
+        <h2><?= $judul ?></h2>
     </div>
     <div class="container">
-    <?php foreach($products as $product ):?>
-        <div class="card">
-        <img
-            class="img-produk"
-            src="<?= BASEURL ;?>/assets/img/produk/<?= $product['gambar_produk'] ?>"
-            alt="gambar produk"
-        />
-        <div class="caption">
-            <h5><?= $product['nama_produk']?></h5>
-            <h5>Rp. <?= $product['harga_produk']?>,-</h5>
-            <small>Tersedia <?= $product['stok_produk']?></small>
-            <?php if ($product['stok_produk'] == 0 ):?>
-                <div class="btn-card">Stok Habis</div>
-            <?php else: ?>
-                <a href="tambah_keranjang.php?produk=<?= $product["id_produk"] ?>">
-                    <div class="btn-card">Beli</div>
-                </a>
-            <?php endif ?>
-        </div>
-        </div>
-    <?php endforeach;?>
+        <?php foreach($products as $product ):?>
+            <div class="card">
+                <img class="img-produk" src="<?= BASEURL ;?>/assets/img/produk/<?= $product['gambar_produk'] ?>" alt="gambar produk"/>
+                <div class="caption">
+                    <h5><?= $product['nama_produk']?></h5>
+                    <h5>Rp. <?= $product['harga_produk']?>,-</h5>
+                    <small>Tersedia <?= $product['stok_produk']?></small>
+                    <?php if ($product['stok_produk'] == 0 ):?>
+                        <div class="btn-card">Stok Habis</div>
+                    <?php else: ?>
+                        <a href="tambah_keranjang.php?produk=<?= $product["id_produk"] ?>">
+                            <div class="btn-card">Beli</div>
+                        </a>
+                    <?php endif ?>
+                </div>
+            </div>
+        <?php endforeach;?>
     </div>
 </div>
 

@@ -12,10 +12,10 @@ require_once(BASEPATH . "/app/database.php");
 require_once(BASEPATH."/app/templates/header.php");
 require_once(BASEPATH.'/app/validations.php');
 
-
 $dataKeranjang = getKeranjang($_SESSION['username']);
 $dataDiri = getDataDiri($_SESSION['username']);
 $bank = getAllBank();
+
 if(isset($_POST['submit'])){
     $no_rekening = htmlspecialchars($_POST['no_rekening']);
     if(!isset($_POST['bank']) ){
@@ -50,14 +50,9 @@ if(isset($_POST['submit'])){
 }
 
 ?>
-<style>
-    h6{
-        margin: 100px;
-    }
-</style>
+
 <div class="produk">
     <div class="judul">
-
         <h2>Keranjang Belanja</h2>
     </div>
     <div class="container a">
@@ -122,4 +117,5 @@ if(isset($_POST['submit'])){
         </div>
         <a class="btn-card" href="konfirmasi_pembayaran.php">Chekout</a>
         <?php endif ; ?>
+    </div>
 </div>

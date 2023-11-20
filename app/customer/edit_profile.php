@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
@@ -10,14 +9,13 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
 require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/app/base.php");
 require_once(BASEPATH . "/app/database.php");
 require_once(BASEPATH.'/app/validations.php');
+// mendapatkan data diri customer
 $customer = getDataDiri($_SESSION['username']);
 
 if (isset($_POST['register'])) {
-    // $username = htmlspecialchars($_POST['username']);
     $nama = htmlspecialchars($_POST['nama']);
     $tel = htmlspecialchars($_POST['tel']);
     $add = htmlspecialchars($_POST['address']);
-    // validateUsername($errors, $username);
     validateNama($errors, $nama);
     validateTel($errors, $tel);
     validateAlamat($errors, $add);
@@ -42,7 +40,6 @@ if (isset($_POST['register'])) {
         
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +52,7 @@ if (isset($_POST['register'])) {
 </head>
 <body>    
     <div class="form-container">
-    <form action="edit_profile.php" method="post">
+        <form action="edit_profile.php" method="post">
             <div class="input-container">
                 <label for="nama">Nama</label>
                 <input type="text" id="nama" name="nama" value="<?= $_POST["nama"] ?? $customer['nama'] ?>">
@@ -72,8 +69,7 @@ if (isset($_POST['register'])) {
                 <span class="error-msg"><?= $errors["address"] ?? '' ?></span>
             </div>
             <a href="profile.php" class="btn">Batal</a>
-            <button type="submit" name="register">Edit</button>
-            
+            <button type="submit" name="register">Edit</button>    
         </form>
     </div>
 </body>

@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
@@ -7,6 +6,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     exit();
 }
 
-	require_once("../base.php");
-	require_once(BASEPATH."/app/database.php");
-	deleteProductInCart($_GET['pro'],$_GET['krjng'],0);
+require_once("../base.php");
+require_once(BASEPATH."/app/database.php");
+// fungsi untuk mengurangi jumlah produk di keranjang 1/1
+deleteProductInCart($_GET['pro'],$_GET['krjng'],0);

@@ -9,10 +9,14 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
 require_once("../base.php");
 require_once(BASEPATH."/app/database.php");
 
+// mengambil data order dengan id
 $order = getOrderbyId($_SESSION['username'],$_GET['id']);
-if($order['status']){
+
+// megegecek status jika status 1 maka mengarah ke daftar transaksi
+if($order['status'])
+{
     header("Location: daftar_transaksi.php");
-}else{
+}else{  // jika tidak maka hapus transaksi
     deleteOrderbyId($_GET['id']);
 }
 

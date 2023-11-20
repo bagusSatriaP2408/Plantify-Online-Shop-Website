@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
@@ -7,6 +6,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     exit();
 }
 
-	require_once("../base.php");
-	require_once(BASEPATH."/app/database.php");
-	increaseProductInCart($_GET['pro'],$_GET['krjng']);
+require_once("../base.php");
+require_once(BASEPATH."/app/database.php");
+// function menambahkan tambah jumlah produk
+increaseProductInCart($_GET['pro'],$_GET['krjng']);
