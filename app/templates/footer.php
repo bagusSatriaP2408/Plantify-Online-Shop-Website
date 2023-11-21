@@ -30,7 +30,7 @@
       </div>
     </footer>
     <div class="copyright">
-      <h5>Copyright&copy;2023 Kelompok 4</h5>
+      <h5>Copyright&copy;2023 PAW2023-1-E04</h5>
     </div>
     <!-- End Footer -->
   </body>

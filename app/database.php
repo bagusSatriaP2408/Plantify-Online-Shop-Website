@@ -19,6 +19,32 @@ function getDataDiri($username)
 
 // ---------------------------end Profile ----------------------------------------
 
+// fungsi query untuk mendapatkan 2 produk terbaru
+function getNewProducts()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM produk ORDER BY created_at DESC LIMIT 4");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+function getPopularProducts()
+{
+	try {
+		$statement = DB->prepare("SELECT *,sum(jumlah_produk) 
+		AS jml FROM order_detail od JOIN produk p ON od.id_produk = p.id_produk  GROUP BY od.id_produk
+		 ORDER BY jml DESC LIMIT 4");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+
 function getAllDataProducts()
 {
 	try {
@@ -29,21 +55,13 @@ function getAllDataProducts()
 		echo $err->getMessage();
 	}
 }
-function getNewProducts()
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM produk ORDER BY created_at DESC LIMIT 1");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
 
-function getAllCategories()
+
+function getAllCategoriesWithGambarProduk()
 {
 	try {
-		$statement = DB->prepare("SELECT * FROM kategori");
+		$statement = DB->prepare("SELECT k.id_kategori,nama_kategori,gambar_produk  FROM produk p 
+		JOIN kategori k ON p.id_kategori = k.id_kategori GROUP BY p.id_kategori");
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
