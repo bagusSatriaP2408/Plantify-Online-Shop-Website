@@ -1,10 +1,4 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Profile";
 require_once("../base.php");

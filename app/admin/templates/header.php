@@ -9,7 +9,7 @@
         </div>
         <div class="profil">
             <p><?= $_SESSION['username']; ?></p>
-            <img src="<?= BASEURL ;?>/assets/img/icon-profile.png" alt="icon-profil" class="icon-profil">
+            <img src="<?= BASEURL ;?>/app/assets/img/icon-profile.png" alt="icon-profil" class="icon-profil">
         </div>
     </header>
     <!-- End Header -->

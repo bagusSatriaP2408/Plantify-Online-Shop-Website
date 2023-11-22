@@ -1,65 +1,58 @@
 <?php
-session_start();
 
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../index.php");
-    exit();
-}
+$title = "Keranjang";       // memberikan judul pada header
+require_once("../base.php");    // untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH."/app/templates/header.php");     // mengabungkan dengan halaman header
+require_once(BASEPATH.'/app/validations.php');      //digunakan untuk menggunakan fungsi validasi
 
-$title = "Keranjang";
-require_once("../base.php");
-require_once(BASEPATH . "/app/database.php");
-require_once(BASEPATH."/app/templates/header.php");
-require_once(BASEPATH.'/app/validations.php');
-
-$dataKeranjang = getKeranjang($_SESSION['username']);
-$dataDiri = getDataDiri($_SESSION['username']);
-$bank = getAllBank();
+$dataKeranjang = getKeranjang($_SESSION['username']);   // mendapatkan semua produk di keranjang customer tersebut
+$dataDiri = getDataDiri($_SESSION['username']);     // mendapatkan data diri customer tersebut
+$bank = getAllBank();       // mendapatkan semua data pada tabel bank
 if(empty($dataKeranjang)){
-    header("Location: keranjang.php");
+    header("Location: keranjang.php"); // jika keranjang kosong maka arahkan ke keranjanng.php
 }
 
-if(isset($_POST['submit'])){
+$total = 0;
+foreach ($dataKeranjang as $data) {
+    $total += $data["harga_produk"] * $data["jml"];
+}                            
 
-    if(!isset($_POST['bank'])){
+if(isset($_POST['submit'])){       // cek apakah ada submit
+    if(!isset($_POST['bank'])){          //cek apakah sudah memilih bank jika belum isi errors 
         $errors['bank'] = "Harap pilih pembayaran";
     }
-    $no_rekening = htmlspecialchars($_POST['no_rekening']);
-    validateTel($errors, $no_rekening);
+
+    $no_rekening = htmlspecialchars($_POST['no_rekening']);     // untuk menghidari script injection
+    validateTel($errors, $no_rekening);     //validasi no rekening jika ada error maka variabel errors terisi
     $cek = "";
-    foreach ($errors as $error) {
+    foreach ($errors as $error) {       //masukkan error ke string cek 
         $cek .= $error;
     }
     
-    if (strlen($cek) == 0) {
+    if (strlen($cek) == 0) { //jika panjangnya 0 maka lakukan berikut 
 
-        $dataKeranjang = getKeranjang($_SESSION['username']);
-        $dataDiri = getDataDiri($_SESSION['username']);
-        $bank = getAllBank();
-        $total = 0;
-        foreach ($dataKeranjang as $data) {
-            $total += $data["harga_produk"] * $data["jml"];
-        }
-
-        $id_keranjang = $dataKeranjang[0]['id_keranjang'];
-        
-        $a = insertOrder($_SESSION['username'],$total,$_POST['no_rekening'],$_POST['bank'],$id_keranjang);
+        $id_keranjang = $dataKeranjang[0]['id_keranjang'];  //mendapatkan keranjang id
+        $a = insertOrder($_SESSION['username'],$total,$_POST['no_rekening'],$_POST['bank'],$id_keranjang); //menambahkan dari keranjang ke order serta menghapus keeranjag
         foreach($dataKeranjang as $data)
-        {
-            insertOrderDetail($a,$data['id_produk'],$data['jml'],$data['jml']*$data['harga_produk']);
+        {                     //perulangan untuk menambahkan produk ke order_detail
+            insertOrderDetail($a,$data['id_produk'],$data['jml'],$data['jml']*$data['harga_produk']);   
         }
         
-        header("Location: ".BASEURL."/app/customer/daftar_transaksi.php?id=".$a);
+        header("Location: ".BASEURL."/app/customer/daftar_transaksi.php?id=".$a); //diarahkan ke daftar transaksi
     }
 }
 
 ?>
 <div class="produk">
     <div class="judul">
-        <h2>Keranjang Belanja</h2>
+        <h2>konfirmasi Pembayaran</h2>
     </div>
     <div class="container a">
-        <div class="card">
+        <div class="card kosong">
+            <div>
+                <h4>Alamat Pengiriman</h4>
+                <div><b><?= $dataDiri['nama']?>  (<?= $dataDiri['no_telepon']?>)</b> <?= $dataDiri['alamat']?> <small class="jumlah-btn" ><a href="edit_profile.php">ubah</a></small></div>
+            </div>
             <table>
                 <tr>
                     <th>Produk</th>
@@ -72,7 +65,7 @@ if(isset($_POST['submit'])){
                             <div class="produk-keranjang">
                                 <img
                                 class="img-keranjang"
-                                src="<?= BASEURL ;?>/assets/img/produk/<?= $data['gambar_produk'] ?>"
+                                src="<?= BASEURL ;?>/app/assets/img/produk/<?= $data['gambar_produk'] ?>"
                                 alt="gambar produk"
                                 />
                                 <div class="caption">
@@ -91,39 +84,28 @@ if(isset($_POST['submit'])){
                 <?php endforeach; ?>  
             </table>
             <div class="total">
-                <?php
-                    $total = 0;
-                    foreach ($dataKeranjang as $data) {
-                        $total += $data["harga_produk"] * $data["jml"];
-                    }                            
-                ?>
                 <h4>Total Pembayaran</h4>
                 <h4>Rp. <?= number_format($total, 0, ',', '.')?>,-</h4>
             </div>
         </div>
-        <form action="konfirmasi_pembayaran.php" method="post">
-            <div class="card bayar">
-                <h3>Info Pembayaran</h3>
-                <h4>Nama : </h4>
-                <h5><?= $dataDiri['nama']?></h5>
-                <h4>Alamat : </h4>
-                <h5><?= $dataDiri['alamat']?></h5>
-                <label for="bank">Tipe Pembayaran</label>
-                <?php foreach($bank as $b) :  ?> 
-                    <div>
-                        <input name="bank" id="<?= $b['id_bank']?>" type="radio" value="<?= $b['id_bank'] ?>" <?= isset($_POST['bank'])&&$_POST["bank"]==$b['id_bank'] ? 'checked' : '' ?> >
-                        <label for="<?= $b['id_bank'] ?>"><?= $b['nama_bank'] ?></lable>
-                    </div>
-                <?php endforeach ?>
-                <span class="error-msg"><?= $errors["bank"] ?? '' ?></span>
-                <label for="">No Rekening</label>
-                <input type="text" name="no_rekening" value="<?= $_POST['no_rekening'] ?? '' ?>">
-                <span class="error-msg"><?= $errors["tel"] ?? '' ?></span>
-                <button class="btn-card" type="submit" name="submit">Pesan</button>
-                <a href="keranjang.php">
-                    <button class="btn-card" type="button">Batalkan</button>
-                </a>
-            </div>
-        </form>
     </div>
+    <form action="konfirmasi_pembayaran.php" method="post">
+        <div class="card bayar">
+            <label for="bank">Tipe Pembayaran</label>
+            <?php foreach($bank as $b) :  ?> 
+                <div>
+                    <input name="bank" id="<?= $b['id_bank']?>" type="radio" value="<?= $b['id_bank'] ?>" <?= isset($_POST['bank'])&&$_POST["bank"]==$b['id_bank'] ? 'checked' : '' ?> >
+                    <label for="<?= $b['id_bank'] ?>"><?= $b['nama_bank'] ?></lable>
+                </div>
+            <?php endforeach ?>
+            <span class="error-msg"><?= $errors["bank"] ?? '' ?></span>
+            <label for="">No Rekening</label>
+            <input type="text" name="no_rekening" value="<?= $_POST['no_rekening'] ?? '' ?>">
+            <span class="error-msg"><?= $errors["tel"] ?? '' ?></span>
+            <button class="btn-card" type="submit" name="submit">Pesan</button>
+            <a href="keranjang.php">
+                <button class="btn-card" type="button">Batalkan</button>
+            </a>
+        </div>
+    </form>
 </div>

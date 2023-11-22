@@ -19,7 +19,7 @@ function getDataDiri($username)
 
 // ---------------------------end Profile ----------------------------------------
 
-// fungsi query untuk mendapatkan 2 produk terbaru
+// fungsi query untuk mendapatkan 4 produk terbaru
 function getNewProducts()
 {
 	try {

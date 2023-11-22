@@ -1,15 +1,9 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Daftar Pesanan";
 
-require_once("../base.php");
-require_once(BASEPATH . "/app/database.php");
+require_once("../base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH . "/app/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
 require_once(BASEPATH."/app/templates/header.php");
 
 $pesanan =  getOrder($_SESSION['username']);

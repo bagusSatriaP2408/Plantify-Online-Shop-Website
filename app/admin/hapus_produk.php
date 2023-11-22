@@ -9,7 +9,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
 require_once("../base.php");
 require_once(BASEPATH."/app/database.php");
 $product = getProductById($_GET['id']);
-unlink(BASEPATH."/assets/img/produk/".$product['gambar_produk']);
+unlink(BASEPATH."/app/assets/img/produk/".$product['gambar_produk']);
 deleteProduct($_GET['id']);
 $previousPage = $_SERVER['HTTP_REFERER'];
 header("Location: $previousPage");

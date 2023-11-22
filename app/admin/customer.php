@@ -14,7 +14,7 @@ $customers = getAllDataCustomer();
 ?>
 
         <!-- start customer -->
-        <div class="wadah">
+        <div class="wadah"> 
             <div class="judul">
                 <h2>Customer</h2>
             </div>

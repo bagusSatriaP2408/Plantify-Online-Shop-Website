@@ -8,13 +8,13 @@ require_once(BASEPATH . "/app/database.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager | <?= $title ?></title>
-    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style_manajer.css" />
+    <link rel="stylesheet" href="<?= BASEURL ?>/app/assets/styles/style_manajer.css" />
 </head>
 <body>
 
     <div class="sidebar">
         <div class="profil">
-            <img src="<?= BASEURL ?>/assets/img/icon-profile.png" alt="profil">
+            <img src="<?= BASEURL ?>/app/assets/img/icon-profile.png" alt="profil">
             <div class="manajer">
                 <span>Manajer</span>
                 <p><?= $_SESSION['username']; ?></p>
