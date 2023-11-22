@@ -11,7 +11,7 @@ require_once('../base.php');
 require_once(BASEPATH . "/app/admin/templates/sidebar.php");
 require_once(BASEPATH . "/app/admin/templates/header.php");
 $products = getAllDataProducts();
-$categories  = getAllCategories();
+$categories  = getAllCategoriesWithGambarProduk();
 $supplier = getAllDataSupplier();
 ?>
 

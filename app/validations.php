@@ -22,7 +22,7 @@ function checkAlphaNumeric($field) {
 }
 
 function checkPassword($field) {
-    $pattern = "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])/";
+    $pattern = "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&#])/";
     return preg_match($pattern, $field);
 }
 

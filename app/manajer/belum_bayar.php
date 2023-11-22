@@ -6,12 +6,28 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'manajer') {
     exit();
 }
 
+require "../validations.php";
+
 $title = "Belum Bayar";
 require_once('../base.php');
 require_once(BASEPATH . "/app/manajer/templates/sidebar.php");
 
+$errors = array();
+
 if(isset($_POST['filter'])){
-    $orders = getAllOrderByStatusAndTime($_POST['time1'],$_POST['time2'],0);
+    $time1 = $_POST['time1'];
+    $time2 = $_POST['time2'];
+
+    if ($time2 < $time1) {
+        $errors['error'] = "waktu sampai tidak boleh kurang dari waktu mulai";
+    }
+
+    if (!$errors['error']) {
+        $orders = getAllOrderByStatusAndTime($_POST['time1'],$_POST['time2'],0);
+    } else {
+        $orders = getAllOrders(0);
+    }
+
 }else{
     $orders = getAllOrders(0);
 }
@@ -20,6 +36,7 @@ if(isset($_POST['filter'])){
     <!-- start container-kanan -->
     <div class="container-kanan">
         <div class="form-container">
+            <p class="error"><?= $errors['error'] ?? "" ?></p>
             <form action="belum_bayar.php" method="post">
                 <label>Mulai dari : </label>
                 <input type="datetime-local" name="time1" value="<?= isset($_POST['time1']) ? $_POST['time1'] :"" ?>">
