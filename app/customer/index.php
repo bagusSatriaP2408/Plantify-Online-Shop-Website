@@ -1,21 +1,17 @@
 <?php
-session_start();
+$title = 'Beranda';  // memberikan judul pada header
+require_once('../base.php'); // untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH . "/app/templates/header.php");  // mengabungkan dengan halaman header
 
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../index.php");
-    exit();
-}
-
-$title = 'Beranda';
-require_once('../base.php');
-require_once(BASEPATH . "/app/templates/header.php");
-
+// mendapatkan nilai id_kategori,nama_kategori,gambar_produk dari kategori join produk
 $categories  = getAllCategoriesWithGambarProduk();
+// mendapatkan nilai semua column dari 4 produk terbaru  
 $news = getNewProducts();
+// mendapatkan nilai 4 produk paling banyak di order  
 $populars = getPopularProducts();
 
 ?>
-<!-- Start Main  -->
+<!------------------------------ START MAIN  --------------------------------->
 <main>
     <div class="main-kiri">
         <h1>Tanamkan Keindahan di Setiap Sudut Rumah Anda!</h1>
@@ -23,62 +19,56 @@ $populars = getPopularProducts();
           Kecantikan alam, dalam genggaman Anda. Bonsai eksklusif untuk
           keindahan yang abadi. Temukan keharmonisan alam di sini
         </p>
-        <a href="<?= BASEURL. '/app/customer/produk.php'?>">
+        <a href="<?= BASEURL. '/app/customer/produk.php'?>">  <!-- mengarah ke halaman produk -->
             <div class="btn">Temukan Sekarang</div>
         </a>
     </div>
     <div class="main-kanan">
         <div>
             <div>
-                <div class="btn-1">Baru</div>
-                <img class="img-baru" src="<?= BASEURL ;?>/assets/img/produk/<?= $news[0]['gambar_produk']?>" alt="terbaru" />
+                <div class="btn-1">Baru</div>                 <!-- mendapatkan gambar produk  terbaru index ke 0 -->
+                <img class="img-baru" src="<?= BASEURL ;?>/app/assets/img/produk/<?= $news[0]['gambar_produk']?>" alt="terbaru" />
             </div>
             <div>
-                <div class="btn-1">Baru</div>
-                <img
-                    class="img-popular"
-                    src="<?= BASEURL ;?>/assets/img/produk/<?= $news[1]['gambar_produk']?>"
+                <div class="btn-1">Baru</div>                 <!-- mendapatkan gambar produk terbaru index ke 1 -->
+                <img class="img-popular" src="<?= BASEURL ;?>/app/assets/img/produk/<?= $news[1]['gambar_produk']?>"
                     alt="popular"
                 />
             </div>
         </div>
         <div>
             <div>
-                <div class="btn-1">unggulan</div>
-                <img
-                    class="img-unggulan"
-                    src="<?= BASEURL ;?>/assets/img/produk/<?= $populars[0]['gambar_produk']?>"
+                <div class="btn-1">unggulan</div>            <!-- mendapatkan gambar produk populer index ke 0 -->
+                <img class="img-unggulan" src="<?= BASEURL ;?>/app/assets/img/produk/<?= $populars[0]['gambar_produk']?>"
                     alt="unggulan"
                 />
             </div>
-            <img class="img-abs" src="<?= BASEURL ;?>/assets/img/Vector.png" alt="img-abs" />
+            <img class="img-abs" src="<?= BASEURL ;?>/app/assets/img/Vector.png" alt="img-abs" />
         </div>
     </div>
 </main>
-    <!-- End Main -->
-    <!-- Start Produk -->
+    <!------------------------------------ END MAIN ----------------------------------------------->
+    <!------------------------------------ START PRODUK NEW ------------------------------------------->
 <div class="produk">
     <div class="judul">
-        <h2>Baru</h2>
-        <h4 ><a style="color:green;"  href="<?= BASEURL. '/app/customer/produk.php'?>">Lihat semua</a></h4>
+        <h2>Baru</h2>                               <!-- mengarah ke halaman produk -->
+        <h4 ><a class="green"  href="<?= BASEURL. '/app/customer/produk.php'?>">Lihat semua</a></h4>
     </div>
     <div class="container">
-    <?php foreach($news as $new):?>
-        <div class="card">
-            <img
-              class="img-produk"
-              src="<?= BASEURL ;?>/assets/img/produk/<?= $new['gambar_produk'] ?>"
-              alt="gambar produk"
+    <?php foreach($news as $new):?> <!-- perulangan untuk mengeluarkan nilai $news -->
+        <div class="card">              <!-- menampialkan gambar produk dari variable $new -->
+            <img src="<?= BASEURL ;?>/app/assets/img/produk/<?= $new['gambar_produk'] ?>"
+              alt="gambar produk" class="img-produk"
             />
             <div class="caption">
-                <h5><?= $new['nama_produk']?></h5>
-                <h5>Rp. <?= $new['harga_produk']?>,-</h5>
-                <small>Tersedia <?= $new['stok_produk']?></small>
+                <h5><?= $new['nama_produk']?></h5>  <!-- menampialkan nama produk dari variable $new -->
+                <h5>Rp. <?= number_format($new["harga_produk"], 0, ',', '.')?>,-</h5>   <!-- menampialkan harga produk dari variable $new -->
+                <small>Tersedia <?= $new['stok_produk']?></small>   <!-- menampialkan stok produk dari variable $new -->
                 <?php if ($new['stok_produk'] == 0 ):?>
-                    <div class="btn-card">Stok Habis</div>
+                    <div class="btn-card">Stok Habis</div>  <!-- kondisi jika stok produk 0 maka tidak bisa dibeli dan menampilkan stok habis -->
                 <?php else: ?>
                     <a href="tambah_keranjang.php?produk=<?= $new["id_produk"] ?>">
-                        <div class="btn-card">Beli</div>
+                        <div class="btn-card">Masukkan Keranjang</div> <!-- menuju ke keranjang.php dengan get berisi id produk -->
                     </a>
                 <?php endif ?>
             </div>
@@ -86,30 +76,28 @@ $populars = getPopularProducts();
     <?php endforeach;?>
     </div>
 </div>
-    <!-- End Produk -->
-    <!-- Start Produk -->
+    <!------------------------------------ END PRODUK NEW----------------------------------------------->
+    <!------------------------------------ START PRODUK UNGGULAN------------------------------------------->
 <div class="produk">
     <div class="judul">
-        <h2>Popular</h2>
-        <h4><a style="color:green"  href="<?= BASEURL. '/app/customer/produk.php'?>">Lihat semua</a></h4>
+        <h2>Popular</h2>                    <!-- mengarah ke halaman produk -->
+        <h4><a class="green"  href="<?= BASEURL. '/app/customer/produk.php'?>">Lihat semua</a></h4>
     </div>
     <div class="container">
-    <?php foreach($populars as $popular):?>
-        <div class="card">
-            <img
-              class="img-produk"
-              src="<?= BASEURL ;?>/assets/img/produk/<?= $popular['gambar_produk'] ?>"
-              alt="gambar produk"
+    <?php foreach($populars as $popular):?> <!-- perulangan untuk mengeluarkan nilai $populars -->
+        <div class="card">        <!-- menampialkan gambar produk dari variable $popular -->
+            <img src="<?= BASEURL ;?>/app/assets/img/produk/<?= $popular['gambar_produk'] ?>" 
+              alt="gambar produk"  class="img-produk" 
             />
             <div class="caption">
-                <h5><?= $popular['nama_produk']?></h5>
-                <h5>Rp. <?= $popular['harga_produk']?>,-</h5>
-                <small>Tersedia <?= $popular['stok_produk']?></small>
-                <?php if ($popular['stok_produk'] == 0 ):?>
+                <h5><?= $popular['nama_produk']?></h5>  <!-- menampialkan nama produk dari variable $popular -->
+                <h5>Rp. <?= number_format($popular["harga_produk"], 0, ',', '.')?>,-</h5>  <!-- menampialkan harga produk dari variable $popular -->
+                <small>Tersedia <?= $popular['stok_produk']?></small>  <!-- menampialkan stok produk dari variable $popular -->
+                <?php if ($popular['stok_produk'] == 0 ):?> <!-- kondisi jika stok produk 0 maka tidak bisa dibeli dan menampilkan stok habis -->
                     <div class="btn-card">Stok Habis</div>
                 <?php else: ?>
                     <a href="tambah_keranjang.php?produk=<?= $popular["id_produk"] ?>">
-                        <div class="btn-card">Beli</div>
+                        <div class="btn-card">Masukkan Keranjang</div>    <!-- menuju ke keranjang.php dengan get berisi id produk -->
                     </a>
                 <?php endif ?>
             </div>
@@ -117,25 +105,25 @@ $populars = getPopularProducts();
     <?php endforeach;?>
     </div>
 </div>
-    <!-- End Produk -->
-    <!-- Start Kategori -->
+    <!------------------------------------ END PRODUK UNGGULAN ----------------------------------------------->
+    <!------------------------------------ START KATEGORI ------------------------------------------->
 <div class="kategori">
     <div class="judul">
         <h2>Kategori</h2>
     </div>
     <div class="container">
-        <?php foreach($categories as $category):?>
-            <a href="<?= BASEURL?>/app/customer/produk.php?cate=<?= $category['id_kategori']?>" >
-                <div class="card-kategori">
-                    <img class="img2" src="<?= BASEURL ;?>/assets/img/produk/<?= $category['gambar_produk']?>" alt="img kategori" />
+        <?php foreach($categories as $category):?>      <!-- perulangan untuk mengeluarkan nilai $categories -->
+            <a href="<?= BASEURL?>/app/customer/produk.php?cate=<?= $category['id_kategori']?>" > <!-- mengarahkan ke produk dengan kategori yang diklik -->
+                <div class="card-kategori">                 <!-- menampialkan gambar produk dari variable $category -->
+                    <img class="img2" src="<?= BASEURL ;?>/app/assets/img/produk/<?= $category['gambar_produk']?>" alt="img kategori" />
                     <h4 class="title2"><?= $category['nama_kategori'] ?></h4>
                 </div>
             </a>
         <?php endforeach ;?>
     </div>
 </div>
-    <!-- End Kategori -->
-    <!-- Start Lokasi -->
+    <!------------------------------------ END KATEGORI ----------------------------------------------->
+    <!------------------------------------ START LOKASI ------------------------------------------->
 <div class="lokasi">
     <div class="judul">
         <h2>Lokasi Kami</h2>
@@ -152,7 +140,7 @@ $populars = getPopularProducts();
         ></iframe>
     </div>
 </div>
-    <!-- End Lokasi -->
+    <!------------------------------------ END LOKASI ----------------------------------------------->
 <?php
-require_once('../templates/footer.php');
+require_once('../templates/footer.php'); // mengabungkan dengan halaman header
 ?>

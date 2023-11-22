@@ -1,13 +1,14 @@
 <?php 
 session_start();
-
+/* pengecekan jika tidak ada variable $_SESSION['login'] atau $_SESSION['role'] 
+tidak sama dengan 'customer' maka dialihkan ke halaman login  */
 if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     header("Location: ../index.php");
     exit();
 }
 
-require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/app/base.php");
-require_once(BASEPATH . "/app/database.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/app/base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH . "/app/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
 require_once(BASEPATH.'/app/validations.php');
 
 $order = getOrderbyId($_SESSION['username'],$_GET['id']);
@@ -40,7 +41,7 @@ if(isset($_POST['edit'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Prembayaran</title>
-    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style.css">
+    <link rel="stylesheet" href="<?= BASEURL ?>/app/assets/styles/style.css">
 </head>
 <body>    
     <div class="form-container">

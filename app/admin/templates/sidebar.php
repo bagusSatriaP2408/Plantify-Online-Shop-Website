@@ -8,13 +8,13 @@ require_once(BASEPATH . "/app/database.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | <?= $title ?></title>
-    <link rel="stylesheet" href="<?= BASEURL ;?>/assets/styles/style_admin.css" />
+    <link rel="stylesheet" href="<?= BASEURL ;?>/app/assets/styles/style_admin.css" />
 </head>
 <body>
     
     <!-- Start Sidebar -->
     <div class="sidebar">
-        <img class="logo" src="<?= BASEURL ;?>/assets/img/logo.png" alt="logo" />
+        <img class="logo" src="<?= BASEURL ;?>/app/assets/img/logo.png" alt="logo" />
         <div class="menu-container">
             <menu>
                 <a href="<?= BASEURL ?>/app/admin/index.php" class="<?= $title === 'Dashboard' ? 'active' : '' ?>">Dashboard</a>

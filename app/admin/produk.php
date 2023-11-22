@@ -11,7 +11,7 @@ require_once('../base.php');
 require_once(BASEPATH . "/app/admin/templates/sidebar.php");
 require_once(BASEPATH . "/app/admin/templates/header.php");
 $products = getAllDataProducts();
-$categories  = getAllCategories();
+$categories  = getAllCategoriesWithGambarProduk();
 $supplier = getAllDataSupplier();
 ?>
 
@@ -25,7 +25,7 @@ $supplier = getAllDataSupplier();
                 <div class="card">
                     <img
                         class="img-produk"
-                        src="<?= BASEURL ;?>/assets/img/produk/<?= $product['gambar_produk'] ?>"
+                        src="<?= BASEURL ;?>/app/assets/img/produk/<?= $product['gambar_produk'] ?>"
                         alt="gambar produk"
                     />
                     <div class="caption">

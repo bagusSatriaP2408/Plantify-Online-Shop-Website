@@ -1,14 +1,8 @@
 <?php
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Keranjang";
-require_once("../base.php");
-require_once(BASEPATH . "/app/database.php");
+require_once("../base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH . "/app/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
 require_once(BASEPATH."/app/templates/header.php");
 
 $detail_order = getDetailOrder($_GET['order']);
@@ -33,7 +27,7 @@ $detail_order = getDetailOrder($_GET['order']);
                                 <div style="display: flex;">
                                     <img
                                     class="img-keranjang"
-                                    src="<?= BASEURL ;?>/assets/img/produk/<?= $order['gambar_produk'] ?>"
+                                    src="<?= BASEURL ;?>/app/assets/img/produk/<?= $order['gambar_produk'] ?>"
                                     alt="gambar produk"
                                     />
                                 </div>

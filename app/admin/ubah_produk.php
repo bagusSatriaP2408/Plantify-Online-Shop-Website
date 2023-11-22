@@ -59,7 +59,7 @@ require_once('../base.php');
 require_once(BASEPATH . "/app/admin/templates/sidebar.php");
 require_once(BASEPATH . "/app/admin/templates/header.php");
 $product = getProductById($id);
-$categories  = getAllCategories();
+$categories  = getAllCategoriesWithGambarProduk();
 $supplier = getAllDataSupplier();
 ?>
 
