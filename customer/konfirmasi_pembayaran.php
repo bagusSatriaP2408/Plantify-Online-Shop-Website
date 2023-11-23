@@ -23,7 +23,7 @@ if(isset($_POST['submit'])){       // cek apakah ada submit
     }
 
     $no_rekening = htmlspecialchars($_POST['no_rekening']);     // untuk menghidari script injection
-    validateTel($errors, $no_rekening);     //validasi no rekening jika ada error maka variabel errors terisi
+    validateRekening($errors, $no_rekening);     //validasi no rekening jika ada error maka variabel errors terisi
     $cek = "";
     foreach ($errors as $error) {       //masukkan error ke string cek 
         $cek .= $error;
@@ -47,65 +47,65 @@ if(isset($_POST['submit'])){       // cek apakah ada submit
     <div class="judul">
         <h2>konfirmasi Pembayaran</h2>
     </div>
-    <div class="container a">
-        <div class="card kosong">
-            <div>
-                <h4>Alamat Pengiriman</h4>
-                <div><b><?= $dataDiri['nama']?>  (<?= $dataDiri['no_telepon']?>)</b> <?= $dataDiri['alamat']?> <small class="jumlah-btn" ><a href="edit_profile.php">ubah</a></small></div>
-            </div>
-            <table>
+    <div class="card">
+        <div class="produk">
+            <h4>Alamat Pengiriman</h4>
+            <div><b><?= $dataDiri['nama']?>  (<?= $dataDiri['no_telepon']?>)</b> <?= $dataDiri['alamat']?> <a href="edit_profile.php"><small class="jumlah-btn" >ubah</small></a></div>
+        </div>
+        <table>
+            <tr>
+                <th>Produk</th>
+                <th>Harga</th>
+                <th>Jumlah</th>
+            </tr>
+            <?php foreach ($dataKeranjang as $data ):?>
                 <tr>
-                    <th>Produk</th>
-                    <th>Harga</th>
-                    <th>Jumlah</th>
-                </tr>
-                <?php foreach ($dataKeranjang as $data ):?>
-                    <tr>
-                        <td>
-                            <div class="produk-keranjang">
-                                <img
-                                class="img-keranjang"
-                                src="<?= BASEURL ;?>/assets/img/produk/<?= $data['gambar_produk'] ?>"
-                                alt="gambar produk"
-                                />
-                                <div class="caption">
-                                    <h5><?= $data['nama_produk']?></h5>
-                                    <small>Tersedia <?= $data['stok_produk']?></small>
-                                </div>
+                    <td>
+                        <div class="produk-keranjang">
+                            <img
+                            class="img-keranjang"
+                            src="<?= BASEURL ;?>/assets/img/produk/<?= $data['gambar_produk'] ?>"
+                            alt="gambar produk"
+                            />
+                            <div class="caption">
+                                <h5><?= $data['nama_produk']?></h5>
+                                <small>Tersedia <?= $data['stok_produk']?></small>
                             </div>
-                        </td>
-                        <td>
-                            <h5>Rp. <?= number_format($data["harga_produk"], 0, ',', '.')?>,-</h5>
-                        </td>
-                        <td>
-                            <h5 class="jml"><?=$data['jml']?> </h5>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>  
-            </table>
-            <div class="total">
-                <h4>Total Pembayaran</h4>
-                <h4>Rp. <?= number_format($total, 0, ',', '.')?>,-</h4>
-            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <h5>Rp. <?= number_format($data["harga_produk"], 0, ',', '.')?>,-</h5>
+                    </td>
+                    <td>
+                        <h5 class="jml"><?=$data['jml']?> </h5>
+                    </td>
+                </tr>
+            <?php endforeach; ?>  
+        </table>
+        <div class="total">
+            <h4>Total Pembayaran</h4>
+            <h4>Rp. <?= number_format($total, 0, ',', '.')?>,-</h4>
         </div>
-    </div>
-    <form action="konfirmasi_pembayaran.php" method="post">
-        <div class="card bayar">
-            <label for="bank">Tipe Pembayaran</label>
-            <?php foreach($bank as $b) :  ?> 
-                <div>
-                    <input name="bank" id="<?= $b['id_bank']?>" type="radio" value="<?= $b['id_bank'] ?>" <?= isset($_POST['bank'])&&$_POST["bank"]==$b['id_bank'] ? 'checked' : '' ?> >
-                    <label for="<?= $b['id_bank'] ?>"><?= $b['nama_bank'] ?></lable>
+        <form action="konfirmasi_pembayaran.php" method="post" >
+            <div class="form-konfirmasi bayar">
+                <h4>Tipe Pembayaran</h4>
+                <div class="tipe-pembayaran">
+                <?php foreach($bank as $b) :  ?> 
+                    <span>
+                        <input name="bank" id="<?= $b['id_bank']?>" type="radio" value="<?= $b['id_bank'] ?>" <?= isset($_POST['bank'])&&$_POST["bank"]==$b['id_bank'] ? 'checked' : '' ?> >
+                        <label for="<?= $b['id_bank'] ?>">Bank <?= $b['nama_bank'] ?></lable>
+                    </span>
+                <?php endforeach ?>
                 </div>
-            <?php endforeach ?>
-            <span class="error-msg"><?= $errors["bank"] ?? '' ?></span>
-            <label for="">No Rekening</label>
-            <input type="text" name="no_rekening" value="<?= $_POST['no_rekening'] ?? '' ?>">
-            <span class="error-msg"><?= $errors["tel"] ?? '' ?></span>
-            <button class="btn-card" type="submit" name="submit">Pesan</button>
-            <a href="keranjang.php">
-                <button class="btn-card" type="button">Batalkan</button>
-            </a>
-        </div>
-    </form>
+                <small class="error"><?= $errors["bank"] ?? '' ?></small>
+                <h4>No Rekening</h4>
+                <input type="text" name="no_rekening" value="<?= $_POST['no_rekening'] ?? '' ?>">
+                <small class="error"><?= $errors["rek"] ?? '' ?></small>
+                <button class="btn-card" type="submit" name="submit">Pesan</button>
+                <a href="keranjang.php">
+                    <button class="kembali" type="button">Batalkan</button>
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
