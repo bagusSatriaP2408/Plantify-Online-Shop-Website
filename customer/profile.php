@@ -2,7 +2,7 @@
 
 $title = "Profile";
 require_once("../base.php");
-require_once(BASEPATH."/templates/header.php");
+require_once(BASEPATH."/customer/templates/header.php");
 // mendapatkan data diri customer
 $customer = getDataDiri($_SESSION['username']);
 ?>

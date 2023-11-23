@@ -1,7 +1,7 @@
 <?php
 $title = 'Beranda';  // memberikan judul pada header
 require_once('../base.php'); // untuk mengunakan variable constant BASEURL/BASEPATH
-require_once(BASEPATH . "/templates/header.php");  // mengabungkan dengan halaman header
+require_once(BASEPATH . "/customer/templates/header.php");  // mengabungkan dengan halaman header
 
 // mendapatkan nilai id_kategori,nama_kategori,gambar_produk dari kategori join produk
 $categories  = getAllCategoriesWithGambarProduk();
@@ -142,5 +142,5 @@ $populars = getPopularProducts();
 </div>
     <!------------------------------------ END LOKASI ----------------------------------------------->
 <?php
-require_once('../templates/footer.php'); // mengabungkan dengan halaman header
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
 ?>

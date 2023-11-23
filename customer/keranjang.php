@@ -2,7 +2,7 @@
 
 $title = "Keranjang";   // memberikan judul pada header
 require_once("../base.php");        // untuk mengunakan variable constant BASEURL/BASEPATH     
-require_once(BASEPATH."/templates/header.php");     // mengabungkan dengan halaman header
+require_once(BASEPATH."/customer/templates/header.php");     // mengabungkan dengan halaman header
 $dataKeranjang = getKeranjang($_SESSION['username']);   // mendapatkan semua produk di keranjang customer tersebut
 
 ?>
@@ -71,5 +71,5 @@ $dataKeranjang = getKeranjang($_SESSION['username']);   // mendapatkan semua pro
         <?php endif;?>
 </div>
 <?php
-require_once('../templates/footer.php'); // mengabungkan dengan halaman header
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
 ?>

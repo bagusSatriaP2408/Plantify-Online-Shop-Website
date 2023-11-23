@@ -2,7 +2,7 @@
 
 $title = 'Produk';  // memberikan judul pada header
 require_once('../base.php');    // untuk mengunakan variable constant BASEURL/BASEPATH
-require_once(BASEPATH . "/templates/header.php");   // mengabungkan dengan halaman header
+require_once(BASEPATH . "/customer/templates/header.php");   // mengabungkan dengan halaman header
 
 // mengecek apakah ada get jika tidak menampilkan semua
 if(!isset($_GET['cate'])){
@@ -41,5 +41,5 @@ if(!isset($_GET['cate'])){
 </div>
 
 <?php
-require_once('../templates/footer.php'); // mengabungkan dengan halaman header
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
 ?>

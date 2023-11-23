@@ -3,7 +3,7 @@
 $title = "Keranjang";
 require_once("../base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
-require_once(BASEPATH."/templates/header.php");
+require_once(BASEPATH."/customer/templates/header.php");
 
 $detail_order = getDetailOrder($_GET['order']);
 ?>
