@@ -100,7 +100,7 @@ function getKeranjang($username)
 	}
 }
 
-// fungsi untuk mendapatkan id keranjang customer 
+// fungsi untuk mendapatkan id keranjang customer dan menambahkan ke database
 function getCartCode($username)
 {
 	try {

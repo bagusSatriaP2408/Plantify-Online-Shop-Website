@@ -1,7 +1,7 @@
 <?php
 $title = 'Beranda';  // memberikan judul pada header
 require_once('../base.php'); // untuk mengunakan variable constant BASEURL/BASEPATH
-require_once(BASEPATH . "/customer/templates/header.php");  // mengabungkan dengan halaman header
+require_once(BASEPATH . "/templates/header.php");  // mengabungkan dengan halaman header
 
 // mendapatkan nilai id_kategori,nama_kategori,gambar_produk dari kategori join produk
 $categories  = getAllCategories();
@@ -52,11 +52,13 @@ $populars = getPopularProducts();
     <div class="judul">
         <h2>Baru</h2>                               <!-- mengarah ke halaman produk -->
         <h4 ><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
+        <h4 ><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
     </div>
     <div class="container">
     <?php foreach($news as $new):?> <!-- perulangan untuk mengeluarkan nilai $news -->
        
         <div class="card">              <!-- menampialkan gambar produk dari variable $new -->
+            <img src="<?= BASEURL ;?>/assets/img/produk/<?= $new['gambar_produk'] ?>"
             <img src="<?= BASEURL ;?>/assets/img/produk/<?= $new['gambar_produk'] ?>"
               alt="gambar produk" class="img-produk"
             />
@@ -93,6 +95,7 @@ $populars = getPopularProducts();
 <div class="produk">
     <div class="judul">
         <h2>Popular</h2>                    <!-- mengarah ke halaman produk -->
+        <h4><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
         <h4><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
     </div>
     <div class="container">
@@ -154,13 +157,13 @@ $populars = getPopularProducts();
     </div>
     <div class="container">
         <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.9644736773307!2d112.72410727433831!3d-7.130106192873798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd803dcd1e1bd7f%3A0x5261304f608c91db!2sLey%20Denara!5e0!3m2!1sid!2sid!4v1699597392448!5m2!1sid!2sid"
-            width="1159"
-            height="287"
-            style="border: 0"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.9644736773307!2d112.72410727433831!3d-7.130106192873798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd803dcd1e1bd7f%3A0x5261304f608c91db!2sLey%20Denara!5e0!3m2!1sid!2sid!4v1699597392448!5m2!1sid!2sid"
+          width="1159"
+          height="287"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
     </div>
 </div>
