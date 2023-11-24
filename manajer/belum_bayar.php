@@ -6,8 +6,6 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'manajer') {
     exit();
 }
 
-require "../validations.php";
-
 $title = "Belum Bayar";
 require_once('../base.php');
 require_once(BASEPATH . "/manajer/templates/sidebar.php");

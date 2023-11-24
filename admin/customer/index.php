@@ -1,7 +1,6 @@
 <?php 
 
 $title = "Customer";
-<<<<<<<< HEAD:admin/customer/index.php
 
 require_once('../../base.php');    // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/admin/templates/sidebar.php");
@@ -9,12 +8,6 @@ require_once(BASEPATH . "/admin/templates/header.php");
 
 $customers = getAllDataCustomer();  // mengambil semua data customer
 
-========
-require_once('../base.php');
-require_once(BASEPATH . "/admin/templates/sidebar.php");
-require_once(BASEPATH . "/admin/templates/header.php");
-$customers = getAllDataCustomer();
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/customer.php
 ?>
 
         <!-- start customer -->

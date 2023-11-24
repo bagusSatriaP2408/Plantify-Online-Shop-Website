@@ -49,28 +49,17 @@ if (isset($_POST['submit'])) {
 }
 
 $title = "Supplier";
-<<<<<<<< HEAD:admin/supplier/ubah.php
 
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
 
 $supplier = getSupplierById($id);   // mengambil data supplier berdasarkan id
 
-========
-require_once('../base.php');
-require_once(BASEPATH . "/admin/templates/sidebar.php");
-require_once(BASEPATH . "/admin/templates/header.php");
-$supplier = getSupplierById($id);
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/ubah_supplier.php
 ?>
 
         <!-- start ubah supplier -->
         <div class="wadah">
-<<<<<<<< HEAD:admin/supplier/ubah.php
             <a href="<?= BASEURL ?>/admin/supplier/">
-========
-            <a href="<?= BASEURL ?>/admin/supplier.php">
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/ubah_supplier.php
                 <button class="kembali">Kembali</button>
             </a>
             <div class="judul">

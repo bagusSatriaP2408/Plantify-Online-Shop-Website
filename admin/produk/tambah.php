@@ -38,7 +38,6 @@ if (isset($_POST['submit'])) {
 }
 
 $title = "Produk";
-<<<<<<<< HEAD:admin/produk/tambah.php
 
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
@@ -46,23 +45,12 @@ require_once(BASEPATH . "/admin/templates/header.php");
 $products = getAllDataProducts();   // mengambil semua data produk
 $categories  = getAllCategories();  // mengambil semua data kategori
 $supplier = getAllDataSupplier();   // mengambil semua data supplier
-========
-require_once('../base.php');
-require_once(BASEPATH . "/admin/templates/sidebar.php");
-require_once(BASEPATH . "/admin/templates/header.php");
-$products = getAllDataProducts();
-$categories  = getAllCategoriesWithGambarProduk();
-$supplier = getAllDataSupplier();
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/tambah_produk.php
+
 ?>
 
         <!-- start tambah produk -->
         <div class="wadah">
-<<<<<<<< HEAD:admin/produk/tambah.php
             <a href="<?= BASEURL ?>/admin/produk/">
-========
-            <a href="<?= BASEURL ?>/admin/produk.php">
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/tambah_produk.php
                 <button class="kembali">Kembali</button>
             </a>
             <div class="judul">

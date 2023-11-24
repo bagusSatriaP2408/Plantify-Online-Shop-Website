@@ -52,7 +52,6 @@ if (isset($_POST['submit'])) {
 }
 
 $title = "Produk";
-<<<<<<<< HEAD:admin/produk/ubah.php
 
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
@@ -61,23 +60,11 @@ $product = getProductById($id);     // mengambil data produk berdasarkan id
 $categories  = getAllCategories();      // mengambil data kategori
 $supplier = getAllDataSupplier();       // mengambil semua data supplier
 
-========
-require_once('../base.php');
-require_once(BASEPATH . "/admin/templates/sidebar.php");
-require_once(BASEPATH . "/admin/templates/header.php");
-$product = getProductById($id);
-$categories  = getAllCategoriesWithGambarProduk();
-$supplier = getAllDataSupplier();
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/ubah_produk.php
 ?>
 
         <!-- start ubah produk -->
         <div class="wadah">
-<<<<<<<< HEAD:admin/produk/ubah.php
             <a href="<?= BASEURL ?>/admin/produk/">
-========
-            <a href="<?= BASEURL ?>/admin/produk.php">
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/ubah_produk.php
                 <button class="kembali">Kembali</button>
             </a>
             <div class="judul">

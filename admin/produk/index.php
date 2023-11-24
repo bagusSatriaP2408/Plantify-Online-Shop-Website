@@ -1,7 +1,6 @@
 <?php 
 
 $title = "Produk";
-<<<<<<<< HEAD:admin/produk/index.php
 
 require_once('../../base.php');     // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/admin/templates/sidebar.php");
@@ -11,14 +10,6 @@ $products = getAllDataProducts();   // mengambil semua data produk
 $categories  = getAllCategories();  // mengambil semua data category
 $supplier = getAllDataSupplier();   // mengambil semua data supplier
 
-========
-require_once('../base.php');
-require_once(BASEPATH . "/admin/templates/sidebar.php");
-require_once(BASEPATH . "/admin/templates/header.php");
-$products = getAllDataProducts();
-$categories  = getAllCategoriesWithGambarProduk();
-$supplier = getAllDataSupplier();
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/produk.php
 ?>
 
         <!-- start produk -->
@@ -42,11 +33,7 @@ $supplier = getAllDataSupplier();
                         <small>Tersedia <?= $product['stok_produk']?></small>
                     </div>
                     <div class="button-container">
-<<<<<<<< HEAD:admin/produk/index.php
                         <a href="<?= BASEURL ?>/admin/produk/ubah.php?id=<?= $product['id_produk']; ?>">
-========
-                        <a href="<?= BASEURL ?>/admin/ubah_produk.php?id=<?= $product['id_produk']; ?>">
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/produk.php
                             <button class="ubah">Ubah</button>
                         </a> 
                         <a href="hapus.php?id=<?= $product['id_produk']; ?>">
@@ -57,12 +44,8 @@ $supplier = getAllDataSupplier();
                 <!-- end card -->
                 <?php endforeach;?>
             </div>
-<<<<<<<< HEAD:admin/produk/index.php
             <!-- end container-produk -->
             <a href="<?= BASEURL ?>/admin/produk/tambah.php">
-========
-            <a href="<?= BASEURL ?>/admin/tambah_produk.php">
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/produk.php
                 <button class="tambah">Tambahkan Produk Baru</button>
             </a>
         </div>
