@@ -157,6 +157,19 @@ function validateTel(&$errors, $tel) {
         }
     }
 }
+function validateRekening(&$errors, $rek) {
+    if (checkRequired($rek)) {
+        $errors["rek"] = "nomor rekening tidak boleh kosong";
+    } else {
+        if (!checkNumeric($rek)) {
+            $errors["rek"] = "nomor rekening harus berupa angka";
+        } else if (strlen($rek) < 10 || strlen($rek) > 16  ) {
+            $errors["rek"] = "panjang nomor rekening 10 - 16 digit";
+        } else {
+            $errors["rek"] = "";
+        }
+    }
+}
 
 // validasi inputan alamat (required)
 function validateAlamat(&$errors, $address) {

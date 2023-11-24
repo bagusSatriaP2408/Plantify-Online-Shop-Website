@@ -3,15 +3,12 @@
 require_once('../../base.php');     // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/validations.php");    // untuk menggunakan fungsi validasi
 
-$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
-
 $errors = array();
 $success = false;
 
 // ketika submit ditekan
 if (isset($_POST['submit'])) {
 
-    $id = $_POST['id'];
     $nama_supplier = htmlspecialchars($_POST['nama_supplier']);
     $tel = htmlspecialchars($_POST['tel']);
     $alamat = htmlspecialchars($_POST['alamat']);
@@ -22,9 +19,9 @@ if (isset($_POST['submit'])) {
         if (!checkAlphabet($nama_supplier)) {
             $errors['error'] = "nama supplier harus berupa alfabet";
         } else if (!checkNumeric($tel)) {
-            $errors['error'] = "telepon supplier harus berupa angka";
+            $errors['error'] = "telepon supplier harus berupa numerik";
         } else if (strlen($tel) < 12) {
-            $errors['error'] = "telepon tidak boleh kurang dari 12 digit";
+            $errors['error'] = "telepon tidak boleh  kurang dari 12 digit";
         } else {
             $errors['error'] = "";
         }
@@ -36,10 +33,9 @@ if (isset($_POST['submit'])) {
 
     if ($success) {
         try{
-            $stat = DB->prepare("UPDATE supplier SET nama_supplier = :nama_supplier, alamat = :alamat, no_telepon = :telepon WHERE id_supplier = :id_supplier");
+            $stat = DB->prepare("INSERT INTO supplier VALUES ('', :nama, :alamat, :telepon)");
             $stat = $stat->execute(array(
-                ":id_supplier" => $id,
-                ":nama_supplier" => $nama_supplier,
+                ":nama" => $nama_supplier,
                 ":alamat" => $alamat,
                 ":telepon" => $tel));
         } catch (PDOException $err) {
@@ -49,62 +45,58 @@ if (isset($_POST['submit'])) {
 }
 
 $title = "Supplier";
-<<<<<<<< HEAD:admin/supplier/ubah.php
+<<<<<<<< HEAD:admin/supplier/tambah.php
 
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-
-$supplier = getSupplierById($id);   // mengambil data supplier berdasarkan id
 
 ========
 require_once('../base.php');
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-$supplier = getSupplierById($id);
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/ubah_supplier.php
+>>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/tambah_supplier.php
 ?>
 
-        <!-- start ubah supplier -->
+        <!-- start tambah supplier -->
         <div class="wadah">
-<<<<<<<< HEAD:admin/supplier/ubah.php
+<<<<<<<< HEAD:admin/supplier/tambah.php
             <a href="<?= BASEURL ?>/admin/supplier/">
 ========
             <a href="<?= BASEURL ?>/admin/supplier.php">
->>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/ubah_supplier.php
+>>>>>>>> 9b1d9f1baf23f286f2dc379bc1e5ce55b12428d6:admin/tambah_supplier.php
                 <button class="kembali">Kembali</button>
             </a>
             <div class="judul">
-                <h2>Ubah Supplier</h2>
+                <h2>Tambah Supplier</h2>
             </div>
             <p class="error"><?= $errors['error'] ?? ''; ?></p>
             <?php if ($success): ?>
-                <div>Supplier sukses diubah!</div>
+                <div>Supplier sukses ditambahkan!</div>
             <?php else: ?>
                 <!-- start form -->
-                <form action="ubah.php" method="post">
-                    <input type="hidden" value="<?= $supplier['id_supplier']; ?>" name="id">
+                <form action="tambah.php" method="post">
                     <!-- inputan nama supplier -->
                     <div class="input-container">
                         <label for="nama_supplier">Nama Supplier</label>
-                        <input type="text" name="nama_supplier" id="nama_supplier" value="<?= $supplier['nama_supplier'] ?>">
+                        <input type="text" name="nama_supplier" id="nama_supplier" value="<?php echo $_POST["nama_supplier"] ?? '' ?>">
                     </div>
-                    <!-- inputan telepon supplier -->
+                    <!-- inputan telepon supplier-->
                     <div class="input-container">
                         <label for="tel">Telepon Supplier</label>
-                        <input type="text" name="tel" id="tel" value="<?= $supplier['no_telepon'] ?>">
+                        <input type="text" name="tel" id="tel" value="<?php echo $_POST["tel"] ?? '' ?>">
                     </div>
                     <!-- inputan alamat supplier -->
                     <div class="input-container">
                         <label for="alamat">Alamat Supplier</label>
-                        <input type="text" name="alamat" id="alamat" value="<?= $supplier['alamat'] ?>">
+                        <input type="text" name="alamat" id="alamat" value="<?php echo $_POST["alamat"] ?? '' ?>">
                     </div>
                     <!-- submit -->
-                    <button type="submit" name="submit" class="submit">Ubah</button>
+                    <button type="submit" name="submit" class="submit">Tambahkan</button>
                 </form>
                 <!-- end form -->
             <?php endif; ?>
         </div>
-        <!-- end ubah supplier -->
+        <!-- end tambah supplier -->
     </div>
     <!-- end container-kanan -->
 

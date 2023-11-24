@@ -41,5 +41,5 @@ if(!isset($_GET['cate'])){
 </div>
 
 <?php
-require_once('../templates/footer.php'); // mengabungkan dengan halaman header
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
 ?>

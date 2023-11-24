@@ -40,9 +40,11 @@ $populars = getPopularProducts();
             <div>
                 <div class="btn-1">unggulan</div>            <!-- mendapatkan gambar produk populer index ke 0 -->
                 <img class="img-unggulan" src="<?= BASEURL ;?>/assets/img/produk/<?= $populars[0]['gambar_produk']?>"
+                <img class="img-unggulan" src="<?= BASEURL ;?>/assets/img/produk/<?= $populars[0]['gambar_produk']?>"
                     alt="unggulan"
                 />
             </div>
+            <img class="img-abs" src="<?= BASEURL ;?>/assets/img/Vector.png" alt="img-abs" />
             <img class="img-abs" src="<?= BASEURL ;?>/assets/img/Vector.png" alt="img-abs" />
         </div>
     </div>
@@ -53,10 +55,12 @@ $populars = getPopularProducts();
     <div class="judul">
         <h2>Baru</h2>                               <!-- mengarah ke halaman produk -->
         <h4 ><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
+        <h4 ><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
     </div>
     <div class="container">
     <?php foreach($news as $new):?> <!-- perulangan untuk mengeluarkan nilai $news -->
         <div class="card">              <!-- menampialkan gambar produk dari variable $new -->
+            <img src="<?= BASEURL ;?>/assets/img/produk/<?= $new['gambar_produk'] ?>"
             <img src="<?= BASEURL ;?>/assets/img/produk/<?= $new['gambar_produk'] ?>"
               alt="gambar produk" class="img-produk"
             />
@@ -81,6 +85,7 @@ $populars = getPopularProducts();
 <div class="produk">
     <div class="judul">
         <h2>Popular</h2>                    <!-- mengarah ke halaman produk -->
+        <h4><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
         <h4><a class="green"  href="<?= BASEURL. '/customer/produk.php'?>">Lihat semua</a></h4>
     </div>
     <div class="container">
@@ -115,6 +120,7 @@ $populars = getPopularProducts();
         <?php foreach($categories as $category):?>      <!-- perulangan untuk mengeluarkan nilai $categories -->
             <a href="<?= BASEURL?>/customer/produk.php?cate=<?= $category['id_kategori']?>" > <!-- mengarahkan ke produk dengan kategori yang diklik -->
                 <div class="card-kategori">                 <!-- menampialkan gambar produk dari variable $category -->
+                    <img class="img2" src="<?= BASEURL ;?>/assets/img/produk/<?= $category['gambar_produk']?>" alt="img kategori" />
                     <img class="img2" src="<?= BASEURL ;?>/assets/img/produk/<?= $category['gambar_produk']?>" alt="img kategori" />
                     <h4 class="title2"><?= $category['nama_kategori'] ?></h4>
                 </div>

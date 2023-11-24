@@ -10,8 +10,6 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
 
 require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/base.php"); // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
-require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/base.php"); // untuk mengunakan variable constant BASEURL/BASEPATH
-require_once(BASEPATH . "/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
 // mendapatkan produk yang ada di keranjang customer  
 $keranjang = getKeranjang($_SESSION['username']); 
 // perulangan untuk menghitung total produk yang ada di keranjang
@@ -27,24 +25,21 @@ foreach($keranjang as $krnjg){
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plantify | <?= $title ?></title> <!--menampilakan title sesuai dengan halaman -->
     <link rel="stylesheet" href="<?= BASEURL ;?>/assets/styles/style_customer.css" />
-    <link rel="icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
   </head>
   <body>
     <!----------------------------------- START HEADER ------------------------------------>
     <header>
       <div class="menu">
         <img class="logo" src="<?= BASEURL ;?>/assets/img/logo.png" alt="logo" />
-        <img class="logo" src="<?= BASEURL ;?>/assets/img/logo.png" alt="logo" />
         <!--kondisi jika title sesuai dengan halaman maka diberikan class active-->
-        <a class="<?= $title == 'Beranda' ? 'active' : '' ?>" href="<?= BASEURL. "/customer/index.php" ?>">Beranda</a>
-        <a class="<?= $title == 'Produk' ? 'active' : '' ?>" href="<?= BASEURL. "/customer/produk.php" ?>">Produk</a>
-        <a class="<?= $title == 'Daftar Pesanan' ? 'active' : '' ?>" href="<?= BASEURL. "/customer/daftar_transaksi.php" ?>">Daftar Pesanan</a>
         <a class="<?= $title == 'Beranda' ? 'active' : '' ?>" href="<?= BASEURL. "/customer/index.php" ?>">Beranda</a>
         <a class="<?= $title == 'Produk' ? 'active' : '' ?>" href="<?= BASEURL. "/customer/produk.php" ?>">Produk</a>
         <a class="<?= $title == 'Daftar Pesanan' ? 'active' : '' ?>" href="<?= BASEURL. "/customer/daftar_transaksi.php" ?>">Daftar Pesanan</a>
       </div>
       <div class="icon-menu">
+        <a href="">
+          <img src="<?= BASEURL ;?>/assets/img/icon-search.png" alt="icon" />
+        </a>
         <a href="<?= BASEURL ;?>/customer/keranjang.php">
           <?php if($total > 0):?> <!--jika total yang telah dihitung lebih besar dari nol maka tampilkan-->
             <div class="con" >
