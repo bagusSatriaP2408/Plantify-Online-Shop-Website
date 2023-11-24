@@ -1,17 +1,14 @@
 <?php 
-session_start();
 
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../index.php");
-    exit();
-}
-
-require "../validations.php";
+require_once('../../base.php');     // untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH . "/validations.php");    // untuk menggunakan fungsi validasi
 
 $id = isset($_POST['id_produk']) ? $_POST['id_produk'] : $_GET['id'];
 
 $errors = array();
 $success = false;
+
+// ketika submit ditekan
 if (isset($_POST['submit'])) {
 
     $id = $_POST['id_produk'];
@@ -55,41 +52,48 @@ if (isset($_POST['submit'])) {
 }
 
 $title = "Produk";
-require_once('../base.php');
+
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-$product = getProductById($id);
-$categories  = getAllCategoriesWithGambarProduk();
-$supplier = getAllDataSupplier();
+
+$product = getProductById($id);     // mengambil data produk berdasarkan id
+$categories  = getAllCategories();      // mengambil data kategori
+$supplier = getAllDataSupplier();       // mengambil semua data supplier
+
 ?>
 
         <!-- start ubah produk -->
         <div class="wadah">
-            <a href="<?= BASEURL ?>/admin/produk.php">
+            <a href="<?= BASEURL ?>/admin/produk/">
                 <button class="kembali">Kembali</button>
             </a>
             <div class="judul">
                 <h2>Ubah Produk</h2>
             </div>
             <p class="error"><?= $errors['error'] ?? ''; ?></p>
-            <?php if ($success) { ?>
+            <?php if ($success): ?>
                 <div>Produk berhasil diubah!</div>
-            <?php } else { ?>
-                <form action="ubah_produk.php" method="post" enctype="multipart/form-data">
+            <?php else: ?>
+                <!-- start form -->
+                <form action="ubah.php" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="<?= $product['id_produk'] ?>" name="id_produk">
                     <input type="hidden" value="<?= $product['gambar_produk']; ?>" name="gambar_lama">
+                    <!-- inputan nama produk -->
                     <div class="input-container">
                         <label for="nama_produk">Nama Produk</label>
                         <input type="text" name="nama_produk" id="nama_produk" value="<?= $product['nama_produk'] ?>">
                     </div>
+                    <!-- inputan harga produk -->
                     <div class="input-container">
                         <label for="harga">Harga Produk</label>
                         <input type="text" name="harga" id="harga" value="<?= $product['harga_produk'] ?>">
                     </div>
+                    <!-- inputan stok produk -->
                     <div class="input-container">
                         <label for="stok">Stok Produk</label>
                         <input type="text" name="stok" id="stok" value="<?= $product['stok_produk'] ?>">
                     </div>
+                    <!-- inputan kategori -->
                     <div class="input-container">
                         <label for="kategori">Kategori</label>
                         <select name="kategori" id="kategori">
@@ -100,6 +104,7 @@ $supplier = getAllDataSupplier();
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <!-- inputan supplier -->
                     <div class="input-container">
                         <label for="supplier">Supplier</label>
                         <select name="supplier" id="supplier">
@@ -110,14 +115,17 @@ $supplier = getAllDataSupplier();
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <!-- inputan gambar -->
                     <div class="input-container">
                         <label for="gambar">Gambar : </label>
                         <img src="<?= BASEURL ?>\assets\img\produk\<?= $product['gambar_produk']; ?>" alt="gambar_produk" style="width:200px;">
                         <input type="file" name="gambar" id="gambar">
                     </div>
+                    <!-- submit -->
                     <button type="submit" name="submit" class="submit">Ubah</button>
                 </form>
-            <?php } ?>
+                <!-- end form -->
+            <?php endif; ?>
         </div>
         <!-- end ubah produk -->
     </div>

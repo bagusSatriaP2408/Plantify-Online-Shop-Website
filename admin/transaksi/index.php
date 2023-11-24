@@ -1,16 +1,13 @@
 <?php 
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Konfirmasi Bayar";
-require_once('../base.php');
+
+require_once('../../base.php');     // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-$pesanan =  getAllOrder();
+
+$pesanan =  getAllOrder();      // mengambil data semua pesanan
+
 ?>
     
         <!-- start konfirmasi -->
@@ -18,6 +15,7 @@ $pesanan =  getAllOrder();
             <div class="judul">
                 <h2>Supplier</h2>
             </div>
+            <!-- start table -->
             <table>
                 <tr>
                     <th>Tanggal Order</th>
@@ -40,7 +38,7 @@ $pesanan =  getAllOrder();
                             <?php if(!$order['status']==0) : ?>
                                 <button class="hapus">Telah dikonfirmasi</button>
                             <?php else: ?>
-                                <a href="<?= BASEURL ?>/admin/ubah_status_bayar.php?id=<?= $order['id_order']; ?>">
+                                <a href="<?= BASEURL ?>/admin/transaksi/ubah_status_bayar.php?id=<?= $order['id_order']; ?>">
                                     <button class="ubah">Konfirmasi</button>
                                 </a>
                             <?php endif;?>
@@ -48,6 +46,7 @@ $pesanan =  getAllOrder();
                     </tr>
                 <?php endforeach; ?>
             </table>
+            <!-- end table -->
         </div>
         <!-- end konfirmasi -->
     </div>

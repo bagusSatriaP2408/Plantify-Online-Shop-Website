@@ -8,7 +8,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
 }
 
 
-require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/base.php"); // untuk mengunakan variable constant BASEURL/BASEPATH
+require_once("../base.php"); // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
 // mendapatkan produk yang ada di keranjang customer  
 $keranjang = getKeranjang($_SESSION['username']); 
@@ -25,6 +25,8 @@ foreach($keranjang as $krnjg){
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Plantify | <?= $title ?></title> <!--menampilakan title sesuai dengan halaman -->
     <link rel="stylesheet" href="<?= BASEURL ;?>/assets/styles/style_customer.css" />
+    <link rel="icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
   </head>
   <body>
     <!----------------------------------- START HEADER ------------------------------------>

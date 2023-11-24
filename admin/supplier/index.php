@@ -1,16 +1,13 @@
 <?php 
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Supplier";
-require_once('../base.php');
+
+require_once('../../base.php');     // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-$supplier = getAllDataSupplier();
+
+$supplier = getAllDataSupplier();   // mengambil semua data supplier
+
 ?>
     
         <!-- start supplier -->
@@ -18,6 +15,7 @@ $supplier = getAllDataSupplier();
             <div class="judul">
                 <h2>Supplier</h2>
             </div>
+            <!-- start table -->
             <table>
                 <tr>
                     <th>Nama</th>
@@ -31,17 +29,20 @@ $supplier = getAllDataSupplier();
                         <td><?= $sup['no_telepon']; ?></td>
                         <td><?= $sup['alamat']; ?></td>
                         <td>
-                            <a href="<?= BASEURL ?>/admin/ubah_supplier.php?id=<?= $sup['id_supplier']; ?>">
-                                <button class="ubah">Ubah</button>
-                            </a>
-                            <a href="hapus_supplier.php?id=<?= $sup['id_supplier']; ?>">
-                                <button class="hapus">Hapus</button>
-                            </a>
+                            <div class="button-container">
+                                <a href="<?= BASEURL ?>/admin/supplier/ubah.php?id=<?= $sup['id_supplier']; ?>">
+                                    <button class="ubah">Ubah</button>
+                                </a>
+                                <a href="hapus.php?id=<?= $sup['id_supplier']; ?>">
+                                    <button class="hapus">Hapus</button>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
-            <a href="<?= BASEURL ?>/admin/tambah_supplier.php">
+            <!-- end table -->
+            <a href="<?= BASEURL ?>/admin/supplier/tambah.php">
                 <button class="tambah">Tambahkan Supplier Baru</button>
             </a>
         </div>

@@ -108,9 +108,9 @@ function validatePassword(&$errors, $password) {
         $errors["password"] = "password tidak boleh kosong";
     } else {
         if (!checkPassword($password)) {
-            $errors["password"] = "harus gabungan angka dan huruf dan simbol";
+            $errors["password"] = "gabungan angka dan huruf dan simbol";
         } else if (strlen($password) < 8) {
-            $errors["password"] = "password tidak boleh kurang dari 8 karakter";
+            $errors["password"] = "tidak boleh kurang dari 8 karakter";
         } else {
             $errors["password"] = "";
         }
@@ -120,7 +120,7 @@ function validatePassword(&$errors, $password) {
 // validasi inputan konfirmasi password (required, password1==password2)
 function validateConfirmPassword(&$errors, $password, $password2) {
     if (checkRequired($password2)) {
-        $errors["password2"] = "harap konfirmasi password anda";
+        $errors["password2"] = "konfirmasi password anda";
     } else {
         if ($password2 != $password) {
             $errors["password2"] = "password tidak sesuai";
@@ -157,6 +157,8 @@ function validateTel(&$errors, $tel) {
         }
     }
 }
+
+// validasi inputan telepon (required, numeric, panjang digit)
 function validateRekening(&$errors, $rek) {
     if (checkRequired($rek)) {
         $errors["rek"] = "nomor rekening tidak boleh kosong";
@@ -193,7 +195,7 @@ function validateLogin(&$errors, $username, $password) {
             $errors["password"] = "harus gabungan angka dan huruf dan simbol";
             return false;
         } else if (strlen($password) < 8) {
-            $errors["password"] = "password tidak boleh kurang dari 8 karakter";
+            $errors["password"] = "tidak boleh kurang dari 8 karakter";
             return false;
         // cek jika role bukan false
         } else if ($role) {
@@ -225,8 +227,8 @@ function validasiTambahProduk (&$errors, $inputan) {
 
     if (checkRequired($nama_produk) || checkRequired($harga) || checkRequired($stok) || $kategori == 0 || $sup == 0) {
         $errors['error'] = "data produk tidak boleh ada yang kosong";
-    } else if (!checkAlphaNumeric($nama_produk) && !checkAlphabet($nama_produk)) {
-        $errors['error'] = "nama produk tidak boleh mengandung simbol";
+    } else if (!checkAlphabet($nama_produk)) {
+        $errors['error'] = "nama produk tidak boleh mengandung angka atau simbol";
     } else if ($stat->rowCount() > 0) {
         $errors['error'] = "nama produk sudah ada";
     } else if (!checkNumeric($harga)) {
@@ -264,7 +266,7 @@ function uploadGambar(&$errors) {
     $namaFileBaru .= '.';
     $namaFileBaru .= $ekstensiGambar;
 
-    move_uploaded_file($tmpName, "../../assets/img/produk/" . $namaFileBaru); 
+    move_uploaded_file($tmpName, BASEPATH . "/assets/img/produk/" . $namaFileBaru); 
     
     return $namaFileBaru;
 

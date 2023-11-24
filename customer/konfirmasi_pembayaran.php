@@ -109,3 +109,6 @@ if(isset($_POST['submit'])){       // cek apakah ada submit
         </form>
     </div>
 </div>
+<?php
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
+?>

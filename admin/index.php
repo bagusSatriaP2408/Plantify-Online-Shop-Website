@@ -1,33 +1,32 @@
 <?php 
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Dashboard";
-require_once('../base.php');
+
+require_once('../base.php');        // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-$products = getAllDataProducts();
-$customers = getAllDataCustomer();
-$supplier = getAllDataSupplier();
+
+$products = getAllDataProducts();   // mengambil semua data produk
+$customers = getAllDataCustomer();  // mengambil semua data customer
+$supplier = getAllDataSupplier();   // mengambil semua data supplier
+
 ?>
         
         <!-- start produk -->
         <div class="wadah">
             <div class="judul">
                 <h2>Produk</h2>
-                <a href="<?= BASEURL ?>/admin/produk.php">
+                <a href="<?= BASEURL ?>/admin/produk/">
                     <h4>Lihat semua</h4>
                 </a>
             </div>
+            <!-- start container-produk -->
             <div class="container-produk">
                 <?php for($i=0;$i<3;$i++):?>
                 <div class="card">
                     <img
                         class="img-produk"
+                        src="<?= BASEURL ;?>/assets/img/produk/<?= $products[$i]['gambar_produk'] ?>"
                         src="<?= BASEURL ;?>/assets/img/produk/<?= $products[$i]['gambar_produk'] ?>"
                         alt="gambar produk"
                     />
@@ -39,6 +38,7 @@ $supplier = getAllDataSupplier();
                 </div>
                 <?php endfor;?>
             </div>
+            <!-- end container-produk -->
         </div>
         <!-- end produk -->
 
@@ -46,10 +46,11 @@ $supplier = getAllDataSupplier();
         <div class="wadah">
             <div class="judul">
                 <h2>Supplier</h2>
-                <a href="<?= BASEURL ?>/admin/supplier.php">
+                <a href="<?= BASEURL ?>/admin/supplier/">
                     <h4>Lihat semua</h4>
                 </a>
             </div>
+            <!-- start table -->
             <table>
                 <tr>
                     <th>Nama</th>
@@ -64,6 +65,7 @@ $supplier = getAllDataSupplier();
                     </tr>
                 <?php endfor; ?>
             </table>
+            <!-- end table -->
         </div>
         <!-- end supplier -->
 
@@ -71,10 +73,11 @@ $supplier = getAllDataSupplier();
         <div class="wadah">
             <div class="judul">
                 <h2>Customer</h2>
-                <a href="<?= BASEURL ?>/admin/customer.php">
+                <a href="<?= BASEURL ?>/admin/customer/">
                     <h4>Lihat semua</h4>
                 </a>
             </div>
+            <!-- start table -->
             <table>
                 <tr>
                     <th>Username</th>
@@ -91,6 +94,7 @@ $supplier = getAllDataSupplier();
                     </tr>
                 <?php endfor; ?>
             </table>
+            <!-- end table -->
         </div>
         <!-- end customer -->
     </div>

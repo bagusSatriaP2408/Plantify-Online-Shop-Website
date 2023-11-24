@@ -46,7 +46,11 @@ $dataKeranjang = getKeranjang($_SESSION['username']);   // mendapatkan semua pro
                         <div class="con-jml">    <!-- tombol untuk tambah satu produk dari keranjang -->
                             <a class="jumlah-btn" href="kurang_jumlah_produk_keranjang.php?pro=<?=$data["id_produk"]?>&krjng=<?= $data['id_keranjang']?>">&minus;</a> 
                                 <h5 class="jml"><?=$data['jml']?> </h5>     <!-- tombol untuk kurang satu produk dari keranjang -->
-                            <a class="jumlah-btn" href="tambah_jumlah_produk_keranjang.php?pro=<?=$data["id_produk"]?>&krjng=<?= $data['id_keranjang']?>">&plus;</a>
+                            <?php if($data['jml'] >= $data['stok_produk']):?>
+                                <span class="jumlah-btn">&plus;</span>
+                            <?php else: ?>
+                                <a class="jumlah-btn" href="tambah_jumlah_produk_keranjang.php?pro=<?=$data["id_produk"]?>&krjng=<?= $data['id_keranjang']?>">&plus;</a>
+                            <?php endif; ?>
                         </div>
                     </td>
                 </tr>

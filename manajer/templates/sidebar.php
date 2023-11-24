@@ -1,5 +1,5 @@
 <?php 
-require_once("../base.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/base.php");
 require_once(BASEPATH . "/database.php");
 ?>
 <!DOCTYPE html>
@@ -8,7 +8,9 @@ require_once(BASEPATH . "/database.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager | <?= $title ?></title>
-    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style_manajer.css" />
+    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style_manajer.css"/>
+    <link rel="icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
 

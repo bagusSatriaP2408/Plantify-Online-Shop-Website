@@ -3,11 +3,12 @@ session_start();
 /* pengecekan jika tidak ada variable $_SESSION['login'] atau $_SESSION['role'] 
 tidak sama dengan 'customer' maka dialihkan ke halaman login  */
 if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../index.php");
+    $prevPage = $_SERVER['HTTP_REFERER'];
+    header("Location: $prevPage");
     exit();
 }
 
-require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
+require_once("../base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
 require_once(BASEPATH.'/validations.php');
 // mendapatkan data diri customer
@@ -69,7 +70,7 @@ if (isset($_POST['register'])) {
                 <textarea name="address" id="address" rows="1"><?= $_POST["address"] ?? $customer['alamat'] ?></textarea>
                 <span class="error-msg"><?= $errors["address"] ?? '' ?></span>
             </div>
-            <a href="profile.php" class="btn">Batal</a>
+            <a href="<?= $_SERVER['HTTP_REFERER']; ?>" class="btn">Batal</a>
             <button type="submit" name="register">Edit</button>    
         </form>
     </div>

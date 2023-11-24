@@ -2,9 +2,11 @@
 require_once('base.php');
 
 
+//------------------------------- Customer ------------------------------------------
 
+//------------------------------- Profile ------------------------------------------
 
-//-------------------------------Profile------------------------------------------
+// fungsi query untuk mendapatkan data diri customer 
 function getDataDiri($username)
 {
 	try {
@@ -17,13 +19,14 @@ function getDataDiri($username)
 	}
 }
 
-// ---------------------------end Profile ----------------------------------------
+// --------------------------- end Profile ----------------------------------------
 
 // fungsi query untuk mendapatkan 4 produk terbaru
 function getNewProducts()
 {
 	try {
-		$statement = DB->prepare("SELECT * FROM produk ORDER BY created_at DESC LIMIT 4");
+		$statement = DB->prepare("SELECT * FROM produk p JOIN kategori k ON p.id_kategori = k.id_kategori
+		ORDER BY created_at DESC LIMIT 4");
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
@@ -31,12 +34,13 @@ function getNewProducts()
 	}
 }
 
+// fungsi query untuk mendapatkan 4 produk yang diorder paling banyak
 function getPopularProducts()
 {
 	try {
 		$statement = DB->prepare("SELECT *,sum(jumlah_produk) 
-		AS jml FROM order_detail od JOIN produk p ON od.id_produk = p.id_produk  GROUP BY od.id_produk
-		 ORDER BY jml DESC LIMIT 4");
+		AS jml FROM order_detail od JOIN produk p ON od.id_produk = p.id_produk JOIN kategori k ON p.id_kategori = k.id_kategori
+		GROUP BY od.id_produk ORDER BY jml DESC LIMIT 4");
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
@@ -44,11 +48,11 @@ function getPopularProducts()
 	}
 }
 
-
-function getAllDataProducts()
+// fungsi query untuk mendapatkan semua data produk
+function getAllDataProductsWithCategory()
 {
 	try {
-		$statement = DB->prepare("SELECT * FROM produk");
+		$statement = DB->prepare("SELECT * FROM produk p JOIN kategori k ON p.id_kategori = k.id_kategori");
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
@@ -56,8 +60,8 @@ function getAllDataProducts()
 	}
 }
 
-
-function getAllCategoriesWithGambarProduk()
+// fungsi query untuk mendapatkan semua data kategori
+function getAllCategories()
 {
 	try {
 		$statement = DB->prepare("SELECT k.id_kategori,nama_kategori,gambar_produk  FROM produk p 
@@ -69,6 +73,7 @@ function getAllCategoriesWithGambarProduk()
 	}
 }
 
+// fungsi query untuk mendapatkan semua data produk berdasarkan kategori
 function getAllDataProductsWithDetailsByCategory($kodeKat)
 {
 	try {
@@ -81,8 +86,7 @@ function getAllDataProductsWithDetailsByCategory($kodeKat)
 	}
 }
 
-
-
+// fungsi untuk mendapatkan keranjang customer
 function getKeranjang($username)
 {
 	try{
@@ -96,17 +100,19 @@ function getKeranjang($username)
 	}
 }
 
+// fungsi untuk mendapatkan id keranjang customer 
 function getCartCode($username)
 {
 	try {
+		// mengambil id_keranjang dari customer 
 		$statement = DB->prepare("SELECT id_keranjang FROM keranjang WHERE username = :username");
 		$statement->bindValue(':username', $username);
 		$statement->execute();
-		if($statement->rowcount() > 0)
+		if($statement->rowcount() > 0)  // jika query ada maka return id_keranjang
 		{
 			return $statement->fetch(PDO::FETCH_ASSOC);
 		}
-		else{
+		else{   //jika query tidak ada maka insert ke table keranjang lalu ambil id_keranjang
 			$statement1 = DB->prepare("INSERT INTO keranjang (username) VALUES (:username)");
 			$statement1->bindValue(':username', $username);
 			$statement1->execute();
@@ -119,9 +125,11 @@ function getCartCode($username)
 		echo $err->getMessage();
 	}
 }
+
+// fungsi query untuk menambahkan keranjang
 function insertCart($username, $id_produk)
 {
-	$id_keranjang = getCartCode($username);
+	$id_keranjang = getCartCode($username); //funsi untuk mendapatkan id_keranjang
 	try {
 		$statement = DB->prepare("INSERT INTO keranjang_detail(id_keranjang,id_produk) VALUES (:id_keranjang,:id_produk)");
 		$statement->bindValue(':id_keranjang', $id_keranjang['id_keranjang']);
@@ -134,23 +142,10 @@ function insertCart($username, $id_produk)
 		echo $err->getMessage();
 	}
 }
-// function getAllProductsInCarts($kodePelanggan)
-// {
-// 	try {
-// 		$statement = DB->prepare("SELECT cartdetails.kodeProduk, namaProduk,gambarProduk, categories.namaKategori,
-// 		 hargaProduk, COUNT(*) AS jumlah_item FROM cartdetails JOIN carts ON cartdetails.kodeKeranjang = carts.kodeKeranjang 
-// 		 JOIN products ON cartdetails.kodeProduk = products.kodeProduk JOIN categories ON products.kodeKategori=categories.kodeKategori
-// 		  where carts.kodePelanggan=:kodePelanggan GROUP BY cartdetails.kodeProduk");
-// 		$statement->bindValue(':kodePelanggan', $kodePelanggan);
-// 		$statement->execute();
-// 		return $statement->fetchAll(PDO::FETCH_ASSOC);
-// 	} catch (PDOException $err) {
-// 		echo $err->getMessage();
-// 	}
-// }
+
+// fungsi query untuk menghapus produk di keranjang
 function deleteProductInCart($id_produk, $id_keranjang,$hapus)
 {
-	// $kodeKeranjang = getCartCode($kodePelanggan);
 	if($hapus===0){
 		$query = "DELETE FROM keranjang_detail WHERE id_keranjang=:id_keranjang AND id_produk=:id_produk ORDER BY id_keranjang_detail DESC LIMIT 1";
 	}elseif($hapus===1){
@@ -168,9 +163,10 @@ function deleteProductInCart($id_produk, $id_keranjang,$hapus)
 		echo $err->getMessage();
 	}
 }
+
+// fungsi untuk menambah produk di keranjang
 function increaseProductInCart($id_produk, $id_keranjang)
 {
-	// $kodeKeranjang = getCartCode($kodePelanggan);
 	try {
 		$statement = DB->prepare("INSERT INTO  keranjang_detail(id_keranjang,id_produk) VALUES (:id_keranjang,:id_produk)");
 		$statement->bindValue(':id_keranjang', $id_keranjang);
@@ -184,6 +180,7 @@ function increaseProductInCart($id_produk, $id_keranjang)
 	}
 }
 
+// fungsi query untuk mendapatkan nama bank 
 function getAllBank()
 {
 	try {
@@ -195,8 +192,7 @@ function getAllBank()
 	}
 }
 
-
-
+// fungsi query untuk menambahkan order ke database
 function insertOrder($username,$total,$rekening,$bank,$id_keranjang)
 {
 	try {
@@ -222,6 +218,7 @@ function insertOrder($username,$total,$rekening,$bank,$id_keranjang)
 	}
 }
 
+// fungsi query untuk menambahkan ke order detail
 function insertOrderDetail($id_order,$id_produk,$jumlah,$total_harga)
 {
 	try {
@@ -237,6 +234,7 @@ function insertOrderDetail($id_order,$id_produk,$jumlah,$total_harga)
 	}
 }
 
+// fungsi query untuk mendapatkan data order dari customer
 function getOrder($username)
 {
 	try {
@@ -249,6 +247,7 @@ function getOrder($username)
 	}
 }
 
+// fungsi query untuk mendapatkan id order berdasarkan customer tertentu
 function getOrderbyId($username,$id)
 {
 	try {
@@ -260,6 +259,8 @@ function getOrderbyId($username,$id)
 		echo $err->getMessage();
 	}
 }
+
+// fungsi query untuk mendapatkan semua data di order detail berdasarkan id
 function getDetailOrder($id){
 	try {
 		$statement = DB->prepare("SELECT * FROM order_detail od JOIN produk p ON od.id_produk = p.id_produk
@@ -271,6 +272,7 @@ function getDetailOrder($id){
 	}
 }
 
+// fungsi query untuk menghapus order berdasarkan id
 function deleteOrderById($id)
 {
 	try {
@@ -286,6 +288,7 @@ function deleteOrderById($id)
 	}
 }
 
+// fungsi query untuk mengupdate order berdasarkan id
 function updateOrder($id_bank,$no_rekening,$id)
 {
 	try {
@@ -297,6 +300,109 @@ function updateOrder($id_bank,$no_rekening,$id)
 	}
 }
 
+//------------------------------- end Customer ------------------------------------------
+
+
+
+
+//------------------------------- Admin ------------------------------------------
+
+// fungsi query untuk mendapatkan semua data produk
+function getAllDataProducts()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM produk");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk mendapatkan semua data customer
+function getAllDataCustomer()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM customer");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk mendapatkan semua data supplier
+function getAllDataSupplier()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM supplier");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk menghapus produk berdasarkan id di database
+function deleteProduct($id) 
+{
+	try {
+		$statement = DB->prepare("DELETE FROM produk WHERE id_produk = :id");
+		$statement->execute(array(":id" => $id));
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk mendapatkan produk berdasarkan id 
+function getProductById($id) 
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM produk WHERE id_produk = :id");
+		$statement->execute(array(":id" => $id));
+		return $statement->fetch(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk menghapus supplier berdasarkan id di database
+function deleteSupplier($id) 
+{
+	try {
+		$statement = DB->prepare("DELETE FROM supplier WHERE id_supplier = :id");
+		$statement->execute(array(":id" => $id));
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk mendapatkan supplier berdasarkan id 
+function getSupplierById($id) {
+	try {
+		$statement = DB->prepare("SELECT * FROM supplier WHERE id_supplier = :id");
+		$statement->execute(array(":id" => $id));
+		return $statement->fetch(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk mendapatkan semua data order
+function getAllOrder()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM `order` o JOIN bank b on o.id_bank=b.id_bank ORDER BY status,tanggal_order DESC");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk mengupdate status order
 function updateStatusOrder($id)
 {
 	try {
@@ -318,124 +424,17 @@ function updateStatusOrder($id)
 	}
 }
 
+// --------------------------- end Admin ----------------------------------------
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//-------------------------------Admin------------------------------------------
-
-function getAllDataCustomer()
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM customer");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
-
-function getAllDataSupplier()
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM supplier");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
-
-function deleteProduct($id) 
-{
-	try {
-		$statement = DB->prepare("DELETE FROM produk WHERE id_produk = :id");
-		$statement->execute(array(":id" => $id));
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
-
-function getProductById($id) 
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM produk WHERE id_produk = :id");
-		$statement->execute(array(":id" => $id));
-		return $statement->fetch(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
-
-function deleteSupplier($id) 
-{
-	try {
-		$statement = DB->prepare("DELETE FROM supplier WHERE id_supplier = :id");
-		$statement->execute(array(":id" => $id));
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
-
-function getSupplierById($id) {
-	try {
-		$statement = DB->prepare("SELECT * FROM supplier WHERE id_supplier = :id");
-		$statement->execute(array(":id" => $id));
-		return $statement->fetch(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
-
-function getAllOrder()
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM `order` o JOIN bank b on o.id_bank=b.id_bank ORDER BY status,tanggal_order DESC");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
-
-// ---------------------------end Admin ----------------------------------------
-
-
-
-
-//-------------------------------Manajer------------------------------------------
-
-function getAllProducts() 
-{
-	try {
-		$statement = DB->prepare("SELECT * FROM produk");
-		$statement->execute();
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
-	} catch (PDOException $err) {
-		echo $err->getMessage();
-	}
-}
+//------------------------------- Manajer ------------------------------------------
 
 function getAllOrders($status) 
 {
 	try {
-		$statement = DB->prepare("SELECT * FROM `order` WHERE status = :status");
+		$statement = DB->prepare("SELECT * FROM `order` WHERE status = :status ORDER BY tanggal_order");
 		$statement->execute([":status"=>$status]);
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
@@ -447,7 +446,7 @@ function getAllOrderByStatusAndTime($time1,$time2,$status)
 {
 	try {
 		$statement = DB->prepare("SELECT * FROM `order` WHERE (tanggal_order BETWEEN :time1 AND :time2) 
-		AND status=:status");
+		AND status=:status ORDER BY tanggal_order");
 		$statement->execute([':time1'=>$time1,':time2'=>$time2,':status'=>$status]);
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {

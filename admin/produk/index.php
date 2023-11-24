@@ -1,18 +1,15 @@
 <?php 
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Produk";
-require_once('../base.php');
+
+require_once('../../base.php');     // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-$products = getAllDataProducts();
-$categories  = getAllCategoriesWithGambarProduk();
-$supplier = getAllDataSupplier();
+
+$products = getAllDataProducts();   // mengambil semua data produk
+$categories  = getAllCategories();  // mengambil semua data category
+$supplier = getAllDataSupplier();   // mengambil semua data supplier
+
 ?>
 
         <!-- start produk -->
@@ -20,8 +17,10 @@ $supplier = getAllDataSupplier();
             <div class="judul">
                 <h2>Produk</h2>
             </div>
+            <!-- start container-produk -->
             <div class="container-produk">
                 <?php foreach ($products as $product):?>
+                <!-- start card -->
                 <div class="card">
                     <img
                         class="img-produk"
@@ -34,17 +33,19 @@ $supplier = getAllDataSupplier();
                         <small>Tersedia <?= $product['stok_produk']?></small>
                     </div>
                     <div class="button-container">
-                        <a href="<?= BASEURL ?>/admin/ubah_produk.php?id=<?= $product['id_produk']; ?>">
+                        <a href="<?= BASEURL ?>/admin/produk/ubah.php?id=<?= $product['id_produk']; ?>">
                             <button class="ubah">Ubah</button>
                         </a> 
-                        <a href="hapus_produk.php?id=<?= $product['id_produk']; ?>">
+                        <a href="hapus.php?id=<?= $product['id_produk']; ?>">
                             <button class="hapus">Hapus</button>
                         </a>
                     </div>
                 </div>
+                <!-- end card -->
                 <?php endforeach;?>
             </div>
-            <a href="<?= BASEURL ?>/admin/tambah_produk.php">
+            <!-- end container-produk -->
+            <a href="<?= BASEURL ?>/admin/produk/tambah.php">
                 <button class="tambah">Tambahkan Produk Baru</button>
             </a>
         </div>

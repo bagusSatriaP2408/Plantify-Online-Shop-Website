@@ -1,16 +1,13 @@
 <?php 
-session_start();
-
-if (!isset($_SESSION['login']) || $_SESSION['role'] != 'admin') {
-    header("Location: ../index.php");
-    exit();
-}
 
 $title = "Customer";
-require_once('../base.php');
+
+require_once('../../base.php');    // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/admin/templates/sidebar.php");
 require_once(BASEPATH . "/admin/templates/header.php");
-$customers = getAllDataCustomer();
+
+$customers = getAllDataCustomer();  // mengambil semua data customer
+
 ?>
 
         <!-- start customer -->
@@ -18,6 +15,7 @@ $customers = getAllDataCustomer();
             <div class="judul">
                 <h2>Customer</h2>
             </div>
+            <!-- start table -->
             <table>
                 <tr>
                     <th>Username</th>
@@ -34,12 +32,11 @@ $customers = getAllDataCustomer();
                     </tr>
                 <?php endforeach; ?>
             </table>
+            <!-- end table -->
         </div>
         <!-- end customer -->
-                    
     </div>
     <!-- end container-kanan -->
 
 </body>
 </html>
-    

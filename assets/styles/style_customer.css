@@ -61,6 +61,15 @@ a {
 .con {
   position: relative;
 }
+.abs {
+  position: absolute;
+  right: -12px;
+  top: -15px;
+  color: yellow;
+}
+.con {
+  position: relative;
+}
 /* End Header */
 /* Start Main */
 main {
@@ -158,7 +167,6 @@ p {
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: 40px;
-  align-content: center;
 }
 .card {
   display: flex;
@@ -186,7 +194,7 @@ small {
   padding: 15px;
 }
 .btn-card {
-  padding: 13px 20px;
+  padding: 10px 20px;
   font-size: medium;
   border-radius: 10px;
   background-color: var(--hijau);
@@ -194,6 +202,20 @@ small {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.btn-card:hover {
+  background-color: #003831;
+}
+.habis {
+  background-color: #5a6268;
+}
+.habis:hover {
+  background-color: #515a61;
+}
+.green {
+  color: var(--hijau);
 }
 .green {
   color: var(--hijau);
@@ -207,7 +229,7 @@ small {
   border-radius: 20px;
   overflow: hidden;
 }
-.img2 {
+.img-kategori {
   object-fit: cover;
   width: 600px;
   height: 242px;
@@ -241,6 +263,10 @@ footer {
   background-color: black;
   max-width: 1687px;
   min-width: 1444px;
+}
+.prod {
+  justify-content: flex-start;
+  column-gap: 50px;
 }
 /* End Footer */
 /* ============================================ End Index ============================ */
@@ -298,10 +324,12 @@ th {
   align-items: center;
 }
 .jumlah-btn {
-  color: #666666;
-  border: 1px solid #666666;
+  color: #10289e;
+  border: 1px solid #0e42a4;
   border-radius: 100px;
   padding: 0 7px 0 7px;
+  cursor: pointer;
+  margin: 10px;
 }
 .jml {
   margin: 15px;
@@ -399,4 +427,15 @@ th.riwayat {
 .back-btn {
   width: auto;
   margin: 0px 60px 30px 60px;
+}
+.hijau {
+  background-color: var(--hijau);
+}
+
+.profile {
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

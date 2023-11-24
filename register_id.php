@@ -70,6 +70,8 @@ if (isset($_POST['register'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style.css">
+    <link rel="icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
     
@@ -78,8 +80,10 @@ if (isset($_POST['register'])) {
         <!-- jika sukses tampilkan terima kasih dan button login ke halaman login -->
         <?php if ($success) { ?>
 
-            <div>Terima Kasih</div>
-            <a href="index.php" class="btn">Login</a>
+            <div class="thx">
+                <h2>Registrasi Berhasil!</h2>
+                <a href="index.php" class="btn">Login</a>
+            </div>
 
         <!-- jika tidak sukses tetap di bagian registrasi -->
         <?php } else { ?>

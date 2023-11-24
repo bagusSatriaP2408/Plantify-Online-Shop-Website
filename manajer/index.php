@@ -9,7 +9,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'manajer') {
 $title = "Dashboard";
 require_once('../base.php');
 require_once(BASEPATH . "/manajer/templates/sidebar.php");
-$products = getAllProducts();
+$products = getAllDataProducts();
 ?>
 
     <!-- start container-kanan -->

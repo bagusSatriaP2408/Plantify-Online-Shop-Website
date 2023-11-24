@@ -47,3 +47,7 @@ $detail_order = getDetailOrder($_GET['order']);
         <a class="kembali back-btn" href="daftar_transaksi.php">Kembali</a>
     </div>
 </div>
+
+<?php
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
+?>

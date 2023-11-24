@@ -7,9 +7,9 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
     exit();
 }
 
-require_once("../base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
+require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
-require_once(BASEPATH.'/validations.php');
+require_once(BASEPATH . "/validations.php");
 
 $order = getOrderbyId($_SESSION['username'],$_GET['id']);
 $banks = getAllBank();
@@ -40,7 +40,7 @@ if(isset($_POST['edit'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Prembayaran</title>
+    <title>Edit Pembayaran</title>
     <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style.css">
 </head>
 <body>    

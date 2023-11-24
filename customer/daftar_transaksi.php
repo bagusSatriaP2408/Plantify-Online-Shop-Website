@@ -14,7 +14,13 @@ $pesanan =  getOrder($_SESSION['username']);
         <h2>Riwayat Transaksi</h2>
     </div>
     <div class="card">
-        <table class="riwaya">
+        <?php if(empty($pesanan)) : ?> <!-- jika keranjang kosong maka tampilkan berikut -->
+            <div class="kosong">
+                <h4>Anda belum melakukan transaksi</h4>
+                <a class="btn-card" href="produk.php">Belanja Sekarang</a>
+            </div>
+        <?php else :?> 
+        <table class="riwayat">
             <tr>
                 <th class="riwayat">Tanggal Order</th>
                 <th class="riwayat">Total Order</th>
@@ -43,6 +49,9 @@ $pesanan =  getOrder($_SESSION['username']);
                 </tr>
             <?php endforeach?>
         </table>
+        <?php endif ?>
     </div>
 </div>
-
+<?php
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
+?>
