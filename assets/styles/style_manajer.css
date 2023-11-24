@@ -91,10 +91,6 @@ a {
     margin: 10px 15px;
     border-radius: 10px;
 }
-p.error {
-    color: red;
-    font-size: 1.1rem;
-}
 input {
     padding: 8px;
     margin: 5px;

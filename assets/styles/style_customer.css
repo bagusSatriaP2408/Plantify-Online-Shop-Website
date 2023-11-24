@@ -30,6 +30,8 @@ footer {
   align-items: center;
   padding: 10px 128px 10px 128px;
   text-align: center;
+  max-width: 1687px;
+  min-width: 1444px;
 }
 .logo {
   margin-right: 20px;
@@ -50,6 +52,15 @@ a {
 .active {
   color: rgb(217, 255, 0);
 }
+.abs {
+  position: absolute;
+  right: -12px;
+  top: -15px;
+  color: yellow;
+}
+.con {
+  position: relative;
+}
 /* End Header */
 /* Start Main */
 main {
@@ -58,6 +69,8 @@ main {
   justify-content: space-between;
   padding: 100px 128px 100px 128px;
   background-color: var(--hijau);
+  max-width: 1687px;
+  min-width: 1444px;
 }
 .main-kiri {
   padding-top: 30px;
@@ -130,6 +143,8 @@ p {
 .lokasi {
   padding: 50px 128px 50px 128px;
   color: var(--hijau);
+  max-width: 1687px;
+  min-width: 1444px;
 }
 .judul {
   display: flex;
@@ -141,7 +156,8 @@ p {
 .container {
   display: flex;
   flex-wrap: wrap;
-  gap: 50px;
+  justify-content: space-between;
+  row-gap: 40px;
   align-content: center;
 }
 .card {
@@ -170,8 +186,7 @@ small {
   padding: 15px;
 }
 .btn-card {
-  width: 90px;
-  height: 40px;
+  padding: 10px 20px;
   font-size: medium;
   border-radius: 10px;
   background-color: var(--hijau);
@@ -179,11 +194,20 @@ small {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.btn-card:hover {
+  background-color: #003831; 
+  color: white; 
+}
+.green {
+  color: var(--hijau);
 }
 /* End Produk */
 /* Start Kategori */
 .card-kategori {
-  width: 566px;
+  width: 600px;
   height: 242px;
   color: black;
   border-radius: 20px;
@@ -191,7 +215,7 @@ small {
 }
 .img2 {
   object-fit: cover;
-  width: 566px;
+  width: 600px;
   height: 242px;
 }
 .title2 {
@@ -221,6 +245,8 @@ footer {
   padding: 15px;
   color: white;
   background-color: black;
+  max-width: 1687px;
+  min-width: 1444px;
 }
 /* End Footer */
 .img-keranjang {
@@ -231,12 +257,21 @@ footer {
 }
 td,
 tr {
-  padding: 0px 60px 40px 60px;
+  padding: 20px;
   text-align: center;
 }
 th {
-  text-align: left;
-  padding: 0px 60px 20px 60px;
+  text-align: center;
+  padding: 50px;
+}
+.kosong {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  width: 82vw;
+  min-height: 60vh;
 }
 .produk-keranjang {
   display: flex;
@@ -249,7 +284,8 @@ th {
   padding: 50px;
 }
 .total {
-  padding: 20px 15px 20px 15px;
+  width: 60%;
+  padding: 15px 20px 10px 20px;
   margin: 0px 60px 30px 60px;
   display: flex;
   justify-content: space-between;
@@ -271,3 +307,62 @@ th {
 .jml {
   margin: 15px;
 }
+
+.checkout-btn {
+  margin: 50px 0px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.alamat {
+  padding: 15px;
+}
+
+.alamat .pengiriman {
+  padding-bottom: 20px;
+}
+
+.alamat .data-diri {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.alamat .data-diri a {
+  color: blue;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: #f2f2f2;
+}
+
+.kembali {
+  padding: 10px 20px;
+  font-size: medium;
+  border-radius: 10px;
+  background-color: var(--hijau);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 600px;
+  margin-top: 20px;
+}
+
+.kembali:hover {
+  background-color: #003831; 
+  color: white; 
+}
+
+
