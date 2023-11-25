@@ -13,7 +13,7 @@ $errors = array();
 $success = false;
 
 if (isset($_POST['login'])) {
-    // mengambil inputan user
+    
     $username = $_POST['username'];
     $password = $_POST['password'];
 
@@ -36,44 +36,40 @@ if (isset($_POST['login'])) {
     }
 }
 
+$title = "Login";
+
+require_once('base.php');        // untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH . "/templates/head.php");
+
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style.css">
-    <link rel="icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
-</head>
-<body>
     
+    <!-- start form-container -->
     <div class="form-container">
+        <!-- start form -->
         <form action="index.php" method="post">
 
             <h2>Login Now</h2>
 
-            <!-- inputan-start -->
+            <!-- inputan username -->
             <div class="input-container">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="<?php echo $_POST["username"] ?? '' ?>">
                 <span class="error-msg"><?php echo $errors["username"] ?? '' ?></span>
             </div>
+            <!-- inputan password -->
             <div class="input-container">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" value="<?php echo $_POST["password"] ?? '' ?>">
                 <span class="error-msg"><?php echo $errors["password"] ?? '' ?></span>
             </div>
-            <!-- inputan-end -->
 
             <button type="submit" name="login">Login</button>
             <p class="link">belum punya akun? <a href="register_role.php">register now</a></p>
 
         </form>
+        <!-- end form -->
     </div>
+    <!-- end form-container -->
 
 </body>
 </html>

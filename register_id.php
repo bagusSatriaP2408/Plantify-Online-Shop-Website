@@ -14,6 +14,7 @@ $roles = $_SESSION['roles'];
 $errors = array();
 $success = false;
 
+// ketika register ditekan
 if (isset($_POST['register'])) {
     // mengambil inputan user
     $username = htmlspecialchars($_POST['username']);
@@ -60,25 +61,19 @@ if (isset($_POST['register'])) {
         }
     }
 }
+
+$title = "Register";
+
+require_once('base.php');        // untuk mengunakan variable constant BASEURL/BASEPATH
+require_once(BASEPATH . "/templates/head.php");
+
 ?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="<?= BASEURL ?>/assets/styles/style.css">
-    <link rel="icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="<?= BASEURL ;?>/assets/img/favicon.ico" type="image/x-icon">
-</head>
-<body>
     
+    <!-- start form-container -->
     <div class="form-container">
 
         <!-- jika sukses tampilkan terima kasih dan button login ke halaman login -->
-        <?php if ($success) { ?>
+        <?php if ($success): ?>
 
             <div class="thx">
                 <h2>Registrasi Berhasil!</h2>
@@ -86,76 +81,84 @@ if (isset($_POST['register'])) {
             </div>
 
         <!-- jika tidak sukses tetap di bagian registrasi -->
-        <?php } else { ?>
+        <?php else: ?>
+            <!-- start form -->
             <form action="register_id.php" method="post">
 
                 <h2>Register Now</h2>
 
                 <!-- form register admin atau manajer -->
-                <?php if ($roles === "admin" || $roles === "manajer") { ?>
+                <?php if ($roles === "admin" || $roles === "manajer"): ?>
 
-                    <!-- inputan-start -->
+                    <!-- inputan username -->
                     <div class="input-container">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" value="<?php echo $_POST["username"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["username"] ?? '' ?></span>
                     </div>
+                    <!-- inputan password -->
                     <div class="input-container">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" value="<?php echo $_POST["password"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["password"] ?? '' ?></span>
                     </div>
+                    <!-- inputan konfirmasi password -->
                     <div class="input-container">
                         <label for="password2">Konfirmasi Password</label>
                         <input type="password" id="password2" name="password2" value="<?php echo $_POST["password2"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["password2"] ?? '' ?></span>
                     </div>
-                    <!-- inputan-end -->
 
                 <!-- form register customer -->
-                <?php } else { ?>
+                <?php else: ?>
 
-                    <!-- inputan-start -->
+                    <!-- inputan-username -->
                     <div class="input-container">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" value="<?php echo $_POST["username"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["username"] ?? '' ?></span>
                     </div>
+                    <!-- inputan password -->
                     <div class="input-container">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" value="<?php echo $_POST["password"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["password"] ?? '' ?></span>
                     </div>
+                    <!-- inputan konfirmasi password -->
                     <div class="input-container">
                         <label for="password2">Konfirmasi Password</label>
                         <input type="password" id="password2" name="password2" value="<?php echo $_POST["password2"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["password2"] ?? '' ?></span>
                     </div>
+                    <!-- inputan nama -->
                     <div class="input-container">
                         <label for="nama">Nama</label>
                         <input type="text" id="nama" name="nama" value="<?php echo $_POST["nama"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["nama"] ?? '' ?></span>
                     </div>
+                    <!-- inputan nomor telepon -->
                     <div class="input-container">
                         <label for="tel">Nomor Telepon</label>
                         <input type="text" id="tel" name="tel" value="<?php echo $_POST["tel"] ?? '' ?>">
                         <span class="error-msg"><?php echo $errors["tel"] ?? '' ?></span>
                     </div>
+                    <!-- inputan alamat -->
                     <div class="input-container">
                         <label for="address">Alamat</label>
                         <textarea name="address" id="address" rows="1"><?php echo $_POST["address"] ?? '' ?></textarea>
                         <span class="error-msg"><?php echo $errors["address"] ?? '' ?></span>
                     </div>
-                    <!-- inputan-end -->
 
-                <?php } ?>
+                <?php endif; ?>
 
                 <a href="register_role.php" class="btn">Kembali</a>
                 <button type="submit" name="register">Register</button>
 
             </form>
-        <?php } ?>
+            <!-- end form -->
+        <?php endif; ?>
     </div>
+    <!-- end form-container -->
 
 </body>
 </html>

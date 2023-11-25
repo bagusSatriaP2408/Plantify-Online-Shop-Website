@@ -1,28 +1,25 @@
 <?php 
 session_start();
 
+/* pengecekan jika tidak ada variable $_SESSION['login'] atau $_SESSION['role'] 
+tidak sama dengan 'manajer' maka dialihkan ke halaman login  */
 if (!isset($_SESSION['login']) || $_SESSION['role'] != 'manajer') {
     header("Location: ../index.php");
     exit();
 }
 
 $title = "Belum Bayar";
-require_once('../base.php');
+
+require_once('../base.php');        // untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/manajer/templates/sidebar.php");
+require_once(BASEPATH . "/validations.php");    //untuk menggunakan fungsi validasi
 
 $errors = array();
 
+// ketika filter ditekan
 if(isset($_POST['filter'])){
-    $time1 = $_POST['time1'];
-    $time2 = $_POST['time2'];
 
-    if (empty($time1) || empty($time2)) {
-        $errors['error'] = "waktu tidak boleh ada yang kosong";
-    } else if ($time2 < $time1) {
-        $errors['error'] = "waktu sampai tidak boleh kurang dari waktu mulai";
-    } else {
-        $errors['error'] = "";
-    }
+    validateFilterTanggal($errors, $_POST);
 
     if ($errors['error'] === "") {
         $orders = getAllOrderByStatusAndTime($_POST['time1'],$_POST['time2'],0);
@@ -33,12 +30,15 @@ if(isset($_POST['filter'])){
 }else{
     $orders = getAllOrders(0);
 }
+
 ?>
 
     <!-- start container-kanan -->
     <div class="container-kanan">
+        <!-- start form-container -->
         <div class="form-container">
             <p class="error" style="color:red;"><?= $errors['error'] ?? "" ?></p>
+            <!-- start form -->
             <form action="belum_bayar.php" method="post">
                 <label>Mulai dari : </label>
                 <input type="datetime-local" name="time1" value="<?= isset($_POST['time1']) ? $_POST['time1'] :"" ?>">
@@ -46,15 +46,23 @@ if(isset($_POST['filter'])){
                 <input type="datetime-local" name="time2" value="<?= isset($_POST['time2']) ? $_POST['time2'] :"" ?>">
                 <input type="submit" name="filter" value="Filter">
             </form>
+            <!-- end form -->
         </div>
+        <!-- end form-container -->
+
+        <!-- start wadah -->
         <div class="wadah">
             <h2>Grafik</h2>
             <div>
                 <canvas id="myChart"></canvas>
             </div>
         </div>
+        <!-- end wadah -->
+
+        <!-- start wadah -->
         <div class="wadah">
             <h2>Rekap</h2>
+            <!-- start table -->
             <table class="rekap">
                 <tr>
                     <th>Tanggal Order</th>
@@ -77,7 +85,9 @@ if(isset($_POST['filter'])){
                     </tr>
                 <?php endforeach; ?>
             </table>
+            <!-- end table -->
             <h2>Jumlah</h2>
+            <!-- start table -->
             <table class="jumlah">
                 <tr>
                     <th>Total Pelanggan</th>
@@ -88,10 +98,13 @@ if(isset($_POST['filter'])){
                     <td ><?= $total ?></td>
                 </tr>
             </table>
+            <!-- end table -->
         </div>
+        <!-- end wadah -->
     </div>
     <!-- end container-kanan -->  
 </body>
+
 <script src="<?= BASEURL ?>/manajer/node_modules/chart.js/dist/chart.umd.js"></script>        
 <script>
     let lable = [];
@@ -124,4 +137,5 @@ if(isset($_POST['filter'])){
     };
     new Chart(chart, config);
 </script>
+
 </html>
