@@ -2,15 +2,15 @@
 
 $title = "Profile";
 require_once("../base.php");
-require_once(BASEPATH."/templates/header.php");
+require_once(BASEPATH."/customer/templates/header.php");
 // mendapatkan data diri customer
 $customer = getDataDiri($_SESSION['username']);
 ?>
 
-<div class="produk">
-    <div class="container">   
-        <div class=" card">
+<div class="profile">
+        <div class="card">
             <div class="caption">
+                <img class="img-keranjang" src="<?= BASEURL?>/assets/img/icon-profile.png" alt="">
                 <h2>Nama : <?= $customer['nama']?></h2>
                 <h2>Username : <?= $customer['username']?></h2>
                 <h2>No Telp : <?= $customer['no_telepon']?></h2>
@@ -23,5 +23,4 @@ $customer = getDataDiri($_SESSION['username']);
                 </a>
             </div>
         </div>
-    </div>
 </div>

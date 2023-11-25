@@ -25,7 +25,8 @@ function getDataDiri($username)
 function getNewProducts()
 {
 	try {
-		$statement = DB->prepare("SELECT * FROM produk ORDER BY created_at DESC LIMIT 4");
+		$statement = DB->prepare("SELECT * FROM produk p JOIN kategori k ON p.id_kategori = k.id_kategori
+		ORDER BY created_at DESC LIMIT 4");
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
@@ -38,8 +39,20 @@ function getPopularProducts()
 {
 	try {
 		$statement = DB->prepare("SELECT *,sum(jumlah_produk) 
-		AS jml FROM order_detail od JOIN produk p ON od.id_produk = p.id_produk  GROUP BY od.id_produk
-		ORDER BY jml DESC LIMIT 4");
+		AS jml FROM order_detail od JOIN produk p ON od.id_produk = p.id_produk JOIN kategori k ON p.id_kategori = k.id_kategori
+		GROUP BY od.id_produk ORDER BY jml DESC LIMIT 4");
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	} catch (PDOException $err) {
+		echo $err->getMessage();
+	}
+}
+
+// fungsi query untuk mendapatkan semua data produk
+function getAllDataProductsWithCategory()
+{
+	try {
+		$statement = DB->prepare("SELECT * FROM produk p JOIN kategori k ON p.id_kategori = k.id_kategori");
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	} catch (PDOException $err) {
@@ -91,14 +104,15 @@ function getKeranjang($username)
 function getCartCode($username)
 {
 	try {
+		// mengambil id_keranjang dari customer 
 		$statement = DB->prepare("SELECT id_keranjang FROM keranjang WHERE username = :username");
 		$statement->bindValue(':username', $username);
 		$statement->execute();
-		if($statement->rowcount() > 0)
+		if($statement->rowcount() > 0)  // jika query ada maka return id_keranjang
 		{
 			return $statement->fetch(PDO::FETCH_ASSOC);
 		}
-		else{
+		else{   //jika query tidak ada maka insert ke table keranjang lalu ambil id_keranjang
 			$statement1 = DB->prepare("INSERT INTO keranjang (username) VALUES (:username)");
 			$statement1->bindValue(':username', $username);
 			$statement1->execute();
@@ -115,7 +129,7 @@ function getCartCode($username)
 // fungsi query untuk menambahkan keranjang
 function insertCart($username, $id_produk)
 {
-	$id_keranjang = getCartCode($username);
+	$id_keranjang = getCartCode($username); //funsi untuk mendapatkan id_keranjang
 	try {
 		$statement = DB->prepare("INSERT INTO keranjang_detail(id_keranjang,id_produk) VALUES (:id_keranjang,:id_produk)");
 		$statement->bindValue(':id_keranjang', $id_keranjang['id_keranjang']);

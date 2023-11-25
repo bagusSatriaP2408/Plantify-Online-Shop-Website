@@ -122,4 +122,6 @@ if(isset($_POST['submit'])){
     </form>
     <!-- end form -->
 </div>
-<!-- end konfirmasi pembayaran -->
+<?php
+require_once('templates/footer.php'); // mengabungkan dengan halaman header
+?>

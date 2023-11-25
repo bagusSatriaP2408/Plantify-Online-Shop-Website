@@ -173,9 +173,6 @@ p {
   flex-wrap: wrap;
   justify-content: space-between;
   row-gap: 40px;
-  justify-content: space-between;
-  row-gap: 40px;
-  align-content: center;
 }
 .card {
   display: flex;
@@ -215,8 +212,13 @@ small {
   cursor: pointer;
 }
 .btn-card:hover {
-  background-color: #003831; 
-  color: white; 
+  background-color: #003831;
+}
+.habis {
+  background-color: #5a6268;
+}
+.habis:hover {
+  background-color: #515a61;
 }
 .green {
   color: var(--hijau);
@@ -233,7 +235,7 @@ small {
   border-radius: 20px;
   overflow: hidden;
 }
-.img2 {
+.img-kategori {
   object-fit: cover;
   width: 600px;
   height: 242px;
@@ -267,6 +269,10 @@ footer {
   background-color: black;
   max-width: 1687px;
   min-width: 1444px;
+}
+.prod {
+  justify-content: flex-start;
+  column-gap: 50px;
 }
 /* End Footer */
 /* ============================================ End Index ============================ */
@@ -325,10 +331,12 @@ th {
   align-items: center;
 }
 .jumlah-btn {
-  color: #666666;
-  border: 1px solid #666666;
+  color: #10289e;
+  border: 1px solid #0e42a4;
   border-radius: 100px;
   padding: 0 7px 0 7px;
+  cursor: pointer;
+  margin: 10px;
 }
 .jml {
   margin: 15px;
@@ -387,8 +395,17 @@ select {
 }
 
 .kembali:hover {
-  background-color: #003831; 
-  color: white; 
+  background-color: #003831;
+  color: white;
+}
+.hijau {
+  background-color: var(--hijau);
 }
 
-
+.profile {
+  width: 100vw;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

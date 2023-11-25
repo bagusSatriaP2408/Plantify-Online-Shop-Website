@@ -9,8 +9,8 @@
         <a href="https://wa.me/6281216505560">
           +62 812-1650-5560
         </a>
-        <a href="https://wa.me/6288803528451">
-          +62 888-0352-8451
+        <a href="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.9644736773307!2d112.72410727433831!3d-7.130106192873798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd803dcd1e1bd7f%3A0x5261304f608c91db!2sLey%20Denara!5e0!3m2!1sid!2sid!4v1699597392448!5m2!1sid!2sid">
+          Universitas Trunojoyo Madura, Telang, Kec. Kamal, Kabupaten Bangkalan, Jawa Timur 
         </a>
       </div>
       <div class="link">

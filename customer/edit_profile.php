@@ -3,11 +3,12 @@ session_start();
 /* pengecekan jika tidak ada variable $_SESSION['login'] atau $_SESSION['role'] 
 tidak sama dengan 'customer' maka dialihkan ke halaman login  */
 if (!isset($_SESSION['login']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../index.php");
+    $prevPage = $_SERVER['HTTP_REFERER'];
+    header("Location: $prevPage");
     exit();
 }
 
-require_once($_SERVER['DOCUMENT_ROOT']."/TA-tes/base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
+require_once("../base.php");// untuk mengunakan variable constant BASEURL/BASEPATH
 require_once(BASEPATH . "/database.php"); // menghubungkan dengan file database.php untuk mendapatkan function SQL
 require_once(BASEPATH.'/validations.php');
 // mendapatkan data diri customer

@@ -130,10 +130,10 @@ function validateNama(&$errors, $nama) {
 // validasi inputan telepon (required, numeric, panjang digit)
 function validateTel(&$errors, $tel) {
     if (checkRequired($tel)) {
-        $errors["tel"] = "nomor tidak boleh kosong";
+        $errors["tel"] = "nomor telepon tidak boleh kosong";
     } else {
         if (!checkNumeric($tel)) {
-            $errors["tel"] = "nomor harus berupa angka";
+            $errors["tel"] = "nomor telepon harus berupa angka";
         } else if (strlen($tel) < 12) {
             $errors["tel"] = "tidak boleh kurang dari 12 digit";
         } else {
