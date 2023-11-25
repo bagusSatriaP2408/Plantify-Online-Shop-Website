@@ -21,7 +21,7 @@ if($order['status']){
 if(isset($_POST['edit'])){
 
     $no_rekening = htmlspecialchars($_POST['rek']);
-    validateRekening($errors, $no_rekening);
+    validateTel($errors, $no_rekening);
     
     $cek = "";
     foreach ($errors as $error) {
@@ -56,7 +56,7 @@ if(isset($_POST['edit'])){
             <div class="input-container">
                 <label for="rek">No Rekening</label>
                 <input type="text" id="rek" name="rek" value="<?= $_POST['rek'] ?? $order['no_rekening'] ?>">
-                <span class="error"><?= $errors["rek"] ?? '' ?></span>
+                <span class="error-msg"><?= $errors["tel"] ?? '' ?></span>
             </div>
             <a href="daftar_transaksi.php" class="btn">Batal</a>
             <button type="submit" name="edit">Edit</button>

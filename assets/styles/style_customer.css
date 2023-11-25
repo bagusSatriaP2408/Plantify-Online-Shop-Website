@@ -18,8 +18,8 @@
 body {
   overflow-x: hidden;
 }
-/* =========================== index ======================== */
 /* Start Header */
+
 header,
 footer {
   width: 100vw;
@@ -275,15 +275,11 @@ footer {
   column-gap: 50px;
 }
 /* End Footer */
-/* ============================================ End Index ============================ */
 .img-keranjang {
   width: 100px;
   height: 100px;
   object-fit: cover;
   border-radius: 10px;
-}
-table {
-  margin: 0px 60px 30px 60px;
 }
 td,
 tr {
@@ -305,11 +301,13 @@ th {
 }
 .produk-keranjang {
   display: flex;
-  width: max-content;
+  text-align: left;
 }
-
+.a {
+  justify-content: flex-start;
+}
 .bayar {
-  padding: 50px 110px;
+  padding: 50px;
 }
 .total {
   width: 60%;
@@ -321,14 +319,10 @@ th {
   background-color: #d9d9d9;
   border-radius: 20px;
 }
-.btn-x {
+.x {
   position: relative;
   top: -20px;
   color: #666666;
-}
-.con-jml {
-  display: flex;
-  align-items: center;
 }
 .jumlah-btn {
   color: #10289e;
